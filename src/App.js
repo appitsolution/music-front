@@ -90,9 +90,9 @@ function App() {
           />
           <Route path="/login/client" element={<LoginClientPage />} />
           <Route path="/forgot" element={<ForgotPasswordEmail />} />
-          <Route path="/forgot" element={<ForgotPasswordCode />} />
+          <Route path="/forgot/code" element={<ForgotPasswordCode />} />
           <Route path="/terms" element={<Terms />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={<Signup />} />
         </Routes>
       </ThemeProvider>
     </>
