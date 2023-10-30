@@ -1,0 +1,126 @@
+.invoices {
+    padding: 80px 0;
+}
+
+.invoices-second {
+    color: #000;
+    text-align: center;
+    font-family: Geometria;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+
+.invoices-block {
+    border-radius: 30px;
+    background: var(--background);
+    box-shadow: 0px 4px 20px 0px rgba(51, 48, 228, 0.5);
+    margin-top: 46px;
+
+    &-header {
+        display: flex;
+        align-items: center;
+        padding: 25px 49px;
+        border-radius: 30px 30px 0px 0px;
+        background: #3330e4;
+
+        &-title {
+            flex: 2;
+            color: #fff;
+            font-family: Geometria;
+            font-size: 26px;
+            font-style: normal;
+            font-weight: 900;
+            line-height: normal;
+        }
+    }
+
+    &-content {
+        padding-bottom: 32px;
+        &-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 49px;
+            padding-right: 32px;
+
+            border-bottom: 1px solid #3330e4;
+
+            &-id {
+                color: var(--text);
+                font-family: Geometria;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                flex: 1;
+            }
+
+            &-date {
+                color: var(--text);
+                font-family: Geometria;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                flex: 2;
+            }
+
+            &-bank {
+                color: var(--text);
+                font-family: Geometria;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                flex: 2;
+            }
+
+            &-value {
+                color: var(--text);
+                font-family: Geometria;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                flex: 1;
+            }
+
+            &-status {
+                flex: 1;
+                display: flex;
+                justify-content: flex-start;
+                &-value {
+                    padding: 2px 17px;
+                    border-radius: 30px;
+                    background: #ff7a09;
+                    color: #fff;
+                    text-align: center;
+                    font-family: Geometria;
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                }
+            }
+
+            &-message {
+                flex: 3;
+                display: flex;
+                justify-content: flex-start;
+
+                &-text {
+                    padding: 4px 17px;
+                    border-radius: 30px;
+                    background: rgba(51, 48, 228, 0.3);
+                    color: var(--text);
+                    font-family: Geometria;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                }
+            }
+        }
+    }
+}

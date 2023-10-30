@@ -1,0 +1,94 @@
+.signup-client-block {
+    padding-bottom: 80px;
+}
+
+.signup-client-modal {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+
+.signup-client-modal-icon {
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.signup-client-modal-title {
+    color: #3330e4;
+    text-align: center;
+    font-family: Geometria;
+    font-size: 38px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
+.signup-client-modal-second {
+    color: var(--text);
+
+    text-align: center;
+    font-family: Geometria;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    max-width: 512px;
+}
+
+.signup-client-modal-desc {
+    color: var(--text);
+    font-family: Geometria;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    text-align: center;
+    max-width: 512px;
+    margin: 0 auto;
+}
+
+.signup-client-agreement-block {
+    padding-bottom: 60px;
+}
+
+.signup-client-agreement-second {
+    color: var(--text);
+    text-align: center;
+    font-family: Geometria;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    margin-bottom: 53px;
+}
+
+.signup-client-agreement-form {
+    max-width: 665px;
+    margin: 0 auto;
+}
+
+.signup-client-agreement-form-flex {
+    display: flex;
+    gap: 17px;
+}
+
+.signup-client-agreement-form-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+
+    &-text {
+        color: var(--text);
+        font-family: Geometria;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+}

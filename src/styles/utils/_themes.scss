@@ -1,0 +1,13 @@
+:root {
+    --text: #000;
+    --placeholder: rgba(0, 0, 0, 0.5);
+    --placeholder-bg: #eef0f2;
+    --background: #fff;
+}
+
+[data-theme="dark"] {
+    --text: #fff;
+    --placeholder: rgba(255, 255, 255, 0.5);
+    --placeholder-bg: rgba(238, 240, 242, 0.2);
+    --background: #000;
+}
