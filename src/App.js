@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TextInput from "./components/form/TextInput";
 import "./styles/main.scss";
 
@@ -25,78 +25,94 @@ import AccountInfluencerInvoicesPage from "./pages/account/influencer/invoices";
 import Terms from "./pages/terms";
 import { ThemeProvider } from "./ThemeContext";
 import SignupInfluencer from "./pages/signup-influencer/signup-influencer";
+import UseVerify from "./hooks/useVerify";
+import PrivateRoute from "./components/PrivateRoute";
+import PublicRoute from "./components/PublicRoute";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthenticated } from "./redux/slice/authenticated";
 
-function App() {
+const App = () => {
   return (
     <>
       <ThemeProvider>
         <Routes>
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signup/client" element={<SignupClient />} />
+          <Route path="/signup" element={<PublicRoute element={Signup} />} />
+          <Route
+            path="/signup/client"
+            element={<PublicRoute element={SignupClient} />}
+          />
           <Route
             path="/signup/client/agreement"
-            element={<SignupClientAgreement />}
+            element={<PublicRoute element={SignupClientAgreement} />}
           />
-          <Route path="/signup/influencer" element={<SignupInfluencer />} />
+          <Route
+            path="/signup/influencer"
+            element={<PublicRoute element={SignupInfluencer} />}
+          />
           <Route
             path="/signup/influencer/agreement"
             element={<SignupInfluencerAgreement />}
           />
-          <Route path="/account/client" element={<AccountClientHome />} />
           <Route
-            path="/account/client/offers"
-            element={<AccountClientOffers />}
+            path="/account/client"
+            element={<PrivateRoute element={AccountClientHome} />}
           />
           <Route
-            path="/account/client/post-content"
-            element={<AccountClientPostContent />}
+            path="/account/client/offers"
+            element={<PrivateRoute element={AccountClientOffers} />}
           />
           <Route
             path="/account/client/payment"
-            element={<AccountClientPayment />}
+            element={<PrivateRoute element={AccountClientPayment} />}
           />
           <Route
             path="/account/client/details"
-            element={<AccountClientDetails />}
+            element={<PrivateRoute element={AccountClientDetails} />}
           />
           <Route
             path="/account/client/invoice-details"
-            element={<AccountClientInvoiceDetails />}
+            element={<PrivateRoute element={AccountClientInvoiceDetails} />}
           />
           <Route
             path="/account/client/past-promos"
-            element={<AccountClientPastPromos />}
+            element={<PrivateRoute element={AccountClientPastPromos} />}
+          />
+          <Route
+            path="/account/client/create-promo"
+            element={<PrivateRoute element={AccountClientPostContent} />}
           />
           <Route
             path="/account/client/past-promos/current"
-            element={<AccountClientPastPromosCurrent />}
+            element={<PrivateRoute element={AccountClientPastPromosCurrent} />}
           />
 
           <Route
             path="/account/influencer"
-            element={<AccountInfluencerHome />}
+            element={<PrivateRoute element={AccountInfluencerHome} />}
           />
           <Route
             path="/account/influencer/details"
-            element={<AccountInfluencerDetails />}
+            element={<PrivateRoute element={AccountInfluencerDetails} />}
           />
           <Route
             path="/account/influencer/invoices"
-            element={<AccountInfluencerInvoicesPage />}
+            element={<PrivateRoute element={AccountInfluencerInvoicesPage} />}
           />
           <Route
             path="/account/influencer/create-invoice"
-            element={<AccountInfluencerCreateInvoicePage />}
+            element={
+              <PrivateRoute element={AccountInfluencerCreateInvoicePage} />
+            }
           />
           <Route path="/login/client" element={<LoginClientPage />} />
           <Route path="/forgot" element={<ForgotPasswordEmail />} />
-          <Route path="/forgot/code" element={<ForgotPasswordCode />} />
+          <Route path="/forgot/code/:email" element={<ForgotPasswordCode />} />
           <Route path="/terms" element={<Terms />} />
-          <Route path="/" element={<Signup />} />
+          <Route path="/" element={<PublicRoute element={Signup} />} />
         </Routes>
       </ThemeProvider>
     </>
   );
-}
+};
 
 export default App;

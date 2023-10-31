@@ -3,8 +3,10 @@ import AltButton from "../../form/AltButton";
 import sponsor from "../../../images/icons/sponsor.svg";
 import influencer from "../../../images/icons/influencer.svg";
 import TitleSection from "../../TitleSection";
+import { useNavigate } from "react-router-dom";
 
 const SignupSelect = () => {
+  const navigation = useNavigate();
   return (
     <>
       <section className="signup-select">
@@ -24,7 +26,10 @@ const SignupSelect = () => {
                 </h2>
                 <p className="signup-select-card-desc">Find your creators</p>
 
-                <AltButton text="Sign up" />
+                <AltButton
+                  text="Sign up"
+                  onClick={() => navigation("/signup/client")}
+                />
               </div>
               <div className="signup-select-card">
                 <img className="signup-select-card-icon" src={influencer} />

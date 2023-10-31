@@ -6,10 +6,41 @@ import StandartButton from "../../form/StandartButton";
 import SelectedInput from "../../form/SelectedInput";
 import ModalWindow from "../../ModalWindow";
 import acceptIcon from "../../../images/icons/accept.svg";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setCompany,
+  setCompanyType,
+  setEmail,
+  setFirstName,
+  setInstagram,
+  setPhone,
+  setReferalCode,
+} from "../../../redux/slice/signup-client";
+import { useNavigate } from "react-router-dom";
 
 const SignupClient = () => {
   const [currentType, setCurrentType] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const dispatch = useDispatch();
+  const navigation = useNavigate();
+
+  const signClienState = useSelector((state) => state.signupClient);
+
+  const registerNext = () => {
+    if (
+      (!signClienState.firstName,
+      !signClienState.company,
+      !signClienState.companyType,
+      !signClienState.instagram,
+      !signClienState.email,
+      !signClienState.phone,
+      !signClienState.referalCode)
+    ) {
+      return;
+    }
+
+    setOpenModal(true);
+  };
   return (
     <>
       <section className="signup-client">
@@ -27,18 +58,24 @@ to get approved as"
                   title="First name*"
                   placeholder="Enter name"
                   style={{ maxWidth: "665px", margin: "30px auto 60px auto" }}
+                  value={signClienState.firstName}
+                  setValue={(value) => dispatch(setFirstName(value))}
                 />
                 <TextInput
                   title="Company*"
                   placeholder="Enter company name"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  value={signClienState.company}
+                  setValue={(value) => dispatch(setCompany(value))}
                 />
                 <SelectedInput
                   data={["Techno", "EDM", "House", "Other"]}
-                  changeValue={setCurrentType}
                   title="Company type*"
+                  changeValue={(value) => dispatch(setCompanyType(value))}
                   placeholder={
-                    currentType === "" ? "Сhoose company type" : currentType
+                    signClienState.companyType === ""
+                      ? "Сhoose company type"
+                      : signClienState.companyType
                   }
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
                 />
@@ -46,26 +83,35 @@ to get approved as"
                   title="Instagram*"
                   placeholder="Enter instagram link"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  value={signClienState.instagram}
+                  setValue={(value) => dispatch(setInstagram(value))}
                 />
                 <TextInput
                   title="Email*"
                   placeholder="Enter email"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  value={signClienState.email}
+                  setValue={(value) => dispatch(setEmail(value))}
                 />
                 <TextInput
                   title="Phone*"
                   placeholder="+_ _ ___ ___ __ __"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  value={signClienState.phone}
+                  setValue={(value) => dispatch(setPhone(value))}
                 />
                 <TextInput
                   title="Referal code*"
                   placeholder="Enter referal code"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  value={signClienState.referalCode}
+                  setValue={(value) => dispatch(setReferalCode(value))}
                 />
 
                 <StandartButton
                   text="Apply now"
                   style={{ margin: "70px auto 0 auto" }}
+                  onClick={registerNext}
                 />
               </form>
             </FormContainer>
@@ -97,7 +143,10 @@ to get approved as"
                     marginLeft: "auto",
                     marginRight: "auto",
                   }}
-                  onClick={() => setOpenModal(false)}
+                  onClick={() => {
+                    setOpenModal(false);
+                    navigation("/signup/client/agreement");
+                  }}
                 />
               </div>
             </ModalWindow>

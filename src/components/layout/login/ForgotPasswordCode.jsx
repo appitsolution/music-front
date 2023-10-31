@@ -1,13 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NumberCode from "../../form/NumberCode";
 import TitleSection from "../../TitleSection";
 import FormContainer from "../../form/FormContainer";
 import TextInput from "../../form/TextInput";
 import StandartButton from "../../form/StandartButton";
 import ModalWindow from "../../ModalWindow";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const ForgotPasswordCode = () => {
+  const navigation = useNavigate();
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [numberCodeState, setNumberCodeState] = useState(["", "", "", ""]);
+
+  const params = useParams();
+
+  const forgotPasswordCodeRequest = async () => {
+    if (numberCodeState.join("").length < 4 || !params.email) return;
+
+    try {
+      const result = await axios.post(
+        `${process.env.REACT_APP_SERVER}/forgot/code?email=${
+          params.email
+        }&code=${numberCodeState.join("")}`
+      );
+
+      if (result.data.code === 200) {
+        navigation("/login/client");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <section className="forgot-password">
@@ -19,7 +44,10 @@ const ForgotPasswordCode = () => {
 
             <FormContainer style={{ marginTop: "73px" }}>
               <div className="login-client-form">
-                <NumberCode />
+                <NumberCode
+                  setNumberCode={setNumberCodeState}
+                  value={numberCodeState}
+                />
 
                 <div
                   style={{
@@ -67,7 +95,10 @@ const ForgotPasswordCode = () => {
             <StandartButton
               text="Ok"
               style={{ padding: "10px 80px" }}
-              onClick={() => setIsOpenModal(false)}
+              onClick={() => {
+                setIsOpenModal(false);
+                forgotPasswordCodeRequest();
+              }}
             />
           </div>
         </div>

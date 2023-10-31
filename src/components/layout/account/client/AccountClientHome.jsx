@@ -6,8 +6,10 @@ import newIcon from "../../../../images/icons/new.svg";
 import invoice from "../../../../images/icons/invoice.svg";
 import accountDetails from "../../../../images/icons/details-account.svg";
 import support from "../../../../images/icons/support.svg";
+import { useNavigate } from "react-router-dom";
 
 const AccountClientHome = () => {
+  const navigation = useNavigate();
   return (
     <section className="account-client">
       <div className="container">
@@ -16,7 +18,10 @@ const AccountClientHome = () => {
 
           <ul className="account-client-menu">
             <li className="account-client-menu-item">
-              <button className="account-client-menu-button">
+              <button
+                className="account-client-menu-button"
+                onClick={() => navigation("")}
+              >
                 <img
                   className="account-client-menu-button-icon"
                   src={past}
@@ -38,7 +43,10 @@ const AccountClientHome = () => {
               </button>
             </li>
             <li className="account-client-menu-item">
-              <button className="account-client-menu-button">
+              <button
+                className="account-client-menu-button"
+                onClick={() => navigation("/account/client/create-promo")}
+              >
                 <img
                   className="account-client-menu-button-icon"
                   src={newIcon}
@@ -48,7 +56,10 @@ const AccountClientHome = () => {
               </button>
             </li>
             <li className="account-client-menu-item">
-              <button className="account-client-menu-button">
+              <button
+                className="account-client-menu-button"
+                onClick={() => navigation("/account/client/invoice-details")}
+              >
                 <img
                   className="account-client-menu-button-icon"
                   src={invoice}
@@ -60,7 +71,10 @@ const AccountClientHome = () => {
               </button>
             </li>
             <li className="account-client-menu-item">
-              <button className="account-client-menu-button">
+              <button
+                className="account-client-menu-button"
+                onClick={() => navigation("/account/client/details")}
+              >
                 <img
                   className="account-client-menu-button-icon"
                   src={accountDetails}
