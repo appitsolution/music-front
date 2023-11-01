@@ -12,13 +12,16 @@ const SelectedInput = ({
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className={styles.block} style={style}>
-      <button
+      <div
         className={styles.label}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
       >
         <p className={styles.title}>{title}</p>
-        <div className={styles.input}>
+        <div
+          className={styles.input}
+          style={{ borderColor: error ? "#FB1E1E" : "transparent" }}
+        >
           <p className={styles.placeholder}>{placeholder}</p>
 
           <div
@@ -32,6 +35,7 @@ const SelectedInput = ({
               <>
                 {data.map((item) => (
                   <button
+                    key={item}
                     className={styles.item}
                     type="button"
                     onClick={() => {
@@ -48,7 +52,7 @@ const SelectedInput = ({
         </div>
 
         {error ? <p className={styles.error}>!</p> : <></>}
-      </button>
+      </div>
     </div>
   );
 };

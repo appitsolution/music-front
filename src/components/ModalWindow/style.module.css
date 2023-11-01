@@ -7,10 +7,9 @@
   height: 100vh;
   background: rgba(0, 0, 0, 0.7);
   z-index: 5;
-  display: flex;
-  align-items: center;
   transition: opacity 250ms linear;
   overflow-y: scroll;
+  display: flex;
 }
 
 .modal {
@@ -18,7 +17,7 @@
   max-width: 666px;
   width: 100%;
   margin: auto;
-  margin: 50px auto;
+  /* margin: 50px auto; */
   border-radius: 30px;
   background: var(--background);
   box-shadow: 0px 4px 20px 0px rgba(51, 48, 228, 0.5);

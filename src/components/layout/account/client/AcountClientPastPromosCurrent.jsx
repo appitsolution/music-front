@@ -73,9 +73,12 @@ const AcountClientPastPromosCurrent = () => {
               marginTop: "30px",
             }}
           >
-            <button className="account-client-past-promos-current-report">
+            <a
+              href="mailto:admin@napoleonpr.com"
+              className="account-client-past-promos-current-report"
+            >
               Click here for Report
-            </button>
+            </a>
           </div>
         </div>
       </div>

@@ -17,16 +17,49 @@ import {
   setReferalCode,
 } from "../../../redux/slice/signup-client";
 import { useNavigate } from "react-router-dom";
+import {
+  formatPhoneNumber,
+  validateEmail,
+  validatePhoneNumber,
+} from "../../../utils/validations";
 
 const SignupClient = () => {
-  const [currentType, setCurrentType] = useState("");
-  const [openModal, setOpenModal] = useState(false);
-  const dispatch = useDispatch();
   const navigation = useNavigate();
-
+  const dispatch = useDispatch();
   const signClienState = useSelector((state) => state.signupClient);
+  const [openModal, setOpenModal] = useState(false);
+
+  const [errorFirstName, setErrorFirstName] = useState(false);
+  const [errorCompany, setErrorCompany] = useState(false);
+  const [errorCompanyType, setErrorCompanyType] = useState(false);
+  const [errorInstagram, setErrorInstagram] = useState(false);
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [errorPhone, setErrorPhone] = useState(false);
+  const [errorReferalCode, setErrorReferalCode] = useState(false);
 
   const registerNext = () => {
+    if (!signClienState.firstName) {
+      setErrorFirstName(true);
+    }
+    if (!signClienState.company) {
+      setErrorCompany(true);
+    }
+    if (!signClienState.companyType) {
+      setErrorCompanyType(true);
+    }
+    if (!signClienState.instagram) {
+      setErrorInstagram(true);
+    }
+    if (!signClienState.email || !validateEmail(signClienState.email)) {
+      setErrorEmail(true);
+    }
+    if (!signClienState.phone || !validatePhoneNumber(signClienState.phone)) {
+      setErrorPhone(true);
+    }
+
+    if (!signClienState.referalCode) {
+      setErrorReferalCode(true);
+    }
     if (
       (!signClienState.firstName,
       !signClienState.company,
@@ -60,6 +93,8 @@ to get approved as"
                   style={{ maxWidth: "665px", margin: "30px auto 60px auto" }}
                   value={signClienState.firstName}
                   setValue={(value) => dispatch(setFirstName(value))}
+                  error={errorFirstName}
+                  onFocus={() => setErrorFirstName(false)}
                 />
                 <TextInput
                   title="Company*"
@@ -67,6 +102,8 @@ to get approved as"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
                   value={signClienState.company}
                   setValue={(value) => dispatch(setCompany(value))}
+                  error={errorCompany}
+                  onFocus={() => setErrorCompany(false)}
                 />
                 <SelectedInput
                   data={["Techno", "EDM", "House", "Other"]}
@@ -78,6 +115,7 @@ to get approved as"
                       : signClienState.companyType
                   }
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  error={errorCompanyType}
                 />
                 <TextInput
                   title="Instagram*"
@@ -85,20 +123,29 @@ to get approved as"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
                   value={signClienState.instagram}
                   setValue={(value) => dispatch(setInstagram(value))}
+                  error={errorInstagram}
+                  onFocus={() => setErrorInstagram(false)}
                 />
                 <TextInput
+                  type={"email"}
                   title="Email*"
                   placeholder="Enter email"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
                   value={signClienState.email}
                   setValue={(value) => dispatch(setEmail(value))}
+                  error={errorEmail}
+                  onFocus={() => setErrorEmail(false)}
                 />
                 <TextInput
                   title="Phone*"
                   placeholder="+_ _ ___ ___ __ __"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
                   value={signClienState.phone}
-                  setValue={(value) => dispatch(setPhone(value))}
+                  setValue={(value) =>
+                    dispatch(setPhone(formatPhoneNumber(value)))
+                  }
+                  error={errorPhone}
+                  onFocus={() => setErrorPhone(false)}
                 />
                 <TextInput
                   title="Referal code*"
@@ -106,6 +153,8 @@ to get approved as"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
                   value={signClienState.referalCode}
                   setValue={(value) => dispatch(setReferalCode(value))}
+                  error={errorReferalCode}
+                  onFocus={() => setErrorReferalCode(false)}
                 />
 
                 <StandartButton

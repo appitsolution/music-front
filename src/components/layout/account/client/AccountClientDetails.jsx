@@ -6,6 +6,10 @@ import TextInput from "../../../form/TextInput";
 import StandartButton from "../../../form/StandartButton";
 import UseVerify from "../../../../hooks/useVerify";
 import axios from "axios";
+import {
+  formatPhoneNumber,
+  validatePhoneNumber,
+} from "../../../../utils/validations";
 
 const AccountClientDetails = () => {
   const [data, setData] = useState({});
@@ -14,6 +18,18 @@ const AccountClientDetails = () => {
   const [isOpenCompany, setIsOpenCompany] = useState(false);
   const [isOpenEmail, setIsOpenEmail] = useState(false);
   const [isOpenPhone, setIsOpenPhone] = useState(false);
+
+  const [errorFirstName, setErrorFirstName] = useState(false);
+  const [errorCompany, setErrorCompany] = useState(false);
+  const [errorCompanyType, setErrorCompanyType] = useState(false);
+  const [errorInstagram, setErrorInstagram] = useState(false);
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [errorPhone, setErrorPhone] = useState(false);
+  const [errorReferalCode, setErrorReferalCode] = useState(false);
+  const [errorUsername, setErrorUsername] = useState(false);
+  const [errorCurrentPassword, setErrorCurrentPassword] = useState(false);
+  const [errorNewPassword, setErrorNewPassword] = useState(false);
+  const [errorRepeatPassword, setErrorRepeatPassword] = useState(false);
 
   const [dataPersonal, setDataPersonal] = useState({
     firstName: "",
@@ -37,7 +53,27 @@ const AccountClientDetails = () => {
   const [dataPhone, setDataPhone] = useState("");
 
   const updateClientPersonal = async () => {
+    if (!dataPersonal.firstName) {
+      setErrorFirstName(true);
+    }
+    if (!dataPersonal.instagram) {
+      setErrorInstagram(true);
+    }
+    if (!dataPersonal.referalCode) {
+      setErrorReferalCode(true);
+    }
+    if (!dataPersonal.username) {
+      setErrorUsername(true);
+    }
     try {
+      if (
+        !dataPersonal.firstName ||
+        !dataPersonal.instagram ||
+        !dataPersonal.referalCode ||
+        !dataPersonal.username
+      ) {
+        return;
+      }
       const result = await axios.put(
         `${process.env.REACT_APP_SERVER}/profile/client/personal`,
         { ...dataPersonal, id: data._id }
@@ -52,7 +88,23 @@ const AccountClientDetails = () => {
   };
 
   const updateClientPassword = async () => {
-    if (dataPassword.newPassword !== dataPassword.acceptPassword) return;
+    if (!dataPassword.currentPassword) {
+      setErrorCurrentPassword(true);
+    }
+    if (!dataPassword.newPassword) {
+      setErrorNewPassword(true);
+    }
+    if (
+      !dataPassword.acceptPassword ||
+      !dataPassword.currentPassword ||
+      !dataPassword.newPassword
+    ) {
+      return;
+    }
+    if (dataPassword.newPassword !== dataPassword.acceptPassword) {
+      setErrorRepeatPassword(true);
+      return;
+    }
     try {
       const result = await axios.put(
         `${process.env.REACT_APP_SERVER}/profile/client/password`,
@@ -64,13 +116,27 @@ const AccountClientDetails = () => {
       );
       if (result.data.code === 200) {
         setIsOpenPassword(false);
+        setDataPassword({
+          currentPassword: "",
+          newPassword: "",
+          acceptPassword: "",
+        });
+        return;
       }
+      setErrorRepeatPassword(true);
     } catch (err) {
       console.log(err);
     }
   };
 
   const updateClientCompany = async () => {
+    if (!dataCompany.company) {
+      setErrorCompany(true);
+    }
+    if (!dataCompany.companyType) {
+      setErrorCompanyType(true);
+    }
+    if (!dataCompany.company || !dataCompany.companyType) return;
     try {
       const result = await axios.put(
         `${process.env.REACT_APP_SERVER}/profile/client/company`,
@@ -86,6 +152,9 @@ const AccountClientDetails = () => {
   };
 
   const updateClientEmail = async () => {
+    if (!dataEmail) {
+      return setErrorEmail(true);
+    }
     try {
       const result = await axios.put(
         `${process.env.REACT_APP_SERVER}/profile/client/email`,
@@ -101,6 +170,9 @@ const AccountClientDetails = () => {
   };
 
   const updateClientPhone = async () => {
+    if (!dataPhone || !validatePhoneNumber(dataPhone)) {
+      return setErrorPhone(true);
+    }
     try {
       const result = await axios.put(
         `${process.env.REACT_APP_SERVER}/profile/client/phone`,
@@ -347,6 +419,8 @@ const AccountClientDetails = () => {
             setValue={(value) =>
               setDataPersonal({ ...dataPersonal, firstName: value })
             }
+            error={errorFirstName}
+            onFocus={() => setErrorFirstName(false)}
           />
           <TextInput
             title="Username"
@@ -356,6 +430,8 @@ const AccountClientDetails = () => {
             setValue={(value) =>
               setDataPersonal({ ...dataPersonal, username: value })
             }
+            error={errorUsername}
+            onFocus={() => setErrorUsername(false)}
           />
 
           <TextInput
@@ -366,6 +442,8 @@ const AccountClientDetails = () => {
             setValue={(value) =>
               setDataPersonal({ ...dataPersonal, instagram: value })
             }
+            error={errorInstagram}
+            onFocus={() => setErrorInstagram(false)}
           />
           <TextInput
             title="Referal code"
@@ -375,6 +453,8 @@ const AccountClientDetails = () => {
             setValue={(value) =>
               setDataPersonal({ ...dataPersonal, referalCode: value })
             }
+            error={errorReferalCode}
+            onFocus={() => setErrorReferalCode()}
           />
 
           <div
@@ -410,6 +490,8 @@ const AccountClientDetails = () => {
                 currentPassword: value,
               })
             }
+            error={errorCurrentPassword}
+            onFocus={() => setErrorCurrentPassword(false)}
           />
           <TextInput
             type="password"
@@ -423,6 +505,8 @@ const AccountClientDetails = () => {
                 newPassword: value,
               })
             }
+            error={errorNewPassword}
+            onFocus={() => setErrorNewPassword(false)}
           />
           <TextInput
             type="password"
@@ -436,6 +520,8 @@ const AccountClientDetails = () => {
                 acceptPassword: value,
               })
             }
+            error={errorRepeatPassword}
+            onFocus={() => setErrorRepeatPassword(false)}
           />
 
           <div
@@ -467,6 +553,8 @@ const AccountClientDetails = () => {
             setValue={(value) =>
               setDataCompany({ ...dataCompany, company: value })
             }
+            error={errorCompany}
+            onFocus={() => setErrorCompany(false)}
           />
 
           <TextInput
@@ -477,6 +565,8 @@ const AccountClientDetails = () => {
             setValue={(value) =>
               setDataCompany({ ...dataCompany, companyType: value })
             }
+            error={errorCompanyType}
+            onFocus={() => setErrorCompanyType(false)}
           />
 
           <div
@@ -503,6 +593,8 @@ const AccountClientDetails = () => {
             style={{ marginTop: "80px" }}
             value={dataEmail}
             setValue={(value) => setDataEmail(value)}
+            error={errorEmail}
+            onFocus={() => setErrorEmail(false)}
           />
 
           <div
@@ -527,7 +619,9 @@ const AccountClientDetails = () => {
             placeholder="+1 234 567 89 00"
             style={{ marginTop: "80px" }}
             value={dataPhone}
-            setValue={(value) => setDataPhone(value)}
+            setValue={(value) => setDataPhone(formatPhoneNumber(value))}
+            error={errorPhone}
+            onFocus={() => setErrorPhone(false)}
           />
 
           <div

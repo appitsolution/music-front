@@ -21,14 +21,14 @@ const AccountClientPostContent = () => {
 
   const createPromo = async () => {
     try {
-      const { dataFetch } = UseVerify();
+      const { dataFetch } = await UseVerify();
       const result = await axios.post(
         `${process.env.REACT_APP_SERVER}/promos`,
         { ...dataPromo, userId: dataFetch._id }
       );
 
       if (result.data.code === 201) {
-        navigation("account/client");
+        navigation("/account/client");
       }
     } catch (err) {
       console.log(err);

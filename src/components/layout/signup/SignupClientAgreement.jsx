@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TitleSection from "../../TitleSection";
 import FormContainer from "../../form/FormContainer";
 import TextInput from "../../form/TextInput";
@@ -17,11 +17,25 @@ import {
 import axios from "axios";
 
 const SignupClientAgreement = () => {
+  const signupClientState = useSelector((state) => state.signupClient);
   const navigation = useNavigate();
   const dispatch = useDispatch();
-  const signupClientState = useSelector((state) => state.signupClient);
+  const [errorUsername, setErrorUsername] = useState(false);
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [errorPassword, setErrorPassword] = useState(false);
+  const [errorRepeatPassword, setErrorRepeatPassword] = useState(false);
 
   const register = async () => {
+    if (!signupClientState.username) {
+      setErrorUsername(true);
+    }
+    if (!signupClientState.email) {
+      setErrorEmail(true);
+    }
+    if (!signupClientState.password) {
+      setErrorPassword(true);
+    }
+
     if (
       !signupClientState.username ||
       !signupClientState.email ||
@@ -31,11 +45,11 @@ const SignupClientAgreement = () => {
     }
 
     if (signupClientState.password !== signupClientState.repeatPassword) {
+      setErrorRepeatPassword(true);
       return;
     }
 
     if (!signupClientState.acceptAgree) return;
-    console.log(`${process.env.REACT_APP_SERVER}/auth/create/client`);
     try {
       const result = await axios.post(
         `${process.env.REACT_APP_SERVER}/auth/create/client`,
@@ -87,6 +101,8 @@ const SignupClientAgreement = () => {
                 style={{ marginTop: "30px" }}
                 value={signupClientState.username}
                 setValue={(value) => dispatch(setUsername(value))}
+                error={errorUsername}
+                onFocus={() => setErrorUsername(false)}
               />
               <TextInput
                 title="Email"
@@ -94,6 +110,8 @@ const SignupClientAgreement = () => {
                 style={{ marginTop: "60px" }}
                 value={signupClientState.email}
                 setValue={(value) => dispatch(setEmail(value))}
+                error={errorEmail}
+                onFocus={() => setErrorEmail(false)}
               />
               <TextInput
                 type="password"
@@ -102,6 +120,8 @@ const SignupClientAgreement = () => {
                 style={{ marginTop: "60px" }}
                 value={signupClientState.password}
                 setValue={(value) => dispatch(setPassword(value))}
+                error={errorPassword}
+                onFocus={() => setErrorPassword(false)}
               />
               <TextInput
                 type="password"
@@ -110,6 +130,8 @@ const SignupClientAgreement = () => {
                 style={{ marginTop: "60px" }}
                 value={signupClientState.repeatPassword}
                 setValue={(value) => dispatch(setRepeatPassword(value))}
+                error={errorRepeatPassword}
+                onFocus={() => setErrorRepeatPassword(false)}
               />
               <CheckBox
                 text="Agree to terms and conditions"

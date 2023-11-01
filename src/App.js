@@ -51,7 +51,7 @@ const App = () => {
           />
           <Route
             path="/signup/influencer/agreement"
-            element={<SignupInfluencerAgreement />}
+            element={<PublicRoute element={SignupInfluencerAgreement} />}
           />
           <Route
             path="/account/client"
@@ -82,7 +82,7 @@ const App = () => {
             element={<PrivateRoute element={AccountClientPostContent} />}
           />
           <Route
-            path="/account/client/past-promos/current"
+            path="/account/client/past-promos/:id"
             element={<PrivateRoute element={AccountClientPastPromosCurrent} />}
           />
 
@@ -104,7 +104,10 @@ const App = () => {
               <PrivateRoute element={AccountInfluencerCreateInvoicePage} />
             }
           />
-          <Route path="/login/client" element={<LoginClientPage />} />
+          <Route
+            path="/login/client"
+            element={<PublicRoute element={LoginClientPage} />}
+          />
           <Route path="/forgot" element={<ForgotPasswordEmail />} />
           <Route path="/forgot/code/:email" element={<ForgotPasswordCode />} />
           <Route path="/terms" element={<Terms />} />

@@ -20,7 +20,7 @@ const AccountClientHome = () => {
             <li className="account-client-menu-item">
               <button
                 className="account-client-menu-button"
-                onClick={() => navigation("")}
+                onClick={() => navigation("/account/client/past-promos")}
               >
                 <img
                   className="account-client-menu-button-icon"
@@ -86,7 +86,10 @@ const AccountClientHome = () => {
               </button>
             </li>
             <li className="account-client-menu-item">
-              <button className="account-client-menu-button">
+              <a
+                href="mailto:admin@napoleonpr.com"
+                className="account-client-menu-button"
+              >
                 <img
                   className="account-client-menu-button-icon"
                   src={support}
@@ -95,7 +98,7 @@ const AccountClientHome = () => {
                 <p className="account-client-menu-button-text">
                   Contact Support
                 </p>
-              </button>
+              </a>
             </li>
           </ul>
         </div>
