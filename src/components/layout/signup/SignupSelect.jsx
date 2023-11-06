@@ -29,6 +29,7 @@ const SignupSelect = () => {
                 <AltButton
                   text="Sign up"
                   onClick={() => navigation("/signup/client")}
+                  style={{ padding: "6px 50px" }}
                 />
               </div>
               <div className="signup-select-card">
@@ -38,7 +39,11 @@ const SignupSelect = () => {
                   Receive client's campaign requests
                 </p>
 
-                <AltButton text="Sign up" />
+                <AltButton
+                  text="Sign up"
+                  onClick={() => navigation("/signup/influencer")}
+                  style={{ padding: "6px 50px" }}
+                />
               </div>
             </div>
 

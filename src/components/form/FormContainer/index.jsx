@@ -3,7 +3,7 @@ import styles from "./style.module.css";
 const FormContainer = ({ children, style }) => {
   return (
     <>
-      <div style={style} className={styles.form}>
+      <div className={styles.form} style={style}>
         {children}
       </div>
     </>

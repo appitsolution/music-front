@@ -6,7 +6,7 @@ import AccountClientPayment from "../../../components/layout/account/client/Acco
 const AccountClientPaymentPage = () => {
   return (
     <>
-      <Header />
+      <Header path="Sponsoring client" />
       <AccountClientPayment />
       <Background />
     </>

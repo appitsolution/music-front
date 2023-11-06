@@ -6,7 +6,7 @@ import Background from "../../components/Background";
 const SignupClientPage = () => {
   return (
     <>
-      <Header />
+      <Header userType="influencer" path="Sponsoring client" />
       <SignupClient />
       <Background />
     </>

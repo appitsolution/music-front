@@ -6,7 +6,7 @@ import Background from "../../components/Background";
 const ForgotPasswordEmailPage = () => {
   return (
     <>
-      <Header />
+      <Header path="Sponsoring client" />
       <ForgotPasswordEmail />
       <Background />
     </>

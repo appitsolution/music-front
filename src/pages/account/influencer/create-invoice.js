@@ -6,7 +6,7 @@ import AccountInfluencerCreateInvoice from "../../../components/layout/account/i
 const AccountInfluencerCreateInvoicePage = () => {
   return (
     <>
-      <Header />
+      <Header path="Sponsoring client" />
       <AccountInfluencerCreateInvoice />
       <Background />
     </>

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const useVerify = async (role = "client") => {
+const useVerify = async () => {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -21,7 +21,6 @@ const useVerify = async (role = "client") => {
     `${process.env.REACT_APP_SERVER}/auth/verify`,
     {
       token: token,
-      role,
     }
   );
 

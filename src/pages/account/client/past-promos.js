@@ -6,7 +6,7 @@ import AcountClientPastPromos from "../../../components/layout/account/client/Ac
 const AcountClientPastPromosPage = () => {
   return (
     <>
-      <Header />
+      <Header path="Sponsoring client / My account / Past promos" />
       <AcountClientPastPromos />
       <Background />
     </>

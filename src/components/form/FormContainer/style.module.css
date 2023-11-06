@@ -6,6 +6,17 @@
   padding-bottom: 80px;
 }
 
+@media screen and (max-width: 786px) {
+  .form {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
+
 [data-theme="dark"] .form {
   background: #000;
 }
+
+/* .formBlock {
+  padding: 0 30px;
+} */

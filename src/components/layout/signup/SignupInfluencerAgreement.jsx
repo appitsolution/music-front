@@ -5,8 +5,14 @@ import TextInput from "../../form/TextInput";
 import CheckBox from "../../form/CheckBox";
 import StandartButton from "../../form/StandartButton";
 import AltButton from "../../form/AltButton";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSignupClear } from "../../../redux/slice/signup-influencer";
 
 const SignupInfluencerAgreement = () => {
+  const navigation = useNavigate();
+  const dispatch = useDispatch();
+
   return (
     <section className="signup-client-agreement">
       <div className="container-form">
@@ -29,23 +35,31 @@ const SignupInfluencerAgreement = () => {
                 style={{ margin: "0 auto" }}
               >
                 <div className="signup-client-agreement-form-block">
-                  <StandartButton text="Yes" style={{ width: "100%" }} />
+                  <StandartButton
+                    text="Yes"
+                    style={{ width: "100%" }}
+                    onClick={() => navigation("/signup/influencer/last")}
+                  />
                   <p className="signup-client-agreement-form-block-text">
                     Create Account
                   </p>
                 </div>
                 <div className="signup-client-agreement-form-block">
-                  <AltButton text="No" style={{ width: "100%" }} />
+                  <AltButton
+                    text="No"
+                    style={{ width: "100%" }}
+                    onClick={() => dispatch(setSignupClear())}
+                  />
                   <p className="signup-client-agreement-form-block-text">
                     Contact Us
                   </p>
                 </div>
               </div>
 
-              <CheckBox
+              {/* <CheckBox
                 text="Agree to terms and conditions"
                 style={{ marginTop: "60px" }}
-              />
+              /> */}
             </form>
           </FormContainer>
         </div>

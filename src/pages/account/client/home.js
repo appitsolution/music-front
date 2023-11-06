@@ -6,7 +6,7 @@ import AccountClientHome from "../../../components/layout/account/client/Account
 const AccountClientHomePage = () => {
   return (
     <>
-      <Header />
+      <Header path="Sponsoring client" />
       <AccountClientHome />
       <Background />
     </>

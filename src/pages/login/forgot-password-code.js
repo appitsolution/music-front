@@ -6,7 +6,7 @@ import ForgotPasswordCode from "../../components/layout/login/ForgotPasswordCode
 const ForgotPasswordCodePage = () => {
   return (
     <>
-      <Header />
+      <Header path="Sponsoring client" />
       <ForgotPasswordCode />
       <Background />
     </>

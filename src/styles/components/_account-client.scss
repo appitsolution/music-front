@@ -11,6 +11,13 @@
 
 .account-client-menu-item {
     width: calc((100% - 40px) / 3);
+
+    @media screen and (max-width: 900px) {
+        width: calc((100% - 20px) / 2);
+    }
+    @media screen and (max-width: 550px) {
+        width: 100%;
+    }
 }
 
 .account-client-menu-button {
@@ -54,6 +61,10 @@
     font-weight: 800;
     line-height: normal;
     text-transform: uppercase;
+
+    @media screen and (max-width: 768px) {
+        font-size: 28px;
+    }
 }
 
 .account-client-second {
@@ -66,6 +77,10 @@
     line-height: normal;
     text-transform: uppercase;
     margin-bottom: 70px;
+
+    @media screen and (max-width: 768px) {
+        font-size: 28px;
+    }
 }
 
 .account-client-offers {
@@ -73,6 +88,10 @@
     gap: 20px;
     margin-top: 60px;
     margin-bottom: 110px;
+
+    @media screen and (max-width: 900px) {
+        flex-wrap: wrap;
+    }
 }
 
 .account-client-offers-item {
@@ -83,6 +102,14 @@
     background: var(--background);
     box-shadow: 0px 4px 20px 0px rgba(51, 48, 228, 0.5);
     overflow: hidden;
+
+    @media screen and (max-width: 900px) {
+        width: calc((100% - 40px) / 2);
+    }
+
+    @media screen and (max-width: 600px) {
+        width: 100%;
+    }
 }
 
 .account-client-offers-title {
@@ -202,6 +229,16 @@
     &.active {
         background: #ff7a09;
         box-shadow: 0px 4px 20px 0px #ff7a09;
+    }
+
+    @media screen and (max-width: 900px) {
+        width: calc(((100% - 60px) - (60px * 3)) / 3);
+    }
+    @media screen and (max-width: 600px) {
+        width: calc(((100% - 20px) - (60px * 2)) / 2);
+    }
+    @media screen and (max-width: 450px) {
+        width: 100%;
     }
 }
 
@@ -395,6 +432,10 @@
     font-style: normal;
     font-weight: 300;
     line-height: normal;
+
+    @media screen and (max-width: 768px) {
+        font-size: 20px;
+    }
 }
 
 .account-client-past-promos-form {
@@ -404,10 +445,18 @@
         justify-content: flex-start;
         flex-wrap: wrap;
         gap: 20px;
+
+        @media screen and (max-width: 768pc) {
+            justify-content: center;
+        }
     }
 
     &-item {
         width: calc((100% - (20px * 6)) / 6);
+
+        @media screen and (max-width: 768pc) {
+            width: unset;
+        }
 
         &-button {
             width: 100%;
@@ -441,9 +490,9 @@
 
 .account-client-past-promos-form-current {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
     gap: 80px;
-    padding: 0 110px;
     padding-top: 30px;
 
     &-video {
@@ -454,6 +503,7 @@
     &-content {
         max-width: 483px;
         width: 100%;
+        margin: 0 auto;
 
         &-title {
             color: #3330e4;

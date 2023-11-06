@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TitleSection from "../../../TitleSection";
 import past from "../../../../images/icons/past.svg";
 import ongoing from "../../../../images/icons/ongoing.svg";
@@ -7,8 +7,27 @@ import invoice from "../../../../images/icons/invoice.svg";
 import accountDetails from "../../../../images/icons/details-account.svg";
 import support from "../../../../images/icons/support.svg";
 import AltButton from "../../../form/AltButton";
+import UseVerify from "../../../../hooks/useVerify";
+import { useNavigate } from "react-router-dom";
 
 const AccountInfluencerHome = () => {
+  const navigation = useNavigate();
+  const [data, setData] = useState({
+    balance: "0",
+  });
+
+  const getData = async () => {
+    try {
+      const { dataFetch } = await UseVerify("influencer");
+      setData(dataFetch);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <section className="account-client">
       <div className="container">
@@ -19,19 +38,23 @@ const AccountInfluencerHome = () => {
             <p className="account-influencer-balance-score">
               Balance Due:{" "}
               <span className="account-influencer-balance-score-span">
-                1 111 $
+                {data.balance} $
               </span>
             </p>
 
             <AltButton
               text="Create an Invoice"
               style={{ padding: "9px 45px" }}
+              onClick={() => navigation("/account/influencer/create-invoice")}
             />
           </div>
 
           <ul className="account-client-menu">
             <li className="account-client-menu-item">
-              <button className="account-client-menu-button">
+              <button
+                className="account-client-menu-button"
+                onClick={() => navigation("/account/influencer/past-promos")}
+              >
                 <img
                   className="account-client-menu-button-icon"
                   src={past}
@@ -63,19 +86,23 @@ const AccountInfluencerHome = () => {
               </button>
             </li>
             <li className="account-client-menu-item">
-              <button className="account-client-menu-button">
+              <button
+                className="account-client-menu-button"
+                onClick={() => navigation("/account/influencer/invoices")}
+              >
                 <img
                   className="account-client-menu-button-icon"
                   src={invoice}
                   alt="account-menu-icon"
                 />
-                <p className="account-client-menu-button-text">
-                  My Invoice Details
-                </p>
+                <p className="account-client-menu-button-text">My Invoices</p>
               </button>
             </li>
             <li className="account-client-menu-item">
-              <button className="account-client-menu-button">
+              <button
+                className="account-client-menu-button"
+                onClick={() => navigation("/account/influencer/details")}
+              >
                 <img
                   className="account-client-menu-button-icon"
                   src={accountDetails}

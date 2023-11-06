@@ -9,11 +9,12 @@ import UseVerify from "../hooks/useVerify";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "../redux/slice/authenticated";
 
-const Header = () => {
+const Header = ({ userType = "client", path = "" }) => {
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const { toggleTheme, theme } = useTheme();
   const isAuth = useSelector((state) => state.authenticated.isAuthenticated);
+  const role = useSelector((state) => state.authenticated.role);
 
   const logoutRequest = () => {
     localStorage.setItem("token", "");
@@ -26,14 +27,17 @@ const Header = () => {
       <header className="header">
         <div className="container">
           <div className="header-block">
-            <button className="header-logo" onClick={() => navigation("/")}>
-              <img src={logo} />
-            </button>
+            <div className="header-thoomb">
+              <button className="header-logo" onClick={() => navigation("/")}>
+                <img src={logo} />
+              </button>
+              <p className="header-path">{path}</p>
+            </div>
 
             <div className="header-navigation">
               {isAuth && (
                 <button
-                  className="header-login"
+                  className="header-logout"
                   type="button"
                   onClick={logoutRequest}
                 >
@@ -49,18 +53,52 @@ const Header = () => {
               </button>
 
               {!isAuth && (
-                <button
-                  className="header-login"
-                  type="button"
-                  onClick={() => navigation("/login/client")}
-                >
-                  Log in
-                </button>
+                <div className="header-mobile">
+                  <button
+                    className="header-login"
+                    type="button"
+                    onClick={() => {
+                      if (userType === "influencer") {
+                        navigation("/login/influencer");
+                      }
+
+                      if (userType === "client") {
+                        navigation("/login/client");
+                      }
+                    }}
+                  >
+                    Log in {userType === "influencer" && "client"}
+                    {userType === "client" && "influencer"}
+                  </button>
+                  <button
+                    className="header-login"
+                    type="button"
+                    onClick={() => {
+                      if (userType === "influencer") {
+                        navigation("/signup/client");
+                      }
+
+                      if (userType === "client") {
+                        navigation("/signup/influencer");
+                      }
+                    }}
+                  >
+                    Sign up as {userType === "influencer" && "client"}
+                    {userType === "client" && "influencer"}
+                  </button>
+                </div>
               )}
               {isAuth && (
                 <button
                   className="header-profile"
-                  onClick={() => navigation("/account/client")}
+                  onClick={() => {
+                    if (role === "influencer") {
+                      navigation("/account/influencer");
+                    }
+                    if (role === "client") {
+                      navigation("/account/client");
+                    }
+                  }}
                 >
                   <img className="header-profile-icon" src={profile} />
                 </button>

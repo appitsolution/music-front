@@ -6,10 +6,93 @@ import StandartButton from "../../form/StandartButton";
 import SelectedInput from "../../form/SelectedInput";
 import ModalWindow from "../../ModalWindow";
 import acceptIcon from "../../../images/icons/accept.svg";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setEmail,
+  setFirstName,
+  setFollowersNumber,
+  setInfluencerName,
+  setInstagram,
+  setMusicStyle,
+  setPhone,
+  setPrice,
+} from "../../../redux/slice/signup-influencer";
+import {
+  formatPhoneNumber,
+  validateEmail,
+  validatePhoneNumber,
+} from "../../../utils/validations";
+import { useNavigate } from "react-router-dom";
 
 const SignupInfluencer = () => {
-  const [currentType, setCurrentType] = useState("");
+  const navigation = useNavigate();
+  const dispatch = useDispatch();
+  const dataForm = useSelector((state) => state.signupInfluencer);
+
   const [openModal, setOpenModal] = useState(false);
+
+  const [errorsForm, setErrorsForm] = useState({
+    firstName: false,
+    influencerName: false,
+    musicStyle: false,
+    instagram: false,
+    followersNumber: false,
+    email: false,
+    phone: false,
+    price: false,
+  });
+
+  const nextForm = () => {
+    let errrosList = {
+      firstName: false,
+      influencerName: false,
+      musicStyle: false,
+      instagram: false,
+      followersNumber: false,
+      email: false,
+      phone: false,
+      price: false,
+    };
+    if (!dataForm.firstName) {
+      errrosList = { ...errrosList, firstName: true };
+    }
+    if (!dataForm.influencerName) {
+      errrosList = { ...errrosList, influencerName: true };
+    }
+    if (!dataForm.musicStyle) {
+      errrosList = { ...errrosList, musicStyle: true };
+    }
+    if (!dataForm.instagram) {
+      errrosList = { ...errrosList, instagram: true };
+    }
+    if (!dataForm.followersNumber) {
+      errrosList = { ...errrosList, followersNumber: true };
+    }
+    if (!validateEmail(dataForm.email)) {
+      errrosList = { ...errrosList, email: true };
+    }
+    if (!validatePhoneNumber(dataForm.phone)) {
+      errrosList = { ...errrosList, phone: true };
+    }
+    if (!dataForm.price) {
+      errrosList = { ...errrosList, price: true };
+    }
+
+    if (
+      !dataForm.firstName ||
+      !dataForm.influencerName ||
+      !dataForm.musicStyle ||
+      !dataForm.instagram ||
+      !dataForm.followersNumber ||
+      !dataForm.email ||
+      !dataForm.phone ||
+      !dataForm.price
+    ) {
+      return setErrorsForm(errrosList);
+    }
+    setOpenModal(true);
+  };
+
   return (
     <>
       <section className="signup-client">
@@ -27,50 +110,95 @@ const SignupInfluencer = () => {
                   title="First name*"
                   placeholder="Enter name"
                   style={{ maxWidth: "665px", margin: "30px auto 60px auto" }}
+                  value={dataForm.firstName}
+                  setValue={(value) => dispatch(setFirstName(value))}
+                  error={errorsForm.firstName}
+                  onFocus={() =>
+                    setErrorsForm({ ...errorsForm, firstName: false })
+                  }
                 />
                 <TextInput
                   title="Influencer name*"
                   placeholder="Enter influencer name"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  value={dataForm.influencerName}
+                  setValue={(value) => dispatch(setInfluencerName(value))}
+                  error={errorsForm.influencerName}
+                  onFocus={() =>
+                    setErrorsForm({ ...errorsForm, influencerName: false })
+                  }
                 />
                 <SelectedInput
                   data={["Techno", "EDM", "House", "Other"]}
-                  changeValue={setCurrentType}
+                  changeValue={(value) => {
+                    dispatch(setMusicStyle(value));
+                    setErrorsForm({ ...errorsForm, musicStyle: false });
+                  }}
                   title="Music style*"
                   placeholder={
-                    currentType === "" ? "Сhoose music style" : currentType
+                    dataForm.musicStyle === ""
+                      ? "Сhoose music style"
+                      : dataForm.musicStyle
                   }
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  error={errorsForm.musicStyle}
                 />
                 <TextInput
                   title="Instagram*"
                   placeholder="Enter instagram link"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  value={dataForm.instagram}
+                  setValue={(value) => dispatch(setInstagram(value))}
+                  error={errorsForm.instagram}
+                  onFocus={() =>
+                    setErrorsForm({ ...errorsForm, instagram: false })
+                  }
                 />
                 <TextInput
                   title="Followers number*"
                   placeholder="Enter followers number"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  value={dataForm.followersNumber}
+                  setValue={(value) => dispatch(setFollowersNumber(value))}
+                  error={errorsForm.followersNumber}
+                  onFocus={() =>
+                    setErrorsForm({ ...errorsForm, followersNumber: false })
+                  }
                 />
                 <TextInput
                   title="Email*"
                   placeholder="Enter email"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  value={dataForm.email}
+                  setValue={(value) => dispatch(setEmail(value))}
+                  error={errorsForm.email}
+                  onFocus={() => setErrorsForm({ ...errorsForm, email: false })}
                 />
                 <TextInput
                   title="Phone*"
                   placeholder="+_ _ ___ ___ __ __"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  value={dataForm.phone}
+                  setValue={(value) =>
+                    dispatch(setPhone(formatPhoneNumber(value)))
+                  }
+                  error={errorsForm.phone}
+                  onFocus={() => setErrorsForm({ ...errorsForm, phone: false })}
                 />
                 <TextInput
                   title="Price for 1 Instagram Post & Story, include your currency*"
                   placeholder="Enter your price here for 1 Instagram Post & Story, include your currency"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  value={dataForm.price}
+                  setValue={(value) => dispatch(setPrice(value))}
+                  error={errorsForm.price}
+                  onFocus={() => setErrorsForm({ ...errorsForm, price: false })}
                 />
 
                 <StandartButton
                   text="Apply now"
                   style={{ margin: "70px auto 0 auto" }}
+                  onClick={nextForm}
                 />
               </form>
             </FormContainer>
@@ -102,7 +230,7 @@ const SignupInfluencer = () => {
                     marginLeft: "auto",
                     marginRight: "auto",
                   }}
-                  onClick={() => setOpenModal(false)}
+                  onClick={() => navigation("/signup/influencer/agreement")}
                 />
               </div>
             </ModalWindow>

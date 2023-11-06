@@ -25,3 +25,15 @@
   text-transform: uppercase;
   color: #3330e4;
 }
+
+@media screen and (max-width: 768px) {
+  .title {
+    font-size: 28px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .span {
+    font-size: 28px;
+  }
+}

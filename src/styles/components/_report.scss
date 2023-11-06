@@ -1,0 +1,111 @@
+.report {
+    padding: 80px 0;
+}
+
+.report-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 35px;
+
+    &-item {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    &-text {
+        color: var(--text);
+        font-family: Geometria;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        &-span {
+            font-weight: 700;
+        }
+    }
+}
+
+.report-table {
+    margin-top: 62px;
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0px 4px 20px 0px rgba(51, 48, 228, 0.5);
+    background: #fff;
+}
+
+.report-table-header {
+    border-radius: 30px 30px 0px 0px;
+    background: rgb(49, 46, 227);
+    height: 84px;
+
+    &-item {
+        color: #fff;
+        font-family: Geometria;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 900;
+        line-height: normal;
+        text-align: center;
+    }
+}
+
+.report-table-body {
+    &-row {
+        height: 38px;
+        border-bottom: 1px solid rgba(50, 47, 228, 0.3);
+
+        &-item {
+            background: #fff;
+            color: #000;
+            text-align: center;
+            font-family: Geometria;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            text-align: center;
+            min-width: 86px;
+
+            &-first {
+                color: #000;
+                font-family: Geometria;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                background: rgba(51, 48, 227, 0.3);
+                padding-left: 17px;
+            }
+
+            &-second {
+                color: #000;
+                text-align: center;
+                font-family: Geometria;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                text-align: center;
+                background: rgba(50, 47, 228, 0.1);
+            }
+        }
+    }
+
+    &-total {
+        height: 38px;
+
+        &-price {
+            background: #ff7a09;
+            color: var(--Black, #000);
+            font-family: Geometria;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 900;
+            line-height: normal;
+            padding-left: 17px;
+        }
+    }
+}

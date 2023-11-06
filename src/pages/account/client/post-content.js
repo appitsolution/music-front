@@ -6,7 +6,7 @@ import AccountClientPostContent from "../../../components/layout/account/client/
 const AccountClientPostContentPage = () => {
   return (
     <>
-      <Header />
+      <Header path="Sponsoring client" />
       <AccountClientPostContent />
       <Background />
     </>

@@ -5,6 +5,10 @@
     gap: 23px;
     margin-top: 20px;
 
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+    }
+
     &-score {
         color: var(--text);
         text-align: center;
@@ -14,6 +18,9 @@
         font-weight: 700;
         line-height: normal;
 
+        @media screen and (max-width: 768px) {
+            font-size: 20px;
+        }
         &-span {
             font-weight: 400;
         }
@@ -27,6 +34,11 @@
         max-width: 550px;
         margin: 0 auto;
         padding-bottom: 50px;
+
+        @media screen and (max-width: 768px) {
+            padding: 0 20px;
+            padding-bottom: 50px;
+        }
     }
 }
 
@@ -67,6 +79,10 @@
             font-weight: 900;
             line-height: normal;
             text-transform: uppercase;
+
+            @media screen and (max-width: 768px) {
+                font-size: 18px;
+            }
         }
 
         &-edit {
@@ -91,6 +107,11 @@
         &-item {
             display: flex;
             align-items: center;
+
+            @media screen and (max-width: 768px) {
+                justify-content: center;
+                flex-direction: column;
+            }
         }
 
         &-title {
@@ -101,6 +122,12 @@
             font-style: normal;
             font-weight: 700;
             line-height: normal;
+
+            @media screen and (max-width: 768px) {
+                font-size: 16px;
+                width: 100%;
+                text-align: center;
+            }
         }
 
         &-value {
@@ -111,6 +138,12 @@
             font-style: normal;
             font-weight: 400;
             line-height: normal;
+
+            @media screen and (max-width: 768px) {
+                font-size: 16px;
+                width: 100%;
+                text-align: center;
+            }
         }
     }
 }

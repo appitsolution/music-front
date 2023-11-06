@@ -6,7 +6,7 @@ import AccountClientInvoiceDetails from "../../../components/layout/account/clie
 const AccountClientInvoiceDetailsPage = () => {
   return (
     <>
-      <Header />
+      <Header path="Sponsoring client / My account / My Invoice Details" />
       <AccountClientInvoiceDetails />
       <Background />
     </>

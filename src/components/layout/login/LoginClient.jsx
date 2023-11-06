@@ -38,7 +38,7 @@ const LoginClient = () => {
     <section className="login-client">
       <div className="container-form">
         <div className="login-client-block">
-          <TitleSection title="Log in to" span="SoundInfluencers" />
+          <TitleSection title="Log in to" span="SPONSORING CLIENT" />
 
           <p className="login-client-second">Embrace Your Influence</p>
 
@@ -90,7 +90,7 @@ const LoginClient = () => {
             <button
               className="login-client-form-signup-link"
               type="button"
-              onClick={() => navigation("/signup")}
+              onClick={() => navigation("/signup/client")}
             >
               Sign Up Here
             </button>

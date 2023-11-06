@@ -10,7 +10,7 @@ import axios from "axios";
 
 const ForgotPasswordCode = () => {
   const navigation = useNavigate();
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(true);
   const [numberCodeState, setNumberCodeState] = useState(["", "", "", ""]);
 
   const params = useParams();

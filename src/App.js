@@ -14,6 +14,7 @@ import SignupInfluencerAgreement from "./pages/signup-influencer/signup-influenc
 import AccountInfluencerHome from "./pages/account/influencer/home";
 import AccountInfluencerDetails from "./pages/account/influencer/details";
 import LoginClientPage from "./pages/login/login-client";
+import LoginInfluencerPage from "./pages/login/login-influencer";
 import ForgotPasswordEmail from "./pages/login/forgot-password-email";
 import ForgotPasswordCode from "./pages/login/forgot-password-code";
 import AccountClientDetails from "./pages/account/client/details";
@@ -30,6 +31,12 @@ import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "./redux/slice/authenticated";
+import SignupInfluencerLast from "./pages/signup-influencer/signup-influencer-last";
+import AccountInfluencerPastPromos from "./pages/account/influencer/past-promos";
+import AccountInfluencerPastPromosCurrentPage from "./pages/account/influencer/past-promos-current";
+import ReportCampaigns from "./components/layout/account/influencer/ReportCampaigns";
+import ReportCampaignsPage from "./pages/account/influencer/report-campaigns";
+import InvoiceResultPage from "./pages/account/influencer/invoice-result";
 
 const App = () => {
   return (
@@ -39,20 +46,36 @@ const App = () => {
           <Route path="/signup" element={<PublicRoute element={Signup} />} />
           <Route
             path="/signup/client"
-            element={<PublicRoute element={SignupClient} />}
+            element={<PublicRoute role="client" element={SignupClient} />}
           />
           <Route
             path="/signup/client/agreement"
-            element={<PublicRoute element={SignupClientAgreement} />}
+            element={
+              <PublicRoute role="client" element={SignupClientAgreement} />
+            }
           />
           <Route
             path="/signup/influencer"
-            element={<PublicRoute element={SignupInfluencer} />}
+            element={
+              <PublicRoute role="influencer" element={SignupInfluencer} />
+            }
           />
           <Route
             path="/signup/influencer/agreement"
-            element={<PublicRoute element={SignupInfluencerAgreement} />}
+            element={
+              <PublicRoute
+                role="influencer"
+                element={SignupInfluencerAgreement}
+              />
+            }
           />
+          <Route
+            path="/signup/influencer/last"
+            element={
+              <PublicRoute role="influencer" element={SignupInfluencerLast} />
+            }
+          />
+
           <Route
             path="/account/client"
             element={<PrivateRoute element={AccountClientHome} />}
@@ -99,14 +122,39 @@ const App = () => {
             element={<PrivateRoute element={AccountInfluencerInvoicesPage} />}
           />
           <Route
+            path="/account/influencer/past-promos"
+            element={<PrivateRoute element={AccountInfluencerPastPromos} />}
+          />
+          <Route
+            path="/account/influencer/past-promos/:id"
+            element={
+              <PrivateRoute element={AccountInfluencerPastPromosCurrentPage} />
+            }
+          />
+
+          <Route
             path="/account/influencer/create-invoice"
             element={
               <PrivateRoute element={AccountInfluencerCreateInvoicePage} />
             }
           />
           <Route
+            path="/account/influencer/reports"
+            element={<PrivateRoute element={ReportCampaignsPage} />}
+          />
+          <Route
+            path="/account/influencer/invoice-result"
+            element={<PrivateRoute element={InvoiceResultPage} />}
+          />
+          <Route
             path="/login/client"
-            element={<PublicRoute element={LoginClientPage} />}
+            element={<PublicRoute role="client" element={LoginClientPage} />}
+          />
+          <Route
+            path="/login/influencer"
+            element={
+              <PublicRoute role="influencer" element={LoginInfluencerPage} />
+            }
           />
           <Route path="/forgot" element={<ForgotPasswordEmail />} />
           <Route path="/forgot/code/:email" element={<ForgotPasswordCode />} />

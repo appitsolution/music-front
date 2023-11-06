@@ -6,7 +6,7 @@ import AccountInfluencerDetails from "../../../components/layout/account/influen
 const AccountInfluencerDetailsPage = () => {
   return (
     <>
-      <Header />
+      <Header path="Influencer / My account / My account details" />
       <AccountInfluencerDetails />
       <Background />
     </>

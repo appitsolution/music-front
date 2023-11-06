@@ -66,3 +66,36 @@
   border: 1px solid #3330e4;
   background: var(--placeholder-bg);
 }
+
+.disabled {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  top: 50%;
+  left: 26px;
+  transform: translateY(-50%);
+}
+
+.disabledText {
+  color: var(--Blue, #3330e4);
+  font-family: Geometria;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+@media screen and (max-width: 768px) {
+  .title {
+    font-size: 16px;
+  }
+
+  .input {
+    font-size: 16px;
+  }
+
+  .input::placeholder {
+    font-size: 16px;
+  }
+}

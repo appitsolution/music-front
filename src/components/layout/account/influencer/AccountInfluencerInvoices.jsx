@@ -31,52 +31,84 @@ const AccountInfluencerInvoices = () => {
             <div className="invoices-block-content">
               <ul className="invoices-block-content-list">
                 <li className="invoices-block-content-item">
-                  <p className="invoices-block-content-item-id">9267</p>
-                  <p className="invoices-block-content-item-date">29/05/2022</p>
-                  <p className="invoices-block-content-item-bank">
-                    Bank Transfer
-                  </p>
-                  <p className="invoices-block-content-item-value">50.1 USD</p>
-                  <div className="invoices-block-content-item-status">
-                    <p className="invoices-block-content-item-status-value">
-                      Paid
-                    </p>
+                  <div className="invoices-block-content-item-thoomb">
+                    <div className="invoices-block-content-item-mobile-flex">
+                      <p className="invoices-block-content-item-id">9267</p>
+                      <p className="invoices-block-content-item-date">
+                        29/05/2022
+                      </p>
+                      <p className="invoices-block-content-item-bank">
+                        Bank Transfer
+                      </p>
+                    </div>
+                    <div className="invoices-block-content-item-mobile-block">
+                      <p className="invoices-block-content-item-value">
+                        50.1 USD
+                      </p>
+                      <div className="invoices-block-content-item-status">
+                        <p className="invoices-block-content-item-status-value">
+                          Paid
+                        </p>
+                      </div>
+                      <button className="invoices-block-content-item-document">
+                        <img
+                          className="invoices-block-content-item-document-icon"
+                          src={pdfIcon}
+                        />
+                      </button>
+
+                      <div className="invoices-block-content-item-message">
+                        <p className="invoices-block-content-item-message-text">
+                          Payment Due: June 30th (subject to approval)
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="invoices-block-content-item-message">
+                  <div className="invoices-block-content-item-message-mobile">
                     <p className="invoices-block-content-item-message-text">
                       Payment Due: June 30th (subject to approval)
                     </p>
                   </div>
-                  <button className="invoices-block-content-item-document">
-                    <img
-                      className="invoices-block-content-item-document-icon"
-                      src={pdfIcon}
-                    />
-                  </button>
                 </li>
                 <li className="invoices-block-content-item">
-                  <p className="invoices-block-content-item-id">9267</p>
-                  <p className="invoices-block-content-item-date">29/05/2022</p>
-                  <p className="invoices-block-content-item-bank">
-                    Bank Transfer
-                  </p>
-                  <p className="invoices-block-content-item-value">50.1 USD</p>
-                  <div className="invoices-block-content-item-status">
-                    <p className="invoices-block-content-item-status-value">
-                      Paid
-                    </p>
+                  <div className="invoices-block-content-item-thoomb">
+                    <div className="invoices-block-content-item-mobile-flex">
+                      <p className="invoices-block-content-item-id">9267</p>
+                      <p className="invoices-block-content-item-date">
+                        29/05/2022
+                      </p>
+                      <p className="invoices-block-content-item-bank">
+                        Bank Transfer
+                      </p>
+                    </div>
+                    <div className="invoices-block-content-item-mobile-block">
+                      <p className="invoices-block-content-item-value">
+                        50.1 USD
+                      </p>
+                      <div className="invoices-block-content-item-status">
+                        <p className="invoices-block-content-item-status-value">
+                          Paid
+                        </p>
+                      </div>
+                      <button className="invoices-block-content-item-document">
+                        <img
+                          className="invoices-block-content-item-document-icon"
+                          src={pdfIcon}
+                        />
+                      </button>
+
+                      <div className="invoices-block-content-item-message">
+                        <p className="invoices-block-content-item-message-text">
+                          Payment Due: June 30th (subject to approval)
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="invoices-block-content-item-message">
+                  <div className="invoices-block-content-item-message-mobile">
                     <p className="invoices-block-content-item-message-text">
                       Payment Due: June 30th (subject to approval)
                     </p>
                   </div>
-                  <button className="invoices-block-content-item-document">
-                    <img
-                      className="invoices-block-content-item-document-icon"
-                      src={pdfIcon}
-                    />
-                  </button>
                 </li>
               </ul>
 

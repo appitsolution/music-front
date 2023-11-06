@@ -23,6 +23,18 @@
   box-shadow: 0px 4px 20px 0px rgba(51, 48, 228, 0.5);
 }
 
+@media screen and (max-width: 768px) {
+  .modal {
+    max-width: 450px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .modal {
+    max-width: 280px;
+  }
+}
+
 .close {
   position: absolute;
   bottom: calc(100% + 6px);
@@ -46,4 +58,10 @@
   font-weight: 900;
   line-height: normal;
   text-transform: uppercase;
+}
+
+@media screen and (max-width: 550px) {
+  .modalHeader {
+    font-size: 18px;
+  }
 }

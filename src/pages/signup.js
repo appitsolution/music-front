@@ -6,7 +6,7 @@ import Background from "../components/Background";
 const Signup = () => {
   return (
     <>
-      <Header />
+      <Header userType="client" />
       <SignupSelect />
       <Background />
     </>

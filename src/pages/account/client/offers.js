@@ -6,7 +6,7 @@ import AccountClientOffers from "../../../components/layout/account/client/Accou
 const AccountClientOffersPage = () => {
   return (
     <>
-      <Header />
+      <Header path="Sponsoring client" />
       <AccountClientOffers />
       <Background />
     </>
