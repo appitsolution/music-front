@@ -4,6 +4,7 @@ import StandartButton from "../../../../form/StandartButton";
 import AltButton from "../../../../form/AltButton";
 import {
   setAccountNumber,
+  setAmount,
   setBankAccountCurrency,
   setBankBranchName,
   setBankCountry,
@@ -27,6 +28,7 @@ const CreateInvoicePayment = () => {
     sortCode: false,
     accountNumber: false,
     swiftOrBic: false,
+    amount: false,
   });
 
   const nextForm = () => {
@@ -39,11 +41,17 @@ const CreateInvoicePayment = () => {
       sortCode: false,
       accountNumber: false,
       swiftOrBic: false,
+      amount: false,
     };
 
     let haveError = false;
     for (let checkError in dataForm) {
       if (checkError === "contactName") break;
+      if (checkError === "amount") {
+        if (dataForm[checkError] === 0 || !Boolean(dataForm[checkError])) {
+          haveError = true;
+        }
+      }
       if (dataForm[checkError] === "") {
         haveError = true;
         listError = {
@@ -145,6 +153,16 @@ const CreateInvoicePayment = () => {
               setValue={(value) => dispatch(setSwiftOrBic(value))}
               error={errorForm.swiftOrBic}
               onFocus={() => setErrorForm({ ...errorForm, swiftOrBic: false })}
+            />
+
+            <TextInput
+              title="Amount"
+              placeholder="Enter Amount"
+              style={{ maxWidth: "665px", margin: "0 auto", marginTop: "60px" }}
+              value={dataForm.amount}
+              setValue={(value) => dispatch(setAmount(value))}
+              error={errorForm.amount}
+              onFocus={() => setErrorForm({ ...errorForm, amount: false })}
             />
 
             <div className="create-invoice-form-content-notification">

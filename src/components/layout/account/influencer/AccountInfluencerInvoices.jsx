@@ -1,9 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TitleSection from "../../../TitleSection";
 import AltButton from "../../../form/AltButton";
 import pdfIcon from "../../../../images/icons/pdf.svg";
+import axios from "axios";
+import UseVerify from "../../../../hooks/useVerify";
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+  const formattedDate = date.toLocaleDateString("en-GB", options);
+  return formattedDate;
+}
 
 const AccountInfluencerInvoices = () => {
+  const [data, setData] = useState([]);
+
+  const getData = async () => {
+    try {
+      const { dataFetch } = await UseVerify();
+      const result = await axios(
+        `${process.env.REACT_APP_SERVER}/invoice?influencerId=${dataFetch._id}`
+      );
+      console.log(result.data.invoices);
+      if (result.data.code === 200) {
+        console.log(result.data.invoices[0].amount);
+        setData(result.data.invoices);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <>
       <section className="invoices">
@@ -30,86 +60,62 @@ const AccountInfluencerInvoices = () => {
             </div>
             <div className="invoices-block-content">
               <ul className="invoices-block-content-list">
-                <li className="invoices-block-content-item">
-                  <div className="invoices-block-content-item-thoomb">
-                    <div className="invoices-block-content-item-mobile-flex">
-                      <p className="invoices-block-content-item-id">9267</p>
-                      <p className="invoices-block-content-item-date">
-                        29/05/2022
-                      </p>
-                      <p className="invoices-block-content-item-bank">
-                        Bank Transfer
-                      </p>
-                    </div>
-                    <div className="invoices-block-content-item-mobile-block">
-                      <p className="invoices-block-content-item-value">
-                        50.1 USD
-                      </p>
-                      <div className="invoices-block-content-item-status">
-                        <p className="invoices-block-content-item-status-value">
-                          Paid
-                        </p>
-                      </div>
-                      <button className="invoices-block-content-item-document">
-                        <img
-                          className="invoices-block-content-item-document-icon"
-                          src={pdfIcon}
-                        />
-                      </button>
+                {data.length === 0 ? (
+                  <></>
+                ) : (
+                  <>
+                    {data.map((item) => (
+                      <li className="invoices-block-content-item">
+                        <div className="invoices-block-content-item-thoomb">
+                          <div className="invoices-block-content-item-mobile-flex">
+                            <p className="invoices-block-content-item-id">
+                              {item._id.slice(
+                                item._id.length - 4,
+                                item._id.length
+                              )}
+                            </p>
+                            <p className="invoices-block-content-item-date">
+                              {formatDate(item.createdAt)}
+                            </p>
+                            <p className="invoices-block-content-item-bank">
+                              Bank Transfer
+                            </p>
+                          </div>
+                          <div className="invoices-block-content-item-mobile-block">
+                            <p className="invoices-block-content-item-value">
+                              {item?.amount} USD
+                            </p>
+                            <div className="invoices-block-content-item-status">
+                              <p className="invoices-block-content-item-status-value">
+                                Paid
+                              </p>
+                            </div>
+                            <a
+                              href={item.file}
+                              className="invoices-block-content-item-document"
+                            >
+                              <img
+                                className="invoices-block-content-item-document-icon"
+                                src={pdfIcon}
+                              />
+                            </a>
 
-                      <div className="invoices-block-content-item-message">
-                        <p className="invoices-block-content-item-message-text">
-                          Payment Due: June 30th (subject to approval)
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="invoices-block-content-item-message-mobile">
-                    <p className="invoices-block-content-item-message-text">
-                      Payment Due: June 30th (subject to approval)
-                    </p>
-                  </div>
-                </li>
-                <li className="invoices-block-content-item">
-                  <div className="invoices-block-content-item-thoomb">
-                    <div className="invoices-block-content-item-mobile-flex">
-                      <p className="invoices-block-content-item-id">9267</p>
-                      <p className="invoices-block-content-item-date">
-                        29/05/2022
-                      </p>
-                      <p className="invoices-block-content-item-bank">
-                        Bank Transfer
-                      </p>
-                    </div>
-                    <div className="invoices-block-content-item-mobile-block">
-                      <p className="invoices-block-content-item-value">
-                        50.1 USD
-                      </p>
-                      <div className="invoices-block-content-item-status">
-                        <p className="invoices-block-content-item-status-value">
-                          Paid
-                        </p>
-                      </div>
-                      <button className="invoices-block-content-item-document">
-                        <img
-                          className="invoices-block-content-item-document-icon"
-                          src={pdfIcon}
-                        />
-                      </button>
-
-                      <div className="invoices-block-content-item-message">
-                        <p className="invoices-block-content-item-message-text">
-                          Payment Due: June 30th (subject to approval)
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="invoices-block-content-item-message-mobile">
-                    <p className="invoices-block-content-item-message-text">
-                      Payment Due: June 30th (subject to approval)
-                    </p>
-                  </div>
-                </li>
+                            <div className="invoices-block-content-item-message">
+                              <p className="invoices-block-content-item-message-text">
+                                Payment Due: June 30th (subject to approval)
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="invoices-block-content-item-message-mobile">
+                          <p className="invoices-block-content-item-message-text">
+                            Payment Due: June 30th (subject to approval)
+                          </p>
+                        </div>
+                      </li>
+                    ))}
+                  </>
+                )}
               </ul>
 
               <div

@@ -7,9 +7,6 @@ import Signup from "./pages/signup";
 import SignupClient from "./pages/signup-client/signup-client";
 import SignupClientAgreement from "./pages/signup-client/signup-client-agreement";
 import AccountClientHome from "./pages/account/client/home";
-import AccountClientOffers from "./pages/account/client/offers";
-import AccountClientPostContent from "./pages/account/client/post-content";
-import AccountClientPayment from "./pages/account/client/payment";
 import SignupInfluencerAgreement from "./pages/signup-influencer/signup-influencer-agreement";
 import AccountInfluencerHome from "./pages/account/influencer/home";
 import AccountInfluencerDetails from "./pages/account/influencer/details";
@@ -37,6 +34,10 @@ import AccountInfluencerPastPromosCurrentPage from "./pages/account/influencer/p
 import ReportCampaigns from "./components/layout/account/influencer/ReportCampaigns";
 import ReportCampaignsPage from "./pages/account/influencer/report-campaigns";
 import InvoiceResultPage from "./pages/account/influencer/invoice-result";
+import AccountClientCreatePromoPage from "./pages/account/client/create-promo";
+import AccountInfluencerOngoingPromos from "./pages/account/influencer/ongoing-promos";
+import AccountInfluencerNewPromosPage from "./pages/account/influencer/new-promos";
+import AccountInfluencerOngoingPromosCurrentPage from "./pages/account/influencer/ongoing-promos-current";
 
 const App = () => {
   return (
@@ -80,14 +81,7 @@ const App = () => {
             path="/account/client"
             element={<PrivateRoute element={AccountClientHome} />}
           />
-          <Route
-            path="/account/client/offers"
-            element={<PrivateRoute element={AccountClientOffers} />}
-          />
-          <Route
-            path="/account/client/payment"
-            element={<PrivateRoute element={AccountClientPayment} />}
-          />
+
           <Route
             path="/account/client/details"
             element={<PrivateRoute element={AccountClientDetails} />}
@@ -102,7 +96,7 @@ const App = () => {
           />
           <Route
             path="/account/client/create-promo"
-            element={<PrivateRoute element={AccountClientPostContent} />}
+            element={<PrivateRoute element={AccountClientCreatePromoPage} />}
           />
           <Route
             path="/account/client/past-promos/:id"
@@ -130,6 +124,25 @@ const App = () => {
             element={
               <PrivateRoute element={AccountInfluencerPastPromosCurrentPage} />
             }
+          />
+
+          <Route
+            path="/account/influencer/ongoing-promos"
+            element={<PrivateRoute element={AccountInfluencerOngoingPromos} />}
+          />
+
+          <Route
+            path="/account/influencer/ongoing-promos/:id"
+            element={
+              <PrivateRoute
+                element={AccountInfluencerOngoingPromosCurrentPage}
+              />
+            }
+          />
+
+          <Route
+            path="/account/influencer/new-promos"
+            element={<PrivateRoute element={AccountInfluencerNewPromosPage} />}
           />
 
           <Route

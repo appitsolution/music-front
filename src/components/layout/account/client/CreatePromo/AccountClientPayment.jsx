@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import TitleSection from "../../../TitleSection";
-import paypal from "../../../../images/icons/paypal.svg";
-import mastercard from "../../../../images/icons/company/mastercard.svg";
-import visa from "../../../../images/icons/company/visa.svg";
-import discover from "../../../../images/icons/company/discover.svg";
-import american from "../../../../images/icons/company/american.svg";
-import jcb from "../../../../images/icons/company/jcb.svg";
-import unionPay from "../../../../images/icons/company/union-pay.svg";
-import ModalWindow from "../../../ModalWindow";
-import visaBank from "../../../../images/icons/visa-bank.svg";
-import StandartButton from "../../../form/StandartButton";
+import TitleSection from "../../../../TitleSection";
+import paypal from "../../../../../images/icons/paypal.svg";
+import mastercard from "../../../../../images/icons/company/mastercard.svg";
+import visa from "../../../../../images/icons/company/visa.svg";
+import discover from "../../../../../images/icons/company/discover.svg";
+import american from "../../../../../images/icons/company/american.svg";
+import jcb from "../../../../../images/icons/company/jcb.svg";
+import unionPay from "../../../../../images/icons/company/union-pay.svg";
+import ModalWindow from "../../../../ModalWindow";
+import visaBank from "../../../../../images/icons/visa-bank.svg";
+import StandartButton from "../../../../form/StandartButton";
+import PaypalButton from "../../../../Payment/PaypalButton";
 
 const AccountClientPayment = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -31,12 +32,14 @@ const AccountClientPayment = () => {
 
                 <ul className="account-client-payment-content-methods">
                   <li className="account-client-payment-content-methods-item">
-                    <button className="account-client-payment-content-methods-button">
-                      <img
-                        className="account-client-payment-content-methods-button-icon"
-                        src={paypal}
-                      />
-                    </button>
+                    <PaypalButton>
+                      <button className="account-client-payment-content-methods-button">
+                        <img
+                          className="account-client-payment-content-methods-button-icon"
+                          src={paypal}
+                        />
+                      </button>
+                    </PaypalButton>
                   </li>
                   <li className="account-client-payment-content-methods-item">
                     <button

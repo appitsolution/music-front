@@ -11,6 +11,7 @@ const initialState = {
     sortCode: "",
     accountNumber: "",
     swiftOrBic: "",
+    amount: 0,
     contactName: "",
     contactPhone: "",
     contactEmail: "",
@@ -89,6 +90,9 @@ export const createInvoiceSlice = createSlice({
     setNotes: (state, action) => {
       state.data.notes = action.payload;
     },
+    setAmount: (state, action) => {
+      state.data.amount = action.payload;
+    },
 
     setClearForm: (state) => {
       state.data.payee = "";
@@ -99,6 +103,7 @@ export const createInvoiceSlice = createSlice({
       state.data.sortCode = "";
       state.data.accountNumber = "";
       state.data.swiftOrBic = "";
+      state.data.amount = 0;
       state.data.contactName = "";
       state.data.contactPhone = "";
       state.data.contactEmail = "";
@@ -136,6 +141,7 @@ export const {
   setCountry,
   setNotes,
   setClearForm,
+  setAmount,
 } = createInvoiceSlice.actions;
 
 export default createInvoiceSlice.reducer;

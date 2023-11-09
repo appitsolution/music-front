@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import TitleSection from "../../../TitleSection";
 import FormContainer from "../../../form/FormContainer";
-import AltButton from "../../../form/AltButton";
 import { useParams } from "react-router-dom";
-import UseVerify from "../../../../hooks/useVerify";
 import axios from "axios";
+import UseVerify from "../../../../hooks/useVerify";
+import ResponseButton from "../../../form/ResponseButton";
+import StandartButton from "../../../form/StandartButton";
 
-const AcountClientPastPromosCurrent = () => {
+const AcountInfluencerOngoingCurrent = () => {
   const params = useParams();
   const [data, setData] = useState({});
 
@@ -33,53 +34,66 @@ const AcountClientPastPromosCurrent = () => {
         <div className="account-client-past-promos-block">
           <TitleSection title="MY" span="account" />
 
-          <p className="account-client-past-promos-second">Past promos</p>
+          <p className="account-client-past-promos-second">Ongoing promos</p>
 
-          <FormContainer style={{ marginTop: "70px" }}>
+          <FormContainer
+            style={{
+              marginTop: "70px",
+              paddingBottom: 0,
+              paddingLeft: 0,
+              paddingRight: 0,
+            }}
+          >
             <div className="account-client-past-promos-form-current">
-              {/* <div className="account-client-past-promos-form-current-video">
-                <div
-                  style={{
-                    width: "551px",
-                    height: "312px",
-                    background: "#3330E4",
-                  }}
-                ></div>
-              </div> */}
-              <div className="account-client-past-promos-form-current-content">
+              <div
+                className="account-client-past-promos-form-current-content"
+                style={{ padding: "0 20px 30px 20px" }}
+              >
                 <h2 className="account-client-past-promos-form-current-content-title">
-                  Promo {data._id}
+                  Promo 1
                 </h2>
                 <p className="account-client-past-promos-form-current-content-client">
                   Client:{" "}
                   <span className="account-client-past-promos-form-current-content-client-value">
-                    {data.firstName}
+                    {data ? data.client : "No Data"}
                   </span>
                 </p>
                 <p className="account-client-past-promos-form-current-content-link">
                   Videolink:{" "}
                   <span className="account-client-past-promos-form-current-content-link-value">
-                    {data.videoLink}
+                    {data ? data.videolink : "No Data"}
                   </span>
                 </p>
                 <p className="account-client-past-promos-form-current-content-desc">
                   Description:{" "}
                   <span className="account-client-past-promos-form-current-content-desc-value">
-                    {data.postDescription}
+                    {data ? data.description : "No Data"}
                   </span>
                 </p>
                 <p className="account-client-past-promos-form-current-content-date">
                   Date Request:{" "}
                   <span className="account-client-past-promos-form-current-content-date-value">
-                    {data.dateRequest}
+                    {data ? data.dateRequest : "No Data"}
                   </span>
                 </p>
                 <p className="account-client-past-promos-form-current-content-wish">
                   Special Wishes:{" "}
                   <span className="account-client-past-promos-form-current-content-wish-value">
-                    {data.specialWishes}
+                    {data ? data.specialWishes : "No Data"}
                   </span>
                 </p>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginBottom: 30,
+                }}
+              >
+                <StandartButton
+                  text="Submit Results & Get Paid"
+                  style={{ padding: "9px 70px" }}
+                />
               </div>
             </div>
           </FormContainer>
@@ -104,4 +118,4 @@ const AcountClientPastPromosCurrent = () => {
   );
 };
 
-export default AcountClientPastPromosCurrent;
+export default AcountInfluencerOngoingCurrent;

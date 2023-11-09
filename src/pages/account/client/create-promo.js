@@ -1,16 +1,17 @@
 import React from "react";
 import Header from "../../../components/Header";
 import Background from "../../../components/Background";
-import AccountClientPostContent from "../../../components/layout/account/client/AccountClientPostContent";
 
-const AccountClientPostContentPage = () => {
+import CreatePromo from "../../../components/layout/account/client/CreatePromo";
+
+const AccountClientCreatePromoPage = () => {
   return (
     <>
       <Header path="Sponsoring client" />
-      <AccountClientPostContent />
+      <CreatePromo />
       <Background />
     </>
   );
 };
 
-export default AccountClientPostContentPage;
+export default AccountClientCreatePromoPage;

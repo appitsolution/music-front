@@ -64,7 +64,10 @@ const AccountInfluencerHome = () => {
               </button>
             </li>
             <li className="account-client-menu-item">
-              <button className="account-client-menu-button">
+              <button
+                className="account-client-menu-button"
+                onClick={() => navigation("/account/influencer/ongoing-promos")}
+              >
                 <img
                   className="account-client-menu-button-icon"
                   src={ongoing}
@@ -76,7 +79,10 @@ const AccountInfluencerHome = () => {
               </button>
             </li>
             <li className="account-client-menu-item">
-              <button className="account-client-menu-button">
+              <button
+                className="account-client-menu-button"
+                onClick={() => navigation("/account/influencer/new-promos")}
+              >
                 <img
                   className="account-client-menu-button-icon"
                   src={newIcon}

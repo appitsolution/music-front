@@ -46,7 +46,7 @@ const AcountClientPastPromosCurrent = () => {
             <div className="account-client-past-promos-form-current">
               <div
                 className="account-client-past-promos-form-current-content"
-                style={{ padding: "0 20px" }}
+                style={{ padding: "0 20px 30px 20px" }}
               >
                 <h2 className="account-client-past-promos-form-current-content-title">
                   Promo 1
@@ -82,8 +82,6 @@ const AcountClientPastPromosCurrent = () => {
                   </span>
                 </p>
               </div>
-
-              <ResponseButton />
             </div>
           </FormContainer>
 

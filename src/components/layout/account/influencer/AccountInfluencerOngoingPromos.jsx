@@ -6,7 +6,7 @@ import UseVerify from "../../../../hooks/useVerify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const AcountClientPastPromos = () => {
+const AccountInfluencerOngoingPromos = () => {
   const navigation = useNavigate();
   const [data, setData] = useState([]);
 
@@ -16,7 +16,6 @@ const AcountClientPastPromos = () => {
       const result = await axios(
         `${process.env.REACT_APP_SERVER}/promos/history?id=${dataFetch._id}`
       );
-      console.log(result.data);
       if (result.data.code === 200) {
         setData(result.data.promos);
       }
@@ -34,7 +33,7 @@ const AcountClientPastPromos = () => {
         <div className="account-client-past-promos-block">
           <TitleSection title="MY" span="account" />
 
-          <p className="account-client-past-promos-second">Past promos</p>
+          <p className="account-client-past-promos-second">Ongoing promos</p>
 
           <FormContainer style={{ marginTop: "70px" }}>
             <div className="account-client-past-promos-form">
@@ -47,7 +46,9 @@ const AcountClientPastPromos = () => {
                     <button
                       className="account-client-past-promos-form-item-button"
                       onClick={() =>
-                        navigation(`/account/client/past-promos/${item._id}`)
+                        navigation(
+                          `/account/influencer/ongoing-promos/${item._id}`
+                        )
                       }
                     >
                       <img className="account-client-past-promos-form-image" />
@@ -78,4 +79,4 @@ const AcountClientPastPromos = () => {
   );
 };
 
-export default AcountClientPastPromos;
+export default AccountInfluencerOngoingPromos;
