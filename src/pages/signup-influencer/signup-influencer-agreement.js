@@ -6,7 +6,7 @@ import SignupInfluencerAgreement from "../../components/layout/signup/SignupInfl
 const SignupInfluencerAgreementPage = () => {
   return (
     <>
-      <Header userType="client" path="Influencer" />
+      <Header userType="client" path="Influencer" page="signup" />
       <SignupInfluencerAgreement />
       <Background />
     </>

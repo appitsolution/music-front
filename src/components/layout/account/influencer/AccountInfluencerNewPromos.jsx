@@ -1,24 +1,44 @@
 import React, { useEffect, useState } from "react";
 import TitleSection from "../../../TitleSection";
 import FormContainer from "../../../form/FormContainer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import UseVerify from "../../../../hooks/useVerify";
+import acceptIcon from "../../../../images/icons/accept.svg";
 import ResponseButton from "../../../form/ResponseButton";
+import ModalWindow from "../../../ModalWindow";
+import StandartButton from "../../../form/StandartButton";
 
 const AcountInfluencerNewPromos = () => {
-  const params = useParams();
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const navigation = useNavigate();
   const [data, setData] = useState([]);
 
   const getData = async () => {
     try {
       const { dataFetch } = await UseVerify();
       const result = await axios(
-        `${process.env.REACT_APP_SERVER}/promos/history?id=${dataFetch._id}`
+        `${process.env.REACT_APP_SERVER}/promos/get-new-promos?influencerId=${dataFetch._id}`
       );
 
       setData(result.data.promos);
       console.log(result.data.promos);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const responsePromo = async (id, res) => {
+    if (!id || !res) return;
+    try {
+      const { dataFetch } = await UseVerify();
+      const result = await axios.put(
+        `${process.env.REACT_APP_SERVER}/promos/update-response?influencerId=${dataFetch._id}&promoId=${id}&promoResponse=${res}`
+      );
+
+      if (result.data.code === 200) {
+        getData();
+      }
     } catch (err) {
       console.log(err);
     }
@@ -83,7 +103,13 @@ const AcountInfluencerNewPromos = () => {
                     </span>
                   </p>
                 </div>
-                <ResponseButton />
+                <ResponseButton
+                  onClickYes={() => {
+                    setIsOpenModal(true);
+                    responsePromo(item._id, "accept");
+                  }}
+                  onClickNo={() => responsePromo(item._id, "refusing")}
+                />
               </div>
             </FormContainer>
           ))}
@@ -104,6 +130,45 @@ const AcountInfluencerNewPromos = () => {
           </div>
         </div>
       </div>
+
+      <ModalWindow isOpen={isOpenModal} setClose={setIsOpenModal}>
+        <div className="signup-client-modal">
+          <img className="signup-client-modal-icon" src={acceptIcon} />
+
+          <h2 className="signup-client-modal-title">Congratulations!</h2>
+
+          <p className="signup-client-modal-second">
+            Your Promo Information is Now Live in the{" "}
+            <button
+              className="signup-client-modal-second"
+              style={{
+                color: "#3330E4",
+                textDecorationLine: "underline",
+                cursor: "pointer",
+              }}
+              onClick={() => navigation("/account/influencer/ongoing-promos")}
+            >
+              "Ongoing Promo"
+            </button>{" "}
+            Section!
+          </p>
+
+          <p className="signup-client-modal-desc">
+            Kindly proceed from there to fulfil the content distribution.
+          </p>
+
+          <StandartButton
+            text="Ok"
+            style={{
+              padding: "8px 80px",
+              marginTop: "30px",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+            onClick={() => navigation("/signup/influencer/agreement")}
+          />
+        </div>
+      </ModalWindow>
     </section>
   );
 };

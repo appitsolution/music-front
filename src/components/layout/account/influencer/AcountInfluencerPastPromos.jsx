@@ -14,7 +14,7 @@ const AccountInfluencerPastPromos = () => {
     try {
       const { dataFetch } = await UseVerify();
       const result = await axios(
-        `${process.env.REACT_APP_SERVER}/promos/history?id=${dataFetch._id}`
+        `${process.env.REACT_APP_SERVER}/promos/history-influencer?id=${dataFetch._id}`
       );
       if (result.data.code === 200) {
         setData(result.data.promos);
@@ -35,7 +35,12 @@ const AccountInfluencerPastPromos = () => {
 
           <p className="account-client-past-promos-second">Past promos</p>
 
-          <FormContainer style={{ marginTop: "70px" }}>
+          <FormContainer
+            style={{
+              marginTop: "70px",
+              display: data.length !== 0 ? "block" : "none",
+            }}
+          >
             <div className="account-client-past-promos-form">
               <ul className="account-client-past-promos-form-list">
                 {data.map((item, index) => (

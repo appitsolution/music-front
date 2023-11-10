@@ -6,7 +6,7 @@ import LoginInfluencer from "../../components/layout/login/LoginInfluencer";
 const LoginInfluencerPage = () => {
   return (
     <>
-      <Header userType="client" path="Influencer" />
+      <Header userType="client" page="login" path="Influencer" />
       <LoginInfluencer />
       <Background />
     </>

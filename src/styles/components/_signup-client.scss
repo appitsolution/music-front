@@ -25,8 +25,11 @@
     text-transform: uppercase;
     margin-bottom: 30px;
 
-    @media screen and (max-width: 550px) {
+    @media screen and (max-width: 768px) {
         font-size: 28px;
+    }
+    @media screen and (max-width: 550px) {
+        font-size: 22px;
     }
 }
 
@@ -44,8 +47,11 @@
     margin-bottom: 30px;
     max-width: 512px;
 
-    @media screen and (max-width: 550px) {
+    @media screen and (max-width: 768px) {
         font-size: 18px;
+    }
+    @media screen and (max-width: 550px) {
+        font-size: 16px;
     }
 }
 

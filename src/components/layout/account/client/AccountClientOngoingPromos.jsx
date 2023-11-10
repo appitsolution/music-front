@@ -6,7 +6,7 @@ import UseVerify from "../../../../hooks/useVerify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const AccountInfluencerOngoingPromos = () => {
+const AcountClientOngoingPromos = () => {
   const navigation = useNavigate();
   const [data, setData] = useState([]);
 
@@ -14,8 +14,9 @@ const AccountInfluencerOngoingPromos = () => {
     try {
       const { dataFetch } = await UseVerify();
       const result = await axios(
-        `${process.env.REACT_APP_SERVER}/promos/get-ongoing-promos?influencerId=${dataFetch._id}`
+        `${process.env.REACT_APP_SERVER}/promos/ongoing-promos-client?id=${dataFetch._id}`
       );
+      console.log(result.data);
       if (result.data.code === 200) {
         setData(result.data.promos);
       }
@@ -35,7 +36,12 @@ const AccountInfluencerOngoingPromos = () => {
 
           <p className="account-client-past-promos-second">Ongoing promos</p>
 
-          <FormContainer style={{ marginTop: "70px" }}>
+          <FormContainer
+            style={{
+              marginTop: "70px",
+              display: data.length !== 0 ? "block" : "none",
+            }}
+          >
             <div className="account-client-past-promos-form">
               <ul className="account-client-past-promos-form-list">
                 {data.map((item, index) => (
@@ -46,9 +52,7 @@ const AccountInfluencerOngoingPromos = () => {
                     <button
                       className="account-client-past-promos-form-item-button"
                       onClick={() =>
-                        navigation(
-                          `/account/influencer/ongoing-promos/${item._id}`
-                        )
+                        navigation(`/account/client/ongoing-promos/${item._id}`)
                       }
                     >
                       <img className="account-client-past-promos-form-image" />
@@ -79,4 +83,4 @@ const AccountInfluencerOngoingPromos = () => {
   );
 };
 
-export default AccountInfluencerOngoingPromos;
+export default AcountClientOngoingPromos;

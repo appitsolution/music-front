@@ -6,7 +6,7 @@ import LoginClient from "../../components/layout/login/LoginClient";
 const LoginClientPage = () => {
   return (
     <>
-      <Header userType="influencer" path="Sponsoring client" />
+      <Header userType="influencer" page="login" path="Sponsoring client" />
       <LoginClient />
       <Background />
     </>

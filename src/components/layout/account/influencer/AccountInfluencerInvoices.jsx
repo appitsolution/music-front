@@ -23,7 +23,6 @@ const AccountInfluencerInvoices = () => {
       );
       console.log(result.data.invoices);
       if (result.data.code === 200) {
-        console.log(result.data.invoices[0].amount);
         setData(result.data.invoices);
       }
     } catch (err) {
@@ -42,28 +41,38 @@ const AccountInfluencerInvoices = () => {
           <p className="invoices-second">My Invoices</p>
 
           <div className="invoices-block">
-            <div className="invoices-block-header">
-              <p className="invoices-block-header-title" style={{ flex: 1 }}>
-                Id
-              </p>
-              <p className="invoices-block-header-title" style={{ flex: 1.8 }}>
-                Raised On
-              </p>
-              <p className="invoices-block-header-title">Payment Via</p>
-              <p className="invoices-block-header-title" style={{ flex: 1 }}>
-                Value
-              </p>
-              <p className="invoices-block-header-title" style={{ flex: 2 }}>
-                Status
-              </p>
-              <div style={{ flex: 2 }}></div>
-            </div>
-            <div className="invoices-block-content">
-              <ul className="invoices-block-content-list">
-                {data.length === 0 ? (
-                  <></>
-                ) : (
-                  <>
+            {data.length !== 0 ? (
+              <>
+                <div className="invoices-block-header">
+                  <p
+                    className="invoices-block-header-title"
+                    style={{ flex: 1 }}
+                  >
+                    Id
+                  </p>
+                  <p
+                    className="invoices-block-header-title"
+                    style={{ flex: 1.8 }}
+                  >
+                    Raised On
+                  </p>
+                  <p className="invoices-block-header-title">Payment Via</p>
+                  <p
+                    className="invoices-block-header-title"
+                    style={{ flex: 1 }}
+                  >
+                    Value
+                  </p>
+                  <p
+                    className="invoices-block-header-title"
+                    style={{ flex: 2 }}
+                  >
+                    Status
+                  </p>
+                  <div style={{ flex: 2 }}></div>
+                </div>
+                <div className="invoices-block-content">
+                  <ul className="invoices-block-content-list">
                     {data.map((item) => (
                       <li className="invoices-block-content-item">
                         <div className="invoices-block-content-item-thoomb">
@@ -91,7 +100,11 @@ const AccountInfluencerInvoices = () => {
                               </p>
                             </div>
                             <a
-                              href={item.file}
+                              style={{
+                                userSelect: "none",
+                                pointerEvents: item.fileUrl ? "all" : "none",
+                              }}
+                              href={item.fileUrl ? item.fileUrl : ""}
                               className="invoices-block-content-item-document"
                             >
                               <img
@@ -114,20 +127,22 @@ const AccountInfluencerInvoices = () => {
                         </div>
                       </li>
                     ))}
-                  </>
-                )}
-              </ul>
+                  </ul>
 
-              <div
-                style={{
-                  marginTop: "29px",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <AltButton text="See more" />
-              </div>
-            </div>
+                  <div
+                    style={{
+                      marginTop: "29px",
+                      display: data.length > 10 ? "flex" : "none",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <AltButton text="See more" />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </section>

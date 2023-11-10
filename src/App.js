@@ -38,6 +38,9 @@ import AccountClientCreatePromoPage from "./pages/account/client/create-promo";
 import AccountInfluencerOngoingPromos from "./pages/account/influencer/ongoing-promos";
 import AccountInfluencerNewPromosPage from "./pages/account/influencer/new-promos";
 import AccountInfluencerOngoingPromosCurrentPage from "./pages/account/influencer/ongoing-promos-current";
+import AccountClientOngoingPromos from "./pages/account/client/ongoing-promos";
+import AcountClientOngoingCurrentPage from "./pages/account/client/ongoing-promos-current";
+import AccountInfluencerUpdateIngoingPromoPage from "./pages/account/influencer/update-ongoing-promo";
 
 const App = () => {
   return (
@@ -102,7 +105,14 @@ const App = () => {
             path="/account/client/past-promos/:id"
             element={<PrivateRoute element={AccountClientPastPromosCurrent} />}
           />
-
+          <Route
+            path="/account/client/ongoing-promos"
+            element={<PrivateRoute element={AccountClientOngoingPromos} />}
+          />
+          <Route
+            path="/account/client/ongoing-promos/:id"
+            element={<PrivateRoute element={AcountClientOngoingCurrentPage} />}
+          />
           <Route
             path="/account/influencer"
             element={<PrivateRoute element={AccountInfluencerHome} />}
@@ -137,6 +147,13 @@ const App = () => {
               <PrivateRoute
                 element={AccountInfluencerOngoingPromosCurrentPage}
               />
+            }
+          />
+
+          <Route
+            path="/account/influencer/update-ongoing-promos/:promoId/:influencerId"
+            element={
+              <PrivateRoute element={AccountInfluencerUpdateIngoingPromoPage} />
             }
           />
 

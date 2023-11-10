@@ -101,7 +101,10 @@ const AccountClientOffers = () => {
           return;
         }
       })
-      .map((item) => item._id);
+      .map((item) => ({
+        influencerId: item._id,
+        confirmation: "wait",
+      }));
     dispatch(setSelectInfluencer([...filterInfluencers]));
     setInfluencers(updateList);
   };

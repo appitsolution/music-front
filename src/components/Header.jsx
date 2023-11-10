@@ -9,7 +9,7 @@ import UseVerify from "../hooks/useVerify";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "../redux/slice/authenticated";
 
-const Header = ({ userType = "client", path = "" }) => {
+const Header = ({ userType = "client", page = "login", path = "" }) => {
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const { toggleTheme, theme } = useTheme();
@@ -22,6 +22,37 @@ const Header = ({ userType = "client", path = "" }) => {
     navigation("/login/client");
   };
 
+  const returnTextLogin = () => {
+    if (userType === "influencer" && page === "login") {
+      return { text: "influencer", path: "/login/influencer" };
+    }
+    if (userType === "client" && page === "login") {
+      return { text: "client", path: "/login/client" };
+    }
+
+    if (userType === "client" && page === "signup") {
+      return { text: "influencer", path: "/login/influencer" };
+    }
+    if (userType === "influencer" && page === "signup") {
+      return { text: "client", path: "/login/client" };
+    }
+  };
+
+  const returnTextSignup = () => {
+    if (userType === "influencer" && page === "signup") {
+      return { text: "influencer", path: "/signup/influencer" };
+    }
+    if (userType === "client" && page === "signup") {
+      return { text: "client", path: "/signup/client" };
+    }
+
+    if (userType === "client" && page === "login") {
+      return { text: "influencer", path: "/signup/influencer" };
+    }
+    if (userType === "influencer" && page === "login") {
+      return { text: "client", path: "/signup/client" };
+    }
+  };
   return (
     <>
       <header className="header">
@@ -58,33 +89,19 @@ const Header = ({ userType = "client", path = "" }) => {
                     className="header-login"
                     type="button"
                     onClick={() => {
-                      if (userType === "influencer") {
-                        navigation("/login/influencer");
-                      }
-
-                      if (userType === "client") {
-                        navigation("/login/client");
-                      }
+                      navigation(returnTextLogin().path);
                     }}
                   >
-                    Log in {userType === "influencer" && "client"}
-                    {userType === "client" && "influencer"}
+                    Log in {returnTextLogin().text}
                   </button>
                   <button
                     className="header-login"
                     type="button"
                     onClick={() => {
-                      if (userType === "influencer") {
-                        navigation("/signup/client");
-                      }
-
-                      if (userType === "client") {
-                        navigation("/signup/influencer");
-                      }
+                      navigation(returnTextSignup().path);
                     }}
                   >
-                    Sign up as {userType === "influencer" && "client"}
-                    {userType === "client" && "influencer"}
+                    Sign up as {returnTextSignup().text}
                   </button>
                 </div>
               )}

@@ -31,7 +31,10 @@ const AccountClientHome = () => {
               </button>
             </li>
             <li className="account-client-menu-item">
-              <button className="account-client-menu-button">
+              <button
+                className="account-client-menu-button"
+                onClick={() => navigation("/account/client/ongoing-promos")}
+              >
                 <img
                   className="account-client-menu-button-icon"
                   src={ongoing}

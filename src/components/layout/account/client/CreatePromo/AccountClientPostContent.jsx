@@ -122,7 +122,7 @@ const AccountClientPostContent = () => {
                 title="Swipe Up Link"
                 placeholder="Enter swipe up link"
                 style={{ marginTop: "60px" }}
-                value={dataPromo.swipeLink}
+                value={dataPromo.swipeUpLink}
                 setValue={(value) => dispatch(setSwipeUpLink(value))}
                 error={formError.swipeUpLink}
                 onFocus={() =>

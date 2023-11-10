@@ -6,7 +6,7 @@ import SignupInfluencerLast from "../../components/layout/signup/SignupInfluence
 const SignupInfluencerLastPage = () => {
   return (
     <>
-      <Header userType="client" path="Influencer"/>
+      <Header userType="client" path="Influencer" page="signup" />
       <SignupInfluencerLast />
       <Background />
     </>
