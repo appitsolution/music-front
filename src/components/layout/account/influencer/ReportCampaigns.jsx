@@ -126,46 +126,47 @@ const ReportCampaigns = () => {
               </tr>
             </thead>
             <tbody className="report-table-body">
-              {data.map((item, indexRow) => (
+              {dataPromo ? <>{data.map((item, indexRow) => (
                 <tr className="report-table-body-row">
                   <td className="report-table-body-row-item-first">
-                    {item ? item.firstName : "No Date"}
+                    {item.firstName ? item.firstName : "No Date"}
                   </td>
                   <td className="report-table-body-row-item">
-                    {item ? item.followersNumber : "No Date"}
+                    {item.followersNumber ? item.followersNumber : "No Date"}
                   </td>
                   <td className="report-table-body-row-item-second">
-                    {item ? item.brand : "No Date"}
+                    {item.brand ? item.brand : "No Date"}
                   </td>
                   <td className="report-table-body-row-item">
-                    {item ? item.datePost : "No Date"}
+                    {item.datePost ? item.datePost : "No Date"}
                   </td>
                   <td className="report-table-body-row-item-second">
-                    {item ? item.caption : "No Date"}
+                    {item.caption ? item.caption : "No Date"}
                   </td>
                   <td className="report-table-body-row-item">
-                    {item ? item.video : "No Date"}
+                    {item.video ? <a target="_blank" href={item.video}>{item.video}</a> : "No Date"}
                   </td>
                   <td className="report-table-body-row-item-second">
-                    {dataPromo ? dataPromo.swipeUpLink : "No Date"}
+                  {dataPromo.swipeUpLink ? <a target="_blank" href={dataPromo.swipeUpLink}>{dataPromo.swipeUpLink}</a> : "No Date"}
                   </td>
                   <td className="report-table-body-row-item">
-                    {dataPromo ? dataPromo.storyTag : "No Date"}
+                  {dataPromo.storyTag ? <a target="_blank" href={dataPromo.storyTag}>{dataPromo.storyTag}</a> : "No Date"}
                   </td>
                   <td className="report-table-body-row-item-second">
-                    {item ? item.postLink : "No Date"}
+                  
+                    {item.postLink ? <a target="_blank" href={item.postLink}>{item.postLink}</a> : "No Date"}
                   </td>
                   <td className="report-table-body-row-item">
-                    {item ? item.screenshot : "No Date"}
+                    {item.screenShot ? <a target="_blank" href={item.screenshot}>{item.screenshot}</a> : "No Date"}
                   </td>
                   <td className="report-table-body-row-item-second">
-                    {item ? item.impressions : "No Date"}
+                    {item.impressions ? item.impressions : "No Date"}
                   </td>
                   <td className="report-table-body-row-item">
-                    {item ? item.like : "No Date"}
+                    {item.like ? item.like : "No Date"}
                   </td>
                 </tr>
-              ))}
+              ))}</> : null}
               <tr className="report-table-body-total">
                 <td className="report-table-body-total-price">
                   TOTAL: {dataPromo ? dataPromo.selectPrice.price : 0}€
@@ -184,6 +185,60 @@ const ReportCampaigns = () => {
               </tr>
             </tbody>
           </table>
+
+          <div className="report-mobile">
+         {dataPromo ? <> {data.map((item)=> (
+            <div className="report-mobile-item">
+              <div className="report-mobile-item-influencer">
+              {item.firstName ? item.firstName : "No Date"}
+              </div>
+              <div className="report-mobile-item-info">
+                <p className="report-mobile-item-info-followers">   {item.followersNumber ? item.followersNumber : "No Date"}</p>
+                <div className="report-mobile-item-info-brand">
+                  <p className="report-mobile-item-info-value">   {item.brand ? item.brand : "No Date"}</p>
+                  <p className="report-mobile-item-info-title">Brand</p>
+                </div>
+                <div className="report-mobile-item-info-date-post">
+                  <p className="report-mobile-item-info-value">   {item.datePost ? item.datePost : "No Date"}</p>
+                  <p className="report-mobile-item-info-title">Date Post</p>
+                </div>
+                <div className="report-mobile-item-info-caption">
+                  <p className="report-mobile-item-info-value">   {item.caption ? item.caption : "No Date"}</p>
+                  <p className="report-mobile-item-info-title">Caption</p>
+                </div>
+                <div className="report-mobile-item-info-video">
+                  <a target="_blank" className="report-mobile-item-info-value" href={item.video ? item.video : ""}>   {item.video ? item.video : "No Date"}</a>
+                  <p className="report-mobile-item-info-title">Video</p>
+                </div>
+                <div className="report-mobile-item-info-swipe-up-link">
+                  <a target="_blank" className="report-mobile-item-info-value" href={dataPromo.swipeUpLink ? dataPromo.swipeUpLink : ""}>{dataPromo.swipeUpLink ? dataPromo.swipeUpLink : "No Date"}</a>
+                  <p className="report-mobile-item-info-title">Swipe Up Link</p>
+                </div>
+                <div className="report-mobile-item-info-story-tag">
+                  <p className="report-mobile-item-info-value">   {dataPromo.storyTag ? dataPromo.storyTag : "No Date"}</p>
+                  <p className="report-mobile-item-info-title">Story Tag</p>
+                </div>
+                <div className="report-mobile-item-info-post-link">
+                  <a target="_blank" className="report-mobile-item-info-value">   {item.postLink ? item.postLink : "No Date"}</a>
+                  <p className="report-mobile-item-info-title">Post Link</p>
+                </div>
+                <div className="report-mobile-item-info-screenshot">
+                  <p className="report-mobile-item-info-value">   {item.screenShot ? item.screenShot : "No Date"}</p>
+                  <p className="report-mobile-item-info-title">Screenshot In</p>
+                </div>
+                <div className="report-mobile-item-info-impressions">
+                  <p className="report-mobile-item-info-value">   {item.impressions ? item.impressions : "No Date"}</p>
+                  <p className="report-mobile-item-info-title">Impressions</p>
+                </div>
+                <div className="report-mobile-item-info-like">
+                  <p className="report-mobile-item-info-value">   {item.like ? item.like : "No Date"}</p>
+                  <p className="report-mobile-item-info-title">Likes</p>
+                </div>
+              </div>  
+            </div>
+          ))}</> : null}
+            
+          </div>
         </div>
       </div>
     </section>

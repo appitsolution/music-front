@@ -17,6 +17,12 @@ const PrivateRoute = ({ element: Element, role = "client", ...rest }) => {
 
   useEffect(() => {
     UseVerify().then((res) => {
+      if(role !== res.dataFetch.role){
+        setisAuth(false);
+        setLoading(false);
+        dispatch(setAuthenticated(false));
+        return 
+      }
       setisAuth(res.verify);
       setLoading(false);
       dispatch(setCurrentRole(res.verify ? res.dataFetch.role : "client"));

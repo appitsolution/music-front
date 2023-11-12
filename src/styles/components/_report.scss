@@ -7,6 +7,10 @@
     justify-content: space-between;
     margin-top: 35px;
 
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+    }
+
     &-item {
         display: flex;
         flex-direction: column;
@@ -34,6 +38,10 @@
     overflow: hidden;
     box-shadow: 0px 4px 20px 0px rgba(51, 48, 228, 0.5);
     background: #fff;
+
+    @media screen and (max-width: 950px) {
+        display: none;
+    }
 }
 
 .report-table-header {
@@ -106,6 +114,115 @@
             font-weight: 900;
             line-height: normal;
             padding-left: 17px;
+        }
+    }
+}
+
+
+.report-mobile {
+    margin-top:20px;
+    border-radius: 30px;
+background: #FFF;
+overflow: hidden;
+box-shadow: 0px 4px 20px 0px rgba(51, 48, 228, 0.50);
+
+@media screen and (min-width: 950px){
+ 
+    display: none;
+    
+}
+}
+
+.report-mobile-item {
+    display: flex;
+    border-bottom: 1px solid #9694ea;
+
+    &-influencer {
+        padding: 24px;
+background:  rgba(51, 48, 227,0.3);
+
+color: #000;
+font-family: Geometria;
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+width: 20%;
+    }
+
+    &-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 24px 16px 20px 16px;
+        width: 100%;
+        &-followers {
+            color: #000;
+font-family: Geometria;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+        }
+
+        &-brand {
+            display: flex;
+            justify-content: space-between;
+        }
+        &-date-post {
+            display: flex;
+            justify-content: space-between;
+        }
+        &-caption {
+            display: flex;
+            justify-content: space-between;
+        }
+        &-video {
+            display: flex;
+            justify-content: space-between;
+        }
+        &-swipe-up-link {
+            display: flex;
+            justify-content: space-between;
+        }
+        &-story-tag {
+            display: flex;
+            justify-content: space-between;
+        }
+        &-post-link {
+            display: flex;
+            justify-content: space-between;
+        }
+        &-screenshot {
+            display: flex;
+            justify-content: space-between;
+        }
+        &-impressions {
+            display: flex;
+            justify-content: space-between;
+        }
+        &-like {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &-value {
+            color: #000;
+font-family: Geometria;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+        }
+
+        &-title {
+            color: rgba(0, 0, 0, 0.50);
+text-align: right;
+font-family: Geometria;
+font-size: 10px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
         }
     }
 }

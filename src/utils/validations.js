@@ -24,3 +24,55 @@ export function validatePhoneNumber(phoneNumber) {
 
   return phoneRegex.test(phoneNumber);
 }
+
+
+
+
+
+export function formatDateString(inputDate) {
+
+  let cleanedInput = inputDate.replace(/[^\d]/g, '');
+
+
+  let formattedDate = '';
+  if (cleanedInput.length > 0) {
+      formattedDate += cleanedInput.substr(0, 2);
+  }
+  if (cleanedInput.length > 2) {
+      formattedDate += '.' + cleanedInput.substr(2, 2);
+  }
+  if (cleanedInput.length > 4) {
+      formattedDate += '.' + cleanedInput.substr(4, 4);
+  }
+
+  return formattedDate;
+}
+
+
+export function validateDate(inputDate) {
+
+  var cleanedInput = inputDate.replace(/[^\d]/g, '');
+
+  // Перевірити довжину введеного рядка
+  if (cleanedInput.length !== 8) {
+      return false;
+  }
+
+  // Отримати компоненти дати
+  var day = parseInt(cleanedInput.substr(0, 2), 10);
+  var month = parseInt(cleanedInput.substr(2, 2), 10);
+  var year = parseInt(cleanedInput.substr(4, 4), 10);
+
+
+  var inputDateObj = new Date(year, month - 1, day);
+  var currentDate = new Date();
+
+  if (isNaN(inputDateObj.getTime()) || inputDateObj < currentDate) {
+      return  false;
+  } else if (day > 31 || month > 12) {
+      return false;
+  } else {
+      return true; // Дата валідна
+  }
+}
+

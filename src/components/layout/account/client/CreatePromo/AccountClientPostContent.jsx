@@ -18,6 +18,7 @@ import {
   setSwipeUpLink,
   setVideoLink,
 } from "../../../../../redux/slice/create-promo";
+import { formatDateString, validateDate } from "../../../../../utils/validations";
 
 const AccountClientPostContent = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,8 @@ const AccountClientPostContent = () => {
       specialWishes: false,
     };
 
+    
+
     let haveError = false;
     for (let checkError in dataPromo) {
       if (
@@ -59,6 +62,13 @@ const AccountClientPostContent = () => {
           };
         }
       }
+    }
+
+
+    if(!validateDate(dataPromo.dateRequest)){
+      haveError = true;
+      setFormError({...listError, dateRequest: true})
+      return 
     }
 
     if (haveError) {
@@ -134,7 +144,7 @@ const AccountClientPostContent = () => {
                 placeholder="Enter data"
                 style={{ marginTop: "60px" }}
                 value={dataPromo.dateRequest}
-                setValue={(value) => dispatch(setDateRequest(value))}
+                setValue={(value) => dispatch(setDateRequest(formatDateString(value)))}
                 error={formError.dateRequest}
                 onFocus={() =>
                   setFormError({ ...formError, dateRequest: false })
