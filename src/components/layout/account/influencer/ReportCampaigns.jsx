@@ -219,11 +219,11 @@ const ReportCampaigns = () => {
                   <p className="report-mobile-item-info-title">Story Tag</p>
                 </div>
                 <div className="report-mobile-item-info-post-link">
-                  <a target="_blank" className="report-mobile-item-info-value">   {item.postLink ? item.postLink : "No Date"}</a>
+                  <a target="_blank" className="report-mobile-item-info-value" href={item.postLink ? item.postLink : ""}>   {item.postLink ? item.postLink : "No Date"}</a>
                   <p className="report-mobile-item-info-title">Post Link</p>
                 </div>
                 <div className="report-mobile-item-info-screenshot">
-                  <p className="report-mobile-item-info-value">   {item.screenShot ? item.screenShot : "No Date"}</p>
+                  <a target="_blank" className="report-mobile-item-info-value" href={item.screenShot ? item.screenShot : ""}>   {item.screenShot ? item.screenShot : "No Date"}</a>
                   <p className="report-mobile-item-info-title">Screenshot In</p>
                 </div>
                 <div className="report-mobile-item-info-impressions">
@@ -238,6 +238,9 @@ const ReportCampaigns = () => {
             </div>
           ))}</> : null}
             
+            <div className="report-mobile-item" style={{background: "#FF7A09"}}>
+             <p className="report-mobile-item-total">TOTAL: {dataPromo ? dataPromo.selectPrice.price : 0}€</p>
+            </div>
           </div>
         </div>
       </div>
