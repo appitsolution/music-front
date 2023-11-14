@@ -6,7 +6,7 @@ import SignupClientAgreement from "../../components/layout/signup/SignupClientAg
 const SignupClientAgreementPage = () => {
   return (
     <>
-      <Header userType="influencer" path="Sponsoring client" page="signuo" />
+      <Header userType="influencer" path="Sponsoring client" page="signup" />
       <SignupClientAgreement />
       <Background />
     </>

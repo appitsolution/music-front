@@ -36,6 +36,7 @@ const Header = ({ userType = "client", page = "login", path = "" }) => {
     if (userType === "influencer" && page === "signup") {
       return { text: "client", path: "/login/client" };
     }
+    return { text: "client", path: "/login/client" };
   };
 
   const returnTextSignup = () => {
@@ -52,6 +53,7 @@ const Header = ({ userType = "client", page = "login", path = "" }) => {
     if (userType === "influencer" && page === "login") {
       return { text: "client", path: "/signup/client" };
     }
+    return { text: "client", path: "/login/client" };
   };
   return (
     <>
