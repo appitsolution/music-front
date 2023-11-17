@@ -11,21 +11,9 @@ import {
   setSelectPrice,
 } from "../../../../../redux/slice/create-promo";
 
-const prices = [
-  {
-    id: 1,
-    price: 299,
-  },
-  {
-    id: 2,
-    price: 599,
-  },
-  {
-    id: 3,
-    price: 899,
-  },
-];
+
 const AccountClientOffers = () => {
+  const [prices,setPrices] =useState([]) 
   const dispatch = useDispatch();
   const [influencers, setInfluencers] = useState([]);
 
@@ -109,11 +97,17 @@ const AccountClientOffers = () => {
     setInfluencers(updateList);
   };
 
+
   const getData = async () => {
     const result = await axios(
       `${process.env.REACT_APP_SERVER}/auth/influencers`
     );
 
+    const offers = await axios(`${process.env.REACT_APP_SERVER}/promos/offers`)
+    if (offers.data.code === 200) {
+      
+      setPrices(offers.data.offers)
+    }
     if (result.data.code === 200) {
       const listInfluencers = result.data.influencers.map((item) => ({
         ...item,
@@ -128,6 +122,20 @@ const AccountClientOffers = () => {
 
     dispatch(setCurrentWindow(1));
   };
+
+  const createInfList = (score)=> {
+
+    const list = []
+    let sum = 0;
+    while(sum <= score){
+      sum += 1
+      if(sum > score) break
+      list.push(<li className="account-client-offers-text-item">
+      Influencer {sum }
+    </li>)
+    }
+    return list
+  }
 
   useEffect(() => {
     getData();
@@ -144,129 +152,28 @@ const AccountClientOffers = () => {
           <TitleSection title="Our" span="offers" />
 
           <ul className="account-client-offers">
-            <li
+            {prices.map((item)=> (
+              <li
               className={`account-client-offers-item ${
                 currentPrice !== 0
-                  ? currentPrice === 1
+                  ? currentPrice === item.id
                     ? ""
                     : "not-active"
                   : ""
               }`}
-              onClick={() => selectPrice(1)}
+              onClick={() => selectPrice(item.id)}
             >
-              <h3 className="account-client-offers-title">offer 1</h3>
+              <h3 className="account-client-offers-title">offer {item.id}</h3>
               <div className="account-client-offers-block">
                 <ul className="account-client-offers-text-list">
-                  <li className="account-client-offers-text-item">
-                    Influencer 1
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 2
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 3
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 4
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 5
-                  </li>
+                {createInfList(item.maxInfluencer)}
                 </ul>
               </div>
 
-              <button className="account-client-offers-button">299 €</button>
+              <button className="account-client-offers-button">{item.price} €</button>
             </li>
-            <li
-              className={`account-client-offers-item ${
-                currentPrice !== 0
-                  ? currentPrice === 2
-                    ? ""
-                    : "not-active"
-                  : ""
-              }`}
-              onClick={() => selectPrice(2)}
-            >
-              <h3 className="account-client-offers-title">offer 2</h3>
-              <div className="account-client-offers-block">
-                <ul className="account-client-offers-text-list">
-                  <li className="account-client-offers-text-item">
-                    Influencer 1
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 2
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 3
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 4
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 5
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 6
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 7
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 8
-                  </li>
-                </ul>
-              </div>
-
-              <button className="account-client-offers-button">599 €</button>
-            </li>
-            <li
-              className={`account-client-offers-item ${
-                currentPrice !== 0
-                  ? currentPrice === 3
-                    ? ""
-                    : "not-active"
-                  : ""
-              }`}
-              onClick={() => selectPrice(3)}
-            >
-              <h3 className="account-client-offers-title">offer 2</h3>
-              <div className="account-client-offers-block">
-                <ul className="account-client-offers-text-list">
-                  <li className="account-client-offers-text-item">
-                    Influencer 1
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 2
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 3
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 4
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 5
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 6
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 7
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 8
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 9
-                  </li>
-                  <li className="account-client-offers-text-item">
-                    Influencer 10
-                  </li>
-                </ul>
-              </div>
-
-              <button className="account-client-offers-button">899 €</button>
-            </li>
+            ))}
+           
           </ul>
 
           <TitleSection title="Pick &" span="choose" />
