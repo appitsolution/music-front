@@ -45,25 +45,13 @@ const AccountClientOffers = () => {
 
   const selectInfluencer = (id) => {
     if (currentPrice === 0) return;
+    const activePrice = prices.find((item)=> item.id === currentPrice)
     if (
-      currentPrice === 1 &&
       influencers.find((item) => item._id === id).active === false &&
-      selectInfluencers.length === 5
+      selectInfluencers.length === activePrice.maxInfluencer
     )
       return;
 
-    if (
-      currentPrice === 2 &&
-      influencers.find((item) => item._id === id).active === false &&
-      selectInfluencers.length === 8
-    )
-      return;
-    if (
-      currentPrice === 3 &&
-      influencers.find((item) => item._id === id).active === false &&
-      selectInfluencers.length === 10
-    )
-      return;
     const updateList = influencers.map((item) => {
       if (item._id === id) {
         if (item.active) {
