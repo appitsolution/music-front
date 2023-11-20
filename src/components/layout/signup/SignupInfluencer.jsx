@@ -71,7 +71,7 @@ const SignupInfluencer = () => {
     if (!validateEmail(dataForm.email)) {
       errrosList = { ...errrosList, email: true };
     }
-    if (!validatePhoneNumber(dataForm.phone)) {
+    if (!dataForm.phone) {
       errrosList = { ...errrosList, phone: true };
     }
     if (!dataForm.price) {
@@ -180,7 +180,7 @@ const SignupInfluencer = () => {
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
                   value={dataForm.phone}
                   setValue={(value) =>
-                    dispatch(setPhone(formatPhoneNumber(value)))
+                    dispatch(setPhone(value))
                   }
                   error={errorsForm.phone}
                   onFocus={() => setErrorsForm({ ...errorsForm, phone: false })}

@@ -65,7 +65,7 @@ const AccountClientPostContent = () => {
     }
 
 
-    if(!validateDate(dataPromo.dateRequest)){
+    if(!dataPromo.dateRequest){
       haveError = true;
       setFormError({...listError, dateRequest: true})
       return 
@@ -144,7 +144,7 @@ const AccountClientPostContent = () => {
                 placeholder="Enter data"
                 style={{ marginTop: "60px" }}
                 value={dataPromo.dateRequest}
-                setValue={(value) => dispatch(setDateRequest(formatDateString(value)))}
+                setValue={(value) => dispatch(setDateRequest(value))}
                 error={formError.dateRequest}
                 onFocus={() =>
                   setFormError({ ...formError, dateRequest: false })
@@ -152,7 +152,7 @@ const AccountClientPostContent = () => {
               />
               <TextArea
                 title="Special Wishes"
-                placeholder="Enter special wishes"
+                placeholder="Write here if you have any deadlines and specifications "
                 style={{ marginTop: "60px" }}
                 value={dataPromo.specialWishes}
                 setValue={(value) => dispatch(setSpecialWishes(value))}

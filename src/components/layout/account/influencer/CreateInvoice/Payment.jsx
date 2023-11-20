@@ -94,17 +94,7 @@ const CreateInvoicePayment = () => {
               error={errorForm.bankName}
               onFocus={() => setErrorForm({ ...errorForm, bankName: false })}
             />
-            <TextInput
-              title="Bank Branch Name*"
-              placeholder="Enter Branch Name"
-              style={{ maxWidth: "665px", margin: "0 auto", marginTop: "60px" }}
-              value={dataForm.bankBranchName}
-              setValue={(value) => dispatch(setBankBranchName(value))}
-              error={errorForm.bankBranchName}
-              onFocus={() =>
-                setErrorForm({ ...errorForm, bankBranchName: false })
-              }
-            />
+
             <TextInput
               title="Bank Country*"
               placeholder="Enter Bank Country"

@@ -112,10 +112,10 @@ const Header = ({ userType = "client", page = "login", path = "" }) => {
                   className="header-profile"
                   onClick={() => {
                     if (role === "influencer") {
-                      navigation("/account/influencer");
+                      navigation("/account/influencer/details");
                     }
                     if (role === "client") {
-                      navigation("/account/client");
+                      navigation("/account/client/details");
                     }
                   }}
                 >

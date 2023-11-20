@@ -6,7 +6,7 @@ import TextInput from "../../../form/TextInput";
 import StandartButton from "../../../form/StandartButton";
 import axios from "axios";
 import UseVerify from "../../../../hooks/useVerify";
-import { formatPhoneNumber } from "../../../../utils/validations";
+import { formatPhoneNumber, validatePhoneNumber } from "../../../../utils/validations";
 
 const AccountInfluencerDetails = () => {
   const [data, setData] = useState({});
@@ -51,6 +51,183 @@ const AccountInfluencerDetails = () => {
   const [errorMusic, setErrorMusic] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorPhone, setErrorPhone] = useState(false);
+
+  const updateClientPersonal = async () => {
+    let errorPersonalList = {
+      firstName: false,
+      username: false,
+      influencerName: false,
+      instagram: false,
+      followersNumber: false,
+    }
+    if (!dataPersonal.firstName) {
+
+      errorPersonalList = {
+        ...errorPersonal,
+        firstName: true,
+      }
+    }
+    if (!dataPersonal.username) {
+      errorPersonalList = {
+        ...errorPersonal,
+        username: true,
+      }
+    }
+    if (!dataPersonal.influencerName) {
+      errorPersonalList = {
+        ...errorPersonal,
+        influencerName: true,
+      }
+    }
+    if (!dataPersonal.instagram) {
+      errorPersonalList = {
+        ...errorPersonal,
+        influencerName: true,
+      }
+    }
+
+    if (!dataPersonal.followersNumber) {
+      errorPersonalList = {
+        ...errorPersonal,
+        followersNumber: true,
+      }
+    }
+    try {
+      if (
+        !dataPersonal.firstName ||
+        !dataPersonal.instagram ||
+        !dataPersonal.influencerName ||
+        !dataPersonal.username||
+        !dataPersonal.followersNumber
+      ) {
+        return setErrorPersonal(errorPersonalList)
+      }
+
+      const result = await axios.put(
+        `${process.env.REACT_APP_SERVER}/profile/influencer/personal`,
+        { ...dataPersonal, id: data._id }
+      );
+
+      if (result.data.code === 200) {
+        setIsOpenPersonal(false);
+        setData({ ...data, ...dataPersonal });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updateClientPassword = async () => {
+    if (!dataPassword.currentPassword) {
+      
+      setErrorPassword({
+        ...errorPassword,
+        currentPassword: true
+      });
+ 
+    }
+    if (!dataPassword.newPassword) {
+      setErrorPassword({
+        ...errorPassword,
+        newPassword: true
+      });
+
+    }
+    if (
+      !dataPassword.acceptPassword ||
+      !dataPassword.currentPassword ||
+      !dataPassword.newPassword
+    ) {
+      return;
+    }
+    if (dataPassword.newPassword !== dataPassword.acceptPassword) {
+      setErrorPassword({
+        ...errorPassword,
+        repeatPassword: true
+      });
+      return
+    }
+    try {
+      const result = await axios.put(
+        `${process.env.REACT_APP_SERVER}/profile/client/password`,
+        {role:'client',
+          currentPassword: dataPassword.currentPassword,
+          newPassword: dataPassword.newPassword,
+          id: data._id,
+        }
+      );
+      if (result.data.code === 200) {
+        setIsOpenPassword(false);
+        setDataPassword({
+          currentPassword: "",
+          newPassword: "",
+          acceptPassword: "",
+        });
+        return;
+      }
+       setErrorPassword({
+        ...errorPassword,
+        repeatPassword: true
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updateMusicStyle = async () => {
+    if (!dataMusic) {
+      return setErrorMusic(true);
+    }
+
+    try {
+      const result = await axios.put(
+        `${process.env.REACT_APP_SERVER}/profile/influencer/music`,
+        { musicStyle: dataMusic, id: data._id }
+      );
+      if (result.data.code === 200) {
+        setIsOpenMusic(false);
+        setData({ ...data, musicStyle: dataMusic });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updateClientEmail = async () => {
+    if (!dataEmail) {
+      return setErrorEmail(true);
+    }
+    try {
+      const result = await axios.put(
+        `${process.env.REACT_APP_SERVER}/profile/client/email`,
+        { email: dataEmail, id: data._id }
+      );
+      if (result.data.code === 200) {
+        setIsOpenEmail(false);
+        setData({ ...data, email: dataEmail });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updateClientPhone = async () => {
+    if (!dataPhone) {
+      return setErrorPhone(true);
+    }
+    try {
+      const result = await axios.put(
+        `${process.env.REACT_APP_SERVER}/profile/influencer/phone`,
+        { phone: dataPhone, id: data._id }
+      );
+      if (result.data.code === 200) {
+        setIsOpenPhone(false);
+        setData({ ...data, phone: dataPhone });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const getData = async () => {
     try {
@@ -280,6 +457,7 @@ const AccountInfluencerDetails = () => {
             value={dataPersonal.firstName}
             setValue={(value) =>
               setDataPersonal({ ...dataPersonal, firstName: value })
+              
             }
             error={errorPersonal.firstName}
             onFocus={() =>
@@ -346,10 +524,11 @@ const AccountInfluencerDetails = () => {
               justifyContent: "center",
             }}
           >
-            <StandartButton text="Save changes" />
+            <StandartButton text="Save changes" onClick={updateClientPersonal}/>
           </div>
         </div>
       </ModalWindow>
+
       <ModalWindow
         header="Password"
         isOpen={isOpenPassword}
@@ -406,10 +585,11 @@ const AccountInfluencerDetails = () => {
               justifyContent: "center",
             }}
           >
-            <StandartButton text="Update Password" />
+            <StandartButton text="Update Password" onClick={updateClientPassword}/>
           </div>
         </div>
       </ModalWindow>
+
       <ModalWindow
         header="Music style"
         isOpen={isOpenMusic}
@@ -433,10 +613,11 @@ const AccountInfluencerDetails = () => {
               justifyContent: "center",
             }}
           >
-            <StandartButton text="Save changes" />
+            <StandartButton text="Save changes" onClick={updateMusicStyle}/>
           </div>
         </div>
       </ModalWindow>
+
       <ModalWindow
         header="Email address"
         isOpen={isOpenEmail}
@@ -460,10 +641,11 @@ const AccountInfluencerDetails = () => {
               justifyContent: "center",
             }}
           >
-            <StandartButton text="Save changes" />
+            <StandartButton text="Save changes" onClick={updateClientEmail}/>
           </div>
         </div>
       </ModalWindow>
+
       <ModalWindow
         header="Phone"
         isOpen={isOpenPhone}
@@ -475,7 +657,7 @@ const AccountInfluencerDetails = () => {
             placeholder="+1 234 567 89 00"
             style={{ marginTop: "80px" }}
             value={dataPhone}
-            setValue={(value) => setDataPhone(formatPhoneNumber(value))}
+            setValue={(value) => setDataPhone(value)}
             error={errorPhone}
             onFocus={() => setErrorPhone(false)}
           />
@@ -487,7 +669,7 @@ const AccountInfluencerDetails = () => {
               justifyContent: "center",
             }}
           >
-            <StandartButton text="Save changes" />
+            <StandartButton text="Save changes" onClick={updateClientPhone}/>
           </div>
         </div>
       </ModalWindow>

@@ -108,7 +108,7 @@ const AccountClientDetails = () => {
     try {
       const result = await axios.put(
         `${process.env.REACT_APP_SERVER}/profile/client/password`,
-        {
+        {role:'client',
           currentPassword: dataPassword.currentPassword,
           newPassword: dataPassword.newPassword,
           id: data._id,
@@ -170,7 +170,7 @@ const AccountClientDetails = () => {
   };
 
   const updateClientPhone = async () => {
-    if (!dataPhone || !validatePhoneNumber(dataPhone)) {
+    if (!dataPhone) {
       return setErrorPhone(true);
     }
     try {
@@ -619,7 +619,7 @@ const AccountClientDetails = () => {
             placeholder="+1 234 567 89 00"
             style={{ marginTop: "80px" }}
             value={dataPhone}
-            setValue={(value) => setDataPhone(formatPhoneNumber(value))}
+            setValue={(value) => setDataPhone(value)}
             error={errorPhone}
             onFocus={() => setErrorPhone(false)}
           />

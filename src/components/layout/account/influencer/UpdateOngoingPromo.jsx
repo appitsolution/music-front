@@ -103,6 +103,8 @@ const UpdateOngoingPromo = () => {
               setValue={(value) =>
                 setFormData({ ...formData, impressions: value })
               }
+              disabled={true}
+              disabledTime="3"
             />
 
             <TextInput
@@ -133,15 +135,15 @@ const UpdateOngoingPromo = () => {
               disabled={true}
               disabledTime="3"
             />
-            <TextInput
+            {/* <TextInput
               style={{ maxWidth: "665px", margin: "60px auto 0 auto" }}
-              title="Reach"
+              title="Reach "
               placeholder="Enter the Reach number here"
-              value={formData.reach}
+              value={formData.impressions}
               setValue={(value) => setFormData({ ...formData, reach: value })}
               disabled={true}
               disabledTime="3"
-            />
+            /> */}
             <TextInput
               style={{ maxWidth: "665px", margin: "60px auto 0 auto" }}
               title="Likes"
@@ -152,13 +154,7 @@ const UpdateOngoingPromo = () => {
               disabledTime="3"
             />
 
-            <TextInput
-              style={{ maxWidth: "665px", margin: "60px auto 0 auto" }}
-              title="Invoice"
-              placeholder="Enter invoice"
-              value={formData.invoice}
-              setValue={(value) => setFormData({ ...formData, invoice: value })}
-            />
+          
             <div
               style={{
                 marginTop: "60px",

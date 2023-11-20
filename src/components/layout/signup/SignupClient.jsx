@@ -53,7 +53,7 @@ const SignupClient = () => {
     if (!signClienState.email || !validateEmail(signClienState.email)) {
       setErrorEmail(true);
     }
-    if (!signClienState.phone || !validatePhoneNumber(signClienState.phone)) {
+    if (!signClienState.phone ) {
       setErrorPhone(true);
     }
 
@@ -142,7 +142,7 @@ to get approved as"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
                   value={signClienState.phone}
                   setValue={(value) =>
-                    dispatch(setPhone(formatPhoneNumber(value)))
+                    dispatch(setPhone(value))
                   }
                   error={errorPhone}
                   onFocus={() => setErrorPhone(false)}
