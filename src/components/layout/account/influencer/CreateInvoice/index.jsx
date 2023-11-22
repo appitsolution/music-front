@@ -1,16 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TitleSection from "../../../../TitleSection";
 import CreateInvoicePayment from "./Payment";
 import CreateInvoiceDetails from "./Details";
 import CreateInvoiceBalances from "./Balances";
 import acceptProgress from "../../../../../images/icons/accept-progress.svg";
 import { useDispatch, useSelector } from "react-redux";
+import { setAllFormInvoice } from "../../../../../redux/slice/create-invoice";
+import axios from "axios";
+import UseVerify from "../../../../../hooks/useVerify";
 
 const AccountInfluencerCreateInvoice = () => {
   const dispatch = useDispatch();
   const currentWindow = useSelector(
     (state) => state.createInvoice.currentWindow
   );
+
+  const getSaved = async () => {
+    try {
+      const { dataFetch } = await UseVerify();
+      const res = await axios(
+        `${process.env.REACT_APP_SERVER}/invoice/saved?influencerId=${dataFetch._id}`
+      );
+      if (res.data.code === 200) {
+        dispatch(setAllFormInvoice(res.data.invoice));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getSaved();
+  }, []);
 
   return (
     <section className="create-invoice">

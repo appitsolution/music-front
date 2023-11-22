@@ -76,3 +76,28 @@ export function validateDate(inputDate) {
   }
 }
 
+
+export function isThreeDaysPassed(inputDate) {
+
+  const currentDate = new Date();
+  const inputDateTime = new Date(inputDate);
+
+ const timeDifference = currentDate - inputDateTime;
+
+ 
+  const threeDaysInMillis = 3 * 24 * 60 * 60 * 1000;
+
+  
+  if (timeDifference >= threeDaysInMillis) {
+  
+    return { isPassed: true, daysLeft: 0 };
+  } else {
+
+    const daysLeft = Math.ceil((threeDaysInMillis - timeDifference) / (24 * 60 * 60 * 1000));
+
+    return { isPassed: false, daysLeft };
+  }
+}
+
+
+

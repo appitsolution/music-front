@@ -5,7 +5,9 @@ const initialState = {
   data: {
     payee: "",
     bankName: "",
-    bankBranchName: "",
+    beneficiary: "",
+    beneficiaryAddress: '',
+    iban: '',
     bankCountry: "",
     bankAccountCurrency: "",
     sortCode: "",
@@ -39,8 +41,14 @@ export const createInvoiceSlice = createSlice({
     setBankName: (state, action) => {
       state.data.bankName = action.payload;
     },
-    setBankBranchName: (state, action) => {
-      state.data.bankBranchName = action.payload;
+    setBeneficiary: (state, action) => {
+      state.data.beneficiary = action.payload;
+    },
+    setBeneficiaryAddress: (state, action) => {
+      state.data.beneficiaryAddress = action.payload;
+    },
+    setIban: (state, action) => {
+      state.data.iban = action.payload;
     },
     setBankCountry: (state, action) => {
       state.data.bankCountry = action.payload;
@@ -95,9 +103,12 @@ export const createInvoiceSlice = createSlice({
     },
 
     setClearForm: (state) => {
+      state.currentWindow = 0;
       state.data.payee = "";
       state.data.bankName = "";
-      state.data.bankBranchName = "";
+      state.data.beneficiary = "";
+      state.data.beneficiaryAddress = "";
+      state.data.iban = "";
       state.data.bankCountry = "";
       state.data.bankAccountCurrency = "";
       state.data.sortCode = "";
@@ -116,6 +127,11 @@ export const createInvoiceSlice = createSlice({
       state.data.country = "";
       state.data.notes = "";
     },
+
+
+    setAllFormInvoice: (state,action)=> {
+      state.data = action.payload
+    }
   },
 });
 
@@ -123,7 +139,9 @@ export const {
   setCurrentWindow,
   setPayee,
   setBankName,
-  setBankBranchName,
+  setBeneficiary,
+  setBeneficiaryAddress,
+  setIban,
   setBankCountry,
   setBankAccountCurrency,
   setSortCode,
@@ -142,6 +160,7 @@ export const {
   setNotes,
   setClearForm,
   setAmount,
+  setAllFormInvoice
 } = createInvoiceSlice.actions;
 
 export default createInvoiceSlice.reducer;

@@ -122,7 +122,7 @@ const AccountInfluencerInvoices = () => {
                         </div>
                         <div className="invoices-block-content-item-message-mobile">
                           <p className="invoices-block-content-item-message-text">
-                            Payment Due: June 30th (subject to approval)
+                            Payment Due: 7 days (subject to approval)
                           </p>
                         </div>
                       </li>

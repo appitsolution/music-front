@@ -26,6 +26,31 @@ const AccountClientOffers = () => {
   );
 
   const selectPrice = (id) => {
+    const searchPrice = prices.find((item) => item.id === id)
+
+    const updateList = influencers.map((item) => {
+      if (searchPrice.connectInfluencer.includes(item._id)) {
+          return {
+            ...item,
+            active: true,
+          };
+      }else {
+        return {
+          ...item,
+          active: false,
+        }
+      }
+
+      return item;
+    });
+    const filterInfluencers = searchPrice.connectInfluencer
+      .map((item) => ({
+        influencerId: item,
+        confirmation: "wait",
+      }));
+    dispatch(setSelectInfluencer([...filterInfluencers]));
+    setInfluencers(updateList);
+
     if (currentPrice === id) {
       dispatch(
         setSelectPrice({
@@ -41,6 +66,7 @@ const AccountClientOffers = () => {
         price: prices.find((item) => item.id === id).price,
       })
     );
+
   };
 
   const selectInfluencer = (id) => {
@@ -193,9 +219,9 @@ const AccountClientOffers = () => {
               ))}
             </ul>
 
-            <div className="account-client-choose-all-block">
+            {/* <div className="account-client-choose-all-block">
               <button className="account-client-choose-all">See more</button>
-            </div>
+            </div> */}
 
             <p className="account-client-choose-total">
               Total{" "}

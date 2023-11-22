@@ -5,10 +5,12 @@ import TextInput from "../../../form/TextInput";
 import StandartButton from "../../../form/StandartButton";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { isThreeDaysPassed } from "../../../../utils/validations";
 
 const UpdateOngoingPromo = () => {
   const params = useParams();
   const navigation = useNavigate();
+  const [data,setData]=useState()
   const [formData, setFormData] = useState({
     brand: "",
     caption: "",
@@ -32,6 +34,7 @@ const UpdateOngoingPromo = () => {
 
       if (result.data.code === 200) {
         setFormData(result.data.promo);
+        setData(isThreeDaysPassed(result.data.dateRequest))
       }
     } catch (err) {
       console.log(err);
@@ -103,8 +106,8 @@ const UpdateOngoingPromo = () => {
               setValue={(value) =>
                 setFormData({ ...formData, impressions: value })
               }
-              disabled={true}
-              disabledTime="3"
+              disabled={!data.isPassed}
+              disabledTime={data.daysLeft}
             />
 
             <TextInput
@@ -132,8 +135,8 @@ const UpdateOngoingPromo = () => {
               setValue={(value) =>
                 setFormData({ ...formData, screenshot: value })
               }
-              disabled={true}
-              disabledTime="3"
+              disabled={!data.isPassed}
+              disabledTime={data.daysLeft}
             />
             {/* <TextInput
               style={{ maxWidth: "665px", margin: "60px auto 0 auto" }}
@@ -150,8 +153,8 @@ const UpdateOngoingPromo = () => {
               placeholder="Enter the Likes number here"
               value={formData.like}
               setValue={(value) => setFormData({ ...formData, like: value })}
-              disabled={true}
-              disabledTime="3"
+              disabled={!data.isPassed}
+              disabledTime={data.daysLeft}
             />
 
           

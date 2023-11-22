@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AccountClientOffers from "./AccountClientOffers";
 import AccountClientPostContent from "./AccountClientPostContent";
 import AccountClientPayment from "./AccountClientPayment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { setAllFormInvoice } from "../../../../../redux/slice/create-invoice";
 
 const CreatePromo = () => {
+  const dispatch = useDispatch()
   const currentWindow = useSelector((state) => state.createPromo.currentWindow);
+ 
   return (
     <>
       {
