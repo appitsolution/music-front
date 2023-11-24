@@ -10,7 +10,10 @@ import { isThreeDaysPassed } from "../../../../utils/validations";
 const UpdateOngoingPromo = () => {
   const params = useParams();
   const navigation = useNavigate();
-  const [data,setData]=useState()
+  const [data, setData] = useState({
+    isPassed: false,
+    daysLeft: 3,
+  });
   const [formData, setFormData] = useState({
     brand: "",
     caption: "",
@@ -32,9 +35,10 @@ const UpdateOngoingPromo = () => {
         `${process.env.REACT_APP_SERVER}/promos/get-ongoing-promo-one?influencerId=${params.influencerId}&promoId=${params.promoId}`
       );
 
+      console.log(result.data.date);
       if (result.data.code === 200) {
         setFormData(result.data.promo);
-        setData(isThreeDaysPassed(result.data.dateRequest))
+        setData(isThreeDaysPassed(result.data.date));
       }
     } catch (err) {
       console.log(err);
@@ -157,7 +161,6 @@ const UpdateOngoingPromo = () => {
               disabledTime={data.daysLeft}
             />
 
-          
             <div
               style={{
                 marginTop: "60px",

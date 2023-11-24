@@ -6,6 +6,24 @@ import UseVerify from "../../../../hooks/useVerify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+function formatDate(inputDate) {
+  const date = new Date(inputDate);
+
+  // Получаем компоненты даты
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Месяцы начинаются с 0
+  const year = date.getFullYear();
+
+  // Добавляем ведущий ноль, если компонент даты меньше 10
+  const formattedDay = day < 10 ? `0${day}` : day;
+  const formattedMonth = month < 10 ? `0${month}` : month;
+
+  // Собираем дату в нужном формате
+  const formattedDate = `${formattedDay}.${formattedMonth}.${year}`;
+
+  return formattedDate;
+}
+
 const AccountInfluencerOngoingPromos = () => {
   const navigation = useNavigate();
   const [data, setData] = useState([]);
@@ -51,7 +69,9 @@ const AccountInfluencerOngoingPromos = () => {
                         )
                       }
                     >
-                      <img className="account-client-past-promos-form-image" />
+                      <div className="account-client-past-promos-form-image">
+                        {item.client}
+                      </div>
                       <p className="account-client-past-promos-form-text">
                         Promo {index + 1}
                       </p>

@@ -49,24 +49,24 @@ const CreateInvoicePayment = () => {
       amount: false,
     };
 
-    let haveError = false;
-    for (let checkError in dataForm) {
-      if (checkError === "contactName") break;
-      if (checkError === "amount") {
-        if (dataForm[checkError] === 0 || !Boolean(dataForm[checkError])) {
-          haveError = true;
-        }
-      }
-      if (dataForm[checkError] === "") {
-        haveError = true;
-        listError = {
-          ...listError,
-          [checkError]: true,
-        };
-      }
-    }
+    // let haveError = false;
+    // for (let checkError in dataForm) {
+    //   if (checkError === "contactName") break;
+    //   if (checkError === "amount") {
+    //     if (dataForm[checkError] === 0 || !Boolean(dataForm[checkError])) {
+    //       haveError = true;
+    //     }
+    //   }
+    //   if (dataForm[checkError] === "") {
+    //     haveError = true;
+    //     listError = {
+    //       ...listError,
+    //       [checkError]: true,
+    //     };
+    //   }
+    // }
 
-    if (haveError) return setErrorForm(listError);
+    // if (haveError) return setErrorForm(listError);
 
     dispatch(setCurrentWindow(1));
   };
@@ -129,48 +129,74 @@ const CreateInvoicePayment = () => {
                 setErrorForm({ ...errorForm, beneficiaryAddress: false })
               }
             />
-           
-         {selectDetails ? <>    <TextInput
-              title="IBAN*"
-              placeholder="Enter IBAN"
-              style={{ maxWidth: "665px", margin: "0 auto", marginTop: "60px" }}
-              value={dataForm.iban}
-              setValue={(value) => dispatch(setIban(value))}
-              error={errorForm.iban}
-              onFocus={() => setErrorForm({ ...errorForm, iban: false })}
-            /><TextInput
-              title="Bank Name*"
-              placeholder="Enter Bank Name"
-              style={{ maxWidth: "665px", margin: "0 auto", marginTop: "60px" }}
-              value={dataForm.bankName}
-              setValue={(value) => dispatch(setBankName(value))}
-              error={errorForm.bankName}
-              onFocus={() => setErrorForm({ ...errorForm, bankName: false })}
-            />
 
-            <TextInput
-              title="Bank Country*"
-              placeholder="Enter Bank Country"
-              style={{ maxWidth: "665px", margin: "0 auto", marginTop: "60px" }}
-              value={dataForm.bankCountry}
-              setValue={(value) => dispatch(setBankCountry(value))}
-              error={errorForm.bankCountry}
-              onFocus={() => setErrorForm({ ...errorForm, bankCountry: false })}
-            />
-            <TextInput
-              title="Bank Account Currency*"
-              placeholder="Enter Bank Account Currency"
-              style={{ maxWidth: "665px", margin: "0 auto", marginTop: "60px" }}
-              value={dataForm.bankAccountCurrency}
-              setValue={(value) => dispatch(setBankAccountCurrency(value))}
-              error={errorForm.bankAccountCurrency}
-              onFocus={() =>
-                setErrorForm({ ...errorForm, bankAccountCurrency: false })
-              }
-            /></>: <></>}
+            {selectDetails ? (
+              <>
+                {" "}
+                <TextInput
+                  title="IBAN*"
+                  placeholder="Enter IBAN"
+                  style={{
+                    maxWidth: "665px",
+                    margin: "0 auto",
+                    marginTop: "60px",
+                  }}
+                  value={dataForm.iban}
+                  setValue={(value) => dispatch(setIban(value))}
+                  error={errorForm.iban}
+                  onFocus={() => setErrorForm({ ...errorForm, iban: false })}
+                />
+                <TextInput
+                  title="Bank Name*"
+                  placeholder="Enter Bank Name"
+                  style={{
+                    maxWidth: "665px",
+                    margin: "0 auto",
+                    marginTop: "60px",
+                  }}
+                  value={dataForm.bankName}
+                  setValue={(value) => dispatch(setBankName(value))}
+                  error={errorForm.bankName}
+                  onFocus={() =>
+                    setErrorForm({ ...errorForm, bankName: false })
+                  }
+                />
+                <TextInput
+                  title="Bank Country*"
+                  placeholder="Enter Bank Country"
+                  style={{
+                    maxWidth: "665px",
+                    margin: "0 auto",
+                    marginTop: "60px",
+                  }}
+                  value={dataForm.bankCountry}
+                  setValue={(value) => dispatch(setBankCountry(value))}
+                  error={errorForm.bankCountry}
+                  onFocus={() =>
+                    setErrorForm({ ...errorForm, bankCountry: false })
+                  }
+                />
+                <TextInput
+                  title="Bank Account Currency*"
+                  placeholder="Enter Bank Account Currency"
+                  style={{
+                    maxWidth: "665px",
+                    margin: "0 auto",
+                    marginTop: "60px",
+                  }}
+                  value={dataForm.bankAccountCurrency}
+                  setValue={(value) => dispatch(setBankAccountCurrency(value))}
+                  error={errorForm.bankAccountCurrency}
+                  onFocus={() =>
+                    setErrorForm({ ...errorForm, bankAccountCurrency: false })
+                  }
+                />
+              </>
+            ) : (
+              <></>
+            )}
             {!selectDetails ? (
               <>
-            
                 <TextInput
                   title="Sort Code*"
                   placeholder="Enter Sort Code"
@@ -205,15 +231,27 @@ const CreateInvoicePayment = () => {
             ) : (
               <></>
             )}
-            {selectDetails ? <><TextInput
-              title="SWIFT / BIC"
-              placeholder="SWIFT / BIC"
-              style={{ maxWidth: "665px", margin: "0 auto", marginTop: "60px" }}
-              value={dataForm.swiftOrBic}
-              setValue={(value) => dispatch(setSwiftOrBic(value))}
-              error={errorForm.swiftOrBic}
-              onFocus={() => setErrorForm({ ...errorForm, swiftOrBic: false })}
-            /></>: <></>}
+            {selectDetails ? (
+              <>
+                <TextInput
+                  title="SWIFT / BIC"
+                  placeholder="SWIFT / BIC"
+                  style={{
+                    maxWidth: "665px",
+                    margin: "0 auto",
+                    marginTop: "60px",
+                  }}
+                  value={dataForm.swiftOrBic}
+                  setValue={(value) => dispatch(setSwiftOrBic(value))}
+                  error={errorForm.swiftOrBic}
+                  onFocus={() =>
+                    setErrorForm({ ...errorForm, swiftOrBic: false })
+                  }
+                />
+              </>
+            ) : (
+              <></>
+            )}
 
             <TextInput
               title="Amount"

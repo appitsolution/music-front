@@ -527,9 +527,19 @@
     }
 
     &-image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 94px;
         height: 94px;
         background: rgba(51, 48, 228, 0.5);
+
+        color: var(--text);
+        font-family: Geometria;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
     }
 }
 

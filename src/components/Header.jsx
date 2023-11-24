@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "../images/icons/logo.svg";
 import profile from "../images/icons/profile.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useNavigation } from "react-router-dom";
 import themeNight from "../images/icons/theme-night.svg";
 import themeDay from "../images/icons/theme-day.svg";
 import { useTheme } from "../ThemeContext";
@@ -12,6 +12,8 @@ import { setAuthenticated } from "../redux/slice/authenticated";
 const Header = ({ userType = "client", page = "login", path = "" }) => {
   const navigation = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const { toggleTheme, theme } = useTheme();
   const isAuth = useSelector((state) => state.authenticated.isAuthenticated);
   const role = useSelector((state) => state.authenticated.role);
@@ -103,7 +105,9 @@ const Header = ({ userType = "client", page = "login", path = "" }) => {
                       navigation(returnTextSignup().path);
                     }}
                   >
-                    Sign up as {returnTextSignup().text}
+                    {location.pathname === "/"
+                      ? "Log in Influencer"
+                      : `Sign up as ${returnTextSignup().text}`}
                   </button>
                 </div>
               )}

@@ -56,7 +56,9 @@ const AccountInfluencerPastPromos = () => {
                         )
                       }
                     >
-                      <img className="account-client-past-promos-form-image" />
+                      <div className="account-client-past-promos-form-image">
+                        {item.client}
+                      </div>
                       <p className="account-client-past-promos-form-text">
                         Promo {index + 1}
                       </p>
