@@ -120,7 +120,10 @@ const AccountInfluencerHome = () => {
               </button>
             </li>
             <li className="account-client-menu-item">
-              <button className="account-client-menu-button">
+              <a
+                href="mailto:admin@napoleonpr.com"
+                className="account-client-menu-button"
+              >
                 <img
                   className="account-client-menu-button-icon"
                   src={support}
@@ -129,7 +132,7 @@ const AccountInfluencerHome = () => {
                 <p className="account-client-menu-button-text">
                   Contact Support
                 </p>
-              </button>
+              </a>
             </li>
           </ul>
         </div>

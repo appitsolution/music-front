@@ -7,6 +7,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAuthenticated } from "../../../redux/slice/authenticated";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 const LoginClient = () => {
   const navigation = useNavigate();
@@ -31,6 +35,13 @@ const LoginClient = () => {
       navigation("/account/influencer");
       return;
     }
+
+    if (result.data.code === 403) {
+      NotificationManager.info("Your account is under verification", "Info");
+      return;
+    }
+
+    NotificationManager.error("Incorrect password", "Error");
 
     setErrorLogin(true);
   };
@@ -97,6 +108,7 @@ const LoginClient = () => {
           </p>
         </div>
       </div>
+      <NotificationContainer />
     </section>
   );
 };

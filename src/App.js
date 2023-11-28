@@ -41,6 +41,7 @@ import AccountInfluencerOngoingPromosCurrentPage from "./pages/account/influence
 import AccountClientOngoingPromos from "./pages/account/client/ongoing-promos";
 import AcountClientOngoingCurrentPage from "./pages/account/client/ongoing-promos-current";
 import AccountInfluencerUpdateIngoingPromoPage from "./pages/account/influencer/update-ongoing-promo";
+import StripeButton from "./components/Payment/StripeButton";
 
 const App = () => {
   return (
@@ -65,6 +66,10 @@ const App = () => {
             }
           />
           <Route
+            path="/test"
+            element={<PublicRoute role="influencer" element={StripeButton} />}
+          />
+          <Route
             path="/signup/influencer/agreement"
             element={
               <PublicRoute
@@ -87,65 +92,119 @@ const App = () => {
 
           <Route
             path="/account/client/details"
-            element={<PrivateRoute role="client" element={AccountClientDetails} />}
+            element={
+              <PrivateRoute role="client" element={AccountClientDetails} />
+            }
           />
           <Route
             path="/account/client/invoice-details"
-            element={<PrivateRoute role="client" element={AccountClientInvoiceDetails} />}
+            element={
+              <PrivateRoute
+                role="client"
+                element={AccountClientInvoiceDetails}
+              />
+            }
           />
           <Route
             path="/account/client/past-promos"
-            element={<PrivateRoute role="client" element={AccountClientPastPromos} />}
+            element={
+              <PrivateRoute role="client" element={AccountClientPastPromos} />
+            }
           />
           <Route
             path="/account/client/create-promo"
-            element={<PrivateRoute role="client" element={AccountClientCreatePromoPage} />}
+            element={
+              <PrivateRoute
+                role="client"
+                element={AccountClientCreatePromoPage}
+              />
+            }
           />
           <Route
             path="/account/client/past-promos/:id"
-            element={<PrivateRoute role="client" element={AccountClientPastPromosCurrent} />}
+            element={
+              <PrivateRoute
+                role="client"
+                element={AccountClientPastPromosCurrent}
+              />
+            }
           />
           <Route
             path="/account/client/ongoing-promos"
-            element={<PrivateRoute role="client" element={AccountClientOngoingPromos} />}
+            element={
+              <PrivateRoute
+                role="client"
+                element={AccountClientOngoingPromos}
+              />
+            }
           />
           <Route
             path="/account/client/ongoing-promos/:id"
-            element={<PrivateRoute role="client" element={AcountClientOngoingCurrentPage} />}
+            element={
+              <PrivateRoute
+                role="client"
+                element={AcountClientOngoingCurrentPage}
+              />
+            }
           />
           <Route
             path="/account/influencer"
-            element={<PrivateRoute role="influencer" element={AccountInfluencerHome} />}
+            element={
+              <PrivateRoute role="influencer" element={AccountInfluencerHome} />
+            }
           />
           <Route
             path="/account/influencer/details"
-            element={<PrivateRoute role="influencer"  element={AccountInfluencerDetails} />}
+            element={
+              <PrivateRoute
+                role="influencer"
+                element={AccountInfluencerDetails}
+              />
+            }
           />
           <Route
             path="/account/influencer/invoices"
-            element={<PrivateRoute role="influencer"  element={AccountInfluencerInvoicesPage} />}
+            element={
+              <PrivateRoute
+                role="influencer"
+                element={AccountInfluencerInvoicesPage}
+              />
+            }
           />
           <Route
             path="/account/influencer/past-promos"
-            element={<PrivateRoute role="influencer"  element={AccountInfluencerPastPromos} />}
+            element={
+              <PrivateRoute
+                role="influencer"
+                element={AccountInfluencerPastPromos}
+              />
+            }
           />
           <Route
             path="/account/influencer/past-promos/:id"
             element={
-              <PrivateRoute role="influencer"  element={AccountInfluencerPastPromosCurrentPage} />
+              <PrivateRoute
+                role="influencer"
+                element={AccountInfluencerPastPromosCurrentPage}
+              />
             }
           />
 
           <Route
             path="/account/influencer/ongoing-promos"
-            element={<PrivateRoute role="influencer"  element={AccountInfluencerOngoingPromos} />}
+            element={
+              <PrivateRoute
+                role="influencer"
+                element={AccountInfluencerOngoingPromos}
+              />
+            }
           />
 
           <Route
             path="/account/influencer/ongoing-promos/:id"
             element={
               <PrivateRoute
-              role="influencer" 
+                role="influencer"
                 element={AccountInfluencerOngoingPromosCurrentPage}
               />
             }
@@ -154,32 +213,47 @@ const App = () => {
           <Route
             path="/account/influencer/update-ongoing-promos/:promoId/:influencerId"
             element={
-              <PrivateRoute role="influencer"  element={AccountInfluencerUpdateIngoingPromoPage} />
+              <PrivateRoute
+                role="influencer"
+                element={AccountInfluencerUpdateIngoingPromoPage}
+              />
             }
           />
 
           <Route
             path="/account/influencer/new-promos"
-            element={<PrivateRoute role="influencer"  element={AccountInfluencerNewPromosPage} />}
+            element={
+              <PrivateRoute
+                role="influencer"
+                element={AccountInfluencerNewPromosPage}
+              />
+            }
           />
 
           <Route
             path="/account/influencer/create-invoice"
             element={
-              <PrivateRoute role="influencer"  element={AccountInfluencerCreateInvoicePage} />
+              <PrivateRoute
+                role="influencer"
+                element={AccountInfluencerCreateInvoicePage}
+              />
             }
           />
           <Route
             path="/account/influencer/reports"
-            element={<PrivateRoute role="influencer"  element={ReportCampaignsPage} />}
+            element={
+              <PrivateRoute role="influencer" element={ReportCampaignsPage} />
+            }
           />
           <Route
             path="/account/influencer/invoice-result"
-            element={<PrivateRoute role="influencer"  element={InvoiceResultPage} />}
+            element={
+              <PrivateRoute role="influencer" element={InvoiceResultPage} />
+            }
           />
           <Route
             path="/login/client"
-            element={<PublicRoute  role="client" element={LoginClientPage} />}
+            element={<PublicRoute role="client" element={LoginClientPage} />}
           />
           <Route
             path="/login/influencer"

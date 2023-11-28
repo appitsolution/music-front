@@ -15,6 +15,10 @@ import {
   setUsername,
 } from "../../../redux/slice/signup-client";
 import axios from "axios";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 const SignupClientAgreement = () => {
   const signupClientState = useSelector((state) => state.signupClient);
@@ -77,6 +81,13 @@ const SignupClientAgreement = () => {
         localStorage.setItem("token", requestToken.data.token);
         dispatch(setSignupClear());
         navigation("/account/client");
+      }
+
+      if (result.data.code === 409) {
+        NotificationManager.error(
+          "An account with this email already exists",
+          "Error"
+        );
       }
     } catch (err) {
       console.log(err);
@@ -149,6 +160,7 @@ const SignupClientAgreement = () => {
           </FormContainer>
         </div>
       </div>
+      <NotificationContainer />
     </section>
   );
 };

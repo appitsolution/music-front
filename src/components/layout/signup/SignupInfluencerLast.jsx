@@ -15,6 +15,10 @@ import {
   setUsername,
 } from "../../../redux/slice/signup-influencer";
 import axios from "axios";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 const SignupInfluencerLast = () => {
   const dataForm = useSelector((state) => state.signupInfluencer);
@@ -81,6 +85,12 @@ const SignupInfluencerLast = () => {
         localStorage.setItem("token", requestToken.data.token);
         dispatch(setSignupClear());
         navigation("/account/influencer");
+      }
+      if (result.data.code === 409) {
+        NotificationManager.error(
+          "An account with this email already exists",
+          "Error"
+        );
       }
     } catch (err) {
       console.log(err);
@@ -159,6 +169,7 @@ const SignupInfluencerLast = () => {
           </FormContainer>
         </div>
       </div>
+      <NotificationContainer />
     </section>
   );
 };
