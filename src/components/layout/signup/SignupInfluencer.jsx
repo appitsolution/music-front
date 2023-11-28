@@ -8,14 +8,19 @@ import ModalWindow from "../../ModalWindow";
 import acceptIcon from "../../../images/icons/accept.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setAcceptAgree,
   setEmail,
   setFirstName,
   setFollowersNumber,
   setInfluencerName,
   setInstagram,
   setMusicStyle,
+  setPassword,
   setPhone,
   setPrice,
+  setRepeatPassword,
+  setSignupClear,
+  setUsername,
 } from "../../../redux/slice/signup-influencer";
 import {
   formatPhoneNumber,
@@ -23,6 +28,12 @@ import {
   validatePhoneNumber,
 } from "../../../utils/validations";
 import { useNavigate } from "react-router-dom";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
+import axios from "axios";
+import CheckBox from "../../form/CheckBox";
 
 const SignupInfluencer = () => {
   const navigation = useNavigate();
@@ -40,9 +51,12 @@ const SignupInfluencer = () => {
     email: false,
     phone: false,
     price: false,
+    username: false,
+    password: false,
+    repeatPassword: false,
   });
 
-  const nextForm = () => {
+  const nextForm = async () => {
     let errrosList = {
       firstName: false,
       influencerName: false,
@@ -52,6 +66,9 @@ const SignupInfluencer = () => {
       email: false,
       phone: false,
       price: false,
+      username: false,
+      password: false,
+      repeatPassword: false,
     };
     if (!dataForm.firstName) {
       errrosList = { ...errrosList, firstName: true };
@@ -77,6 +94,13 @@ const SignupInfluencer = () => {
     if (!dataForm.price) {
       errrosList = { ...errrosList, price: true };
     }
+    if (!dataForm.username) {
+      errrosList = { ...errrosList, username: true };
+    }
+
+    if (!dataForm.password) {
+      errrosList = { ...errrosList, password: true };
+    }
 
     if (
       !dataForm.firstName ||
@@ -86,11 +110,55 @@ const SignupInfluencer = () => {
       !dataForm.followersNumber ||
       !dataForm.email ||
       !dataForm.phone ||
-      !dataForm.price
+      !dataForm.price || !dataForm.username || !dataForm.password
     ) {
       return setErrorsForm(errrosList);
     }
-    setOpenModal(true);
+
+    if (dataForm.password !== dataForm.repeatPassword) {
+      return setErrorsForm({ ...errrosList, repeatPassword: true });
+    }
+
+    if (!dataForm.acceptAgree) return;
+    try {
+      const result = await axios.post(
+        `${process.env.REACT_APP_SERVER}/auth/create/influencer`,
+        {
+          firstName: dataForm.firstName,
+          influencerName: dataForm.influencerName,
+          musicStyle: dataForm.musicStyle,
+          instagram: dataForm.instagram,
+          followersNumber: dataForm.followersNumber,
+          email: dataForm.email,
+          phone: dataForm.phone,
+          price: dataForm.price,
+          username: dataForm.username,
+          password: dataForm.password,
+        }
+      );
+
+      if (result.data.code === 201) {
+        const requestToken = await axios.post(
+          `${process.env.REACT_APP_SERVER}/auth/login/influencer`,
+          {
+            email: dataForm.email,
+            password: dataForm.password,
+          }
+        );
+        localStorage.setItem("token", requestToken.data.token);
+        dispatch(setSignupClear());
+        setOpenModal(true);
+      }
+      if (result.data.code === 409) {
+        NotificationManager.error(
+          "An account with this email already exists",
+          "Error"
+        );
+      }
+    } catch (err) {
+      console.log(err);
+    }
+   
   };
 
   return (
@@ -175,6 +243,18 @@ const SignupInfluencer = () => {
                   onFocus={() => setErrorsForm({ ...errorsForm, email: false })}
                 />
                 <TextInput
+                title="Username"
+                placeholder="Enter username"
+                style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                value={dataForm.username}
+                setValue={(value) => dispatch(setUsername(value))}
+                error={errorsForm.username}
+                onFocus={() =>
+                  setErrorsForm({ ...errorsForm, username: false })
+                }
+              />
+              
+                <TextInput
                   title="Phone*"
                   placeholder="+_ _ ___ ___ __ __"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
@@ -194,6 +274,37 @@ const SignupInfluencer = () => {
                   error={errorsForm.price}
                   onFocus={() => setErrorsForm({ ...errorsForm, price: false })}
                 />
+                              <TextInput
+                type="password"
+                title="Password"
+                placeholder="Enter password"
+                style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                value={dataForm.password}
+                setValue={(value) => dispatch(setPassword(value))}
+                error={errorsForm.password}
+                onFocus={() =>
+                  setErrorsForm({ ...errorsForm, password: false })
+                }
+              />
+              <TextInput
+                type="password"
+                title="Repeat Password"
+                placeholder="Repeat Password"
+                style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                value={dataForm.repeatPassword}
+                setValue={(value) => dispatch(setRepeatPassword(value))}
+                error={errorsForm.repeatPassword}
+                onFocus={() =>
+                  setErrorsForm({ ...errorsForm, repeatPassword: false })
+                }
+              />
+              <CheckBox
+                text="Agree to terms and conditions"
+                style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                checked={dataForm.acceptAgree}
+                setChecked={(value) => dispatch(setAcceptAgree(value))}
+              />
+
 
                 <StandartButton
                   text="Apply now"
@@ -230,12 +341,13 @@ const SignupInfluencer = () => {
                     marginLeft: "auto",
                     marginRight: "auto",
                   }}
-                  onClick={() => navigation("/signup/influencer/agreement")}
+                  onClick={() => navigation("/account/influencer")}
                 />
               </div>
             </ModalWindow>
           </div>
         </div>
+        <NotificationContainer />
       </section>
     </>
   );

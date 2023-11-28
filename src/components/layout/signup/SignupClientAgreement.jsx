@@ -154,7 +154,7 @@ const SignupClientAgreement = () => {
               <StandartButton
                 text="Continue"
                 style={{ margin: "0 auto", marginTop: "50px" }}
-                onClick={register}
+                // onClick={register}
               />
             </form>
           </FormContainer>
