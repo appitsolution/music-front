@@ -6,7 +6,10 @@ import TextInput from "../../../form/TextInput";
 import StandartButton from "../../../form/StandartButton";
 import axios from "axios";
 import UseVerify from "../../../../hooks/useVerify";
-import { formatPhoneNumber, validatePhoneNumber } from "../../../../utils/validations";
+import {
+  formatPhoneNumber,
+  validatePhoneNumber,
+} from "../../../../utils/validations";
 
 const AccountInfluencerDetails = () => {
   const [data, setData] = useState({});
@@ -18,9 +21,8 @@ const AccountInfluencerDetails = () => {
 
   const [dataPersonal, setDataPersonal] = useState({
     firstName: "",
-    username: "",
     influencerName: "",
-    instagram: "",
+    instagramUsername: "",
     followersNumber: "",
   });
 
@@ -36,9 +38,8 @@ const AccountInfluencerDetails = () => {
 
   const [errorPersonal, setErrorPersonal] = useState({
     firstName: false,
-    username: false,
     influencerName: false,
-    instagram: false,
+    instagramUsername: false,
     followersNumber: false,
   });
 
@@ -55,52 +56,44 @@ const AccountInfluencerDetails = () => {
   const updateClientPersonal = async () => {
     let errorPersonalList = {
       firstName: false,
-      username: false,
       influencerName: false,
-      instagram: false,
+      instagramUsername: false,
       followersNumber: false,
-    }
+    };
     if (!dataPersonal.firstName) {
-
       errorPersonalList = {
         ...errorPersonal,
         firstName: true,
-      }
+      };
     }
-    if (!dataPersonal.username) {
-      errorPersonalList = {
-        ...errorPersonal,
-        username: true,
-      }
-    }
+
     if (!dataPersonal.influencerName) {
       errorPersonalList = {
         ...errorPersonal,
         influencerName: true,
-      }
+      };
     }
-    if (!dataPersonal.instagram) {
+    if (!dataPersonal.instagramUsername) {
       errorPersonalList = {
         ...errorPersonal,
-        influencerName: true,
-      }
+        instagramUsername: true,
+      };
     }
 
     if (!dataPersonal.followersNumber) {
       errorPersonalList = {
         ...errorPersonal,
         followersNumber: true,
-      }
+      };
     }
     try {
       if (
         !dataPersonal.firstName ||
-        !dataPersonal.instagram ||
+        !dataPersonal.instagramUsername ||
         !dataPersonal.influencerName ||
-        !dataPersonal.username||
         !dataPersonal.followersNumber
       ) {
-        return setErrorPersonal(errorPersonalList)
+        return setErrorPersonal(errorPersonalList);
       }
 
       const result = await axios.put(
@@ -119,19 +112,16 @@ const AccountInfluencerDetails = () => {
 
   const updateClientPassword = async () => {
     if (!dataPassword.currentPassword) {
-      
       setErrorPassword({
         ...errorPassword,
-        currentPassword: true
+        currentPassword: true,
       });
- 
     }
     if (!dataPassword.newPassword) {
       setErrorPassword({
         ...errorPassword,
-        newPassword: true
+        newPassword: true,
       });
-
     }
     if (
       !dataPassword.acceptPassword ||
@@ -143,14 +133,15 @@ const AccountInfluencerDetails = () => {
     if (dataPassword.newPassword !== dataPassword.acceptPassword) {
       setErrorPassword({
         ...errorPassword,
-        repeatPassword: true
+        repeatPassword: true,
       });
-      return
+      return;
     }
     try {
       const result = await axios.put(
         `${process.env.REACT_APP_SERVER}/profile/client/password`,
-        {role:'client',
+        {
+          role: "client",
           currentPassword: dataPassword.currentPassword,
           newPassword: dataPassword.newPassword,
           id: data._id,
@@ -165,9 +156,9 @@ const AccountInfluencerDetails = () => {
         });
         return;
       }
-       setErrorPassword({
+      setErrorPassword({
         ...errorPassword,
-        repeatPassword: true
+        repeatPassword: true,
       });
     } catch (err) {
       console.log(err);
@@ -235,9 +226,8 @@ const AccountInfluencerDetails = () => {
       setData(dataFetch);
       setDataPersonal({
         firstName: dataFetch.firstName,
-        username: dataFetch.username,
         influencerName: dataFetch.influencerName,
-        instagram: dataFetch.instagram,
+        instagramUsername: dataFetch.instagramUsername,
         followersNumber: dataFetch.followersNumber,
       });
       setDataMusic(dataFetch.musicStyle);
@@ -291,14 +281,6 @@ const AccountInfluencerDetails = () => {
                   </div>
                   <div className="account-influencer-details-wrapper-content-item">
                     <p className="account-influencer-details-wrapper-content-title">
-                      Username
-                    </p>
-                    <p className="account-influencer-details-wrapper-content-value">
-                      {data.username ? data.username : "No Data"}
-                    </p>
-                  </div>
-                  <div className="account-influencer-details-wrapper-content-item">
-                    <p className="account-influencer-details-wrapper-content-title">
                       Influencer name
                     </p>
                     <p className="account-influencer-details-wrapper-content-value">
@@ -307,10 +289,12 @@ const AccountInfluencerDetails = () => {
                   </div>
                   <div className="account-influencer-details-wrapper-content-item">
                     <p className="account-influencer-details-wrapper-content-title">
-                      Instagram
+                      Instagram username
                     </p>
                     <p className="account-influencer-details-wrapper-content-value">
-                      {data.instagram ? data.instagram : "No Data"}
+                      {data.instagramUsername
+                        ? data.instagramUsername
+                        : "No Data"}
                     </p>
                   </div>
                   <div className="account-influencer-details-wrapper-content-item">
@@ -457,26 +441,13 @@ const AccountInfluencerDetails = () => {
             value={dataPersonal.firstName}
             setValue={(value) =>
               setDataPersonal({ ...dataPersonal, firstName: value })
-              
             }
             error={errorPersonal.firstName}
             onFocus={() =>
               setErrorPersonal({ ...errorPersonal, firstName: false })
             }
           />
-          <TextInput
-            title="Username"
-            placeholder="John Doe"
-            style={{ marginTop: "50px" }}
-            value={dataPersonal.username}
-            setValue={(value) =>
-              setDataPersonal({ ...dataPersonal, username: value })
-            }
-            error={errorPersonal.username}
-            onFocus={() =>
-              setErrorPersonal({ ...errorPersonal, username: false })
-            }
-          />
+
           <TextInput
             title="Influencer name"
             placeholder="John Doe"
@@ -491,16 +462,16 @@ const AccountInfluencerDetails = () => {
             }
           />
           <TextInput
-            title="Instagram"
+            title="Instagram username"
             placeholder="John Doe"
             style={{ marginTop: "50px" }}
-            value={dataPersonal.instagram}
+            value={dataPersonal.instagramUsername}
             setValue={(value) =>
-              setDataPersonal({ ...dataPersonal, instagram: value })
+              setDataPersonal({ ...dataPersonal, instagramUsername: value })
             }
-            error={errorPersonal.instagram}
+            error={errorPersonal.instagramUsername}
             onFocus={() =>
-              setErrorPersonal({ ...errorPersonal, instagram: false })
+              setErrorPersonal({ ...errorPersonal, instagramUsername: false })
             }
           />
           <TextInput
@@ -524,7 +495,10 @@ const AccountInfluencerDetails = () => {
               justifyContent: "center",
             }}
           >
-            <StandartButton text="Save changes" onClick={updateClientPersonal}/>
+            <StandartButton
+              text="Save changes"
+              onClick={updateClientPersonal}
+            />
           </div>
         </div>
       </ModalWindow>
@@ -585,7 +559,10 @@ const AccountInfluencerDetails = () => {
               justifyContent: "center",
             }}
           >
-            <StandartButton text="Update Password" onClick={updateClientPassword}/>
+            <StandartButton
+              text="Update Password"
+              onClick={updateClientPassword}
+            />
           </div>
         </div>
       </ModalWindow>
@@ -613,7 +590,7 @@ const AccountInfluencerDetails = () => {
               justifyContent: "center",
             }}
           >
-            <StandartButton text="Save changes" onClick={updateMusicStyle}/>
+            <StandartButton text="Save changes" onClick={updateMusicStyle} />
           </div>
         </div>
       </ModalWindow>
@@ -641,7 +618,7 @@ const AccountInfluencerDetails = () => {
               justifyContent: "center",
             }}
           >
-            <StandartButton text="Save changes" onClick={updateClientEmail}/>
+            <StandartButton text="Save changes" onClick={updateClientEmail} />
           </div>
         </div>
       </ModalWindow>
@@ -669,7 +646,7 @@ const AccountInfluencerDetails = () => {
               justifyContent: "center",
             }}
           >
-            <StandartButton text="Save changes" onClick={updateClientPhone}/>
+            <StandartButton text="Save changes" onClick={updateClientPhone} />
           </div>
         </div>
       </ModalWindow>

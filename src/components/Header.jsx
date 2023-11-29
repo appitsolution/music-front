@@ -87,27 +87,47 @@ const Header = ({ userType = "client", page = "login", path = "" }) => {
                 )}
               </button>
 
-              {!isAuth && (
+              {!isAuth && page === "signup" && (
                 <div className="header-mobile">
                   <button
                     className="header-login"
                     type="button"
                     onClick={() => {
-                      navigation(returnTextLogin().path);
+                      navigation("/login/client");
                     }}
                   >
-                    Log in {returnTextLogin().text}
+                    Log in client
                   </button>
                   <button
                     className="header-login"
                     type="button"
                     onClick={() => {
-                      navigation(returnTextSignup().path);
+                      navigation("/login/influencer");
                     }}
                   >
-                    {location.pathname === "/"
-                      ? "Log in Influencer"
-                      : `Sign up as ${returnTextSignup().text}`}
+                    Log in influencer
+                  </button>
+                </div>
+              )}
+              {!isAuth && page === "login" && (
+                <div className="header-mobile">
+                  <button
+                    className="header-login"
+                    type="button"
+                    onClick={() => {
+                      navigation("/signup/client");
+                    }}
+                  >
+                    Signup in client
+                  </button>
+                  <button
+                    className="header-login"
+                    type="button"
+                    onClick={() => {
+                      navigation("/signup/influencer");
+                    }}
+                  >
+                    Signup in influencer
                   </button>
                 </div>
               )}

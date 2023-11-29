@@ -36,6 +36,11 @@ const LoginClient = () => {
       return;
     }
 
+    if (result.data.code === 403) {
+      NotificationManager.info("Your account is under verification", "Info");
+      return;
+    }
+
     NotificationManager.error("Incorrect password", "Error");
 
     setErrorLogin(true);

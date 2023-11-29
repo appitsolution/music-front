@@ -4,6 +4,7 @@ const initialState = {
   firstName: "",
   influencerName: "",
   musicStyle: "",
+  musicStyleOther: "",
   instagram: "",
   followersNumber: "",
   email: "",
@@ -27,6 +28,9 @@ export const signupInfluencerSlice = createSlice({
     },
     setMusicStyle: (state, action) => {
       state.musicStyle = action.payload;
+    },
+    setMusicStyleOther: (state, action) => {
+      state.musicStyleOther = action.payload;
     },
     setInstagram: (state, action) => {
       state.instagram = action.payload;
@@ -59,6 +63,7 @@ export const signupInfluencerSlice = createSlice({
       state.firstName = "";
       state.influencerName = "";
       state.musicStyle = "";
+      state.musicStyleOther = "";
       state.instagram = "";
       state.followersNumber = "";
       state.email = "";
@@ -77,6 +82,7 @@ export const {
   setFirstName,
   setInfluencerName,
   setMusicStyle,
+  setMusicStyleOther,
   setInstagram,
   setFollowersNumber,
   setEmail,

@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAllFormInvoice } from "../../../../../redux/slice/create-invoice";
 import axios from "axios";
 import UseVerify from "../../../../../hooks/useVerify";
+import StandartButton from "../../../../form/StandartButton";
+import AltButton from "../../../../form/AltButton";
 
 const AccountInfluencerCreateInvoice = () => {
   const dispatch = useDispatch();
@@ -22,7 +24,9 @@ const AccountInfluencerCreateInvoice = () => {
         `${process.env.REACT_APP_SERVER}/invoice/saved?influencerId=${dataFetch._id}`
       );
       if (res.data.code === 200) {
-        dispatch(setAllFormInvoice(res.data.invoice));
+        dispatch(
+          setAllFormInvoice({ ...res.data.invoice, amount: dataFetch.balance })
+        );
       }
     } catch (err) {
       console.log(err);
@@ -110,6 +114,16 @@ const AccountInfluencerCreateInvoice = () => {
             ][currentWindow]
           }
         </>
+
+        <div
+          style={{
+            display: currentWindow === 0 ? "none" : "flex",
+            justifyContent: "center",
+            marginTop: 30,
+          }}
+        >
+          <AltButton text="Back Step" />
+        </div>
       </div>
     </section>
   );

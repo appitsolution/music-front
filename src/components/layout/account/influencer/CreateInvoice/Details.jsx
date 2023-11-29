@@ -176,7 +176,7 @@ const CreateInvoiceDetails = () => {
                 </button>
 
                 <p className="create-invoice-form-content-switch-text">
-                  VAT Registrated
+                  VAT Registered
                 </p>
               </div>
             )}
@@ -233,7 +233,7 @@ const CreateInvoiceDetails = () => {
                 </button>
 
                 <p className="create-invoice-form-content-switch-text">
-                  VAT Registrated
+                  VAT Registered
                 </p>
               </div>
             </div>
@@ -311,7 +311,7 @@ const CreateInvoiceDetails = () => {
                 </button>
 
                 <p className="create-invoice-form-content-switch-text">
-                  My registrated office is different
+                  My registered office is different
                 </p>
               </div>
             )}

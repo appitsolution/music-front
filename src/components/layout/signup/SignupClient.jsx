@@ -67,29 +67,17 @@ const SignupClient = () => {
     if (!signClienState.email || !validateEmail(signClienState.email)) {
       setErrorEmail(true);
     }
-    if (!signClienState.phone ) {
-      setErrorPhone(true);
-    }
 
-    if (!signClienState.username) {
-      setErrorUsername(true);
-    }
-    if (!signClienState.email) {
-      setErrorEmail(true);
-    }
     if (!signClienState.password) {
       setErrorPassword(true);
     }
     if (
-      (!signClienState.firstName ||
+      !signClienState.firstName ||
       !signClienState.company ||
-      !signClienState.companyType||
+      !signClienState.companyType ||
       !signClienState.instagram ||
-      !signClienState.email||
-      !signClienState.phone ||
-      !signClienState.username ||
       !signClienState.email ||
-      !signClienState.password)
+      !signClienState.password
     ) {
       return;
     }
@@ -106,11 +94,10 @@ const SignupClient = () => {
           firstName: signClienState.firstName,
           company: signClienState.company,
           companyType: signClienState.companyType,
-          instagram: signClienState.instagram,
+          instagramUsername: signClienState.instagram,
           email: signClienState.email,
           phone: signClienState.phone,
           referalCode: signClienState.referalCode,
-          username: signClienState.username,
           password: signClienState.password,
         }
       );
@@ -126,6 +113,13 @@ const SignupClient = () => {
         setOpenModal(true);
         localStorage.setItem("token", requestToken.data.token);
         dispatch(setSignupClear());
+      }
+
+      if (
+        result.data.code === 409 &&
+        result.data.message === "This instagram already exists"
+      ) {
+        return setErrorInstagram(true);
       }
 
       if (result.data.code === 409) {
@@ -182,23 +176,15 @@ to get approved as"
                   error={errorCompanyType}
                 />
                 <TextInput
-                  title="Instagram*"
-                  placeholder="Enter instagram link"
+                  title="Instagram username*"
+                  placeholder="Enter instagram username "
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
                   value={signClienState.instagram}
                   setValue={(value) => dispatch(setInstagram(value))}
                   error={errorInstagram}
                   onFocus={() => setErrorInstagram(false)}
                 />
-                 <TextInput
-                title="Username"
-                placeholder="Enter username"
-                style={{ maxWidth: "665px", margin: "0 auto 60px auto"  }}
-                value={signClienState.username}
-                setValue={(value) => dispatch(setUsername(value))}
-                error={errorUsername}
-                onFocus={() => setErrorUsername(false)}
-              />
+
                 <TextInput
                   type={"email"}
                   title="Email*"
@@ -210,51 +196,46 @@ to get approved as"
                   onFocus={() => setErrorEmail(false)}
                 />
                 <TextInput
-                  title="Phone*"
+                  title="Phone"
                   placeholder="+_ _ ___ ___ __ __"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
                   value={signClienState.phone}
-                  setValue={(value) =>
-                    dispatch(setPhone(value))
-                  }
-                  error={errorPhone}
-                  onFocus={() => setErrorPhone(false)}
+                  setValue={(value) => dispatch(setPhone(value))}
                 />
                 <TextInput
-                  title="Referal code"
-                  placeholder="Enter referal code"
+                  title="Referral code"
+                  placeholder="Enter referral code"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
                   value={signClienState.referalCode}
                   setValue={(value) => dispatch(setReferalCode(value))}
-                  error={errorReferalCode}
-                  onFocus={() => setErrorReferalCode(false)}
                 />
-                 <TextInput
-                type="password"
-                title="Password"
-                placeholder="Enter password"
-                style={{ maxWidth: "665px", margin: "0 auto 60px auto"  }}
-                value={signClienState.password}
-                setValue={(value) => dispatch(setPassword(value))}
-                error={errorPassword}
-                onFocus={() => setErrorPassword(false)}
-              />
-              <TextInput
-                type="password"
-                title="Repeat Password"
-                placeholder="Repeat Password"
-                style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
-                value={signClienState.repeatPassword}
-                setValue={(value) => dispatch(setRepeatPassword(value))}
-                error={errorRepeatPassword}
-                onFocus={() => setErrorRepeatPassword(false)}
-              />
-              <CheckBox
-                text="Agree to terms and conditions"
-                style={{ maxWidth: "665px", margin: "0 auto 60px auto"  }}
-                checked={signClienState.acceptAgree}
-                setChecked={(value) => dispatch(setAcceptAgree(value))}
-              />
+                <TextInput
+                  type="password"
+                  title="Password"
+                  placeholder="Enter password"
+                  style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  value={signClienState.password}
+                  setValue={(value) => dispatch(setPassword(value))}
+                  error={errorPassword}
+                  onFocus={() => setErrorPassword(false)}
+                />
+                <TextInput
+                  type="password"
+                  title="Repeat Password"
+                  placeholder="Repeat Password"
+                  style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  value={signClienState.repeatPassword}
+                  setValue={(value) => dispatch(setRepeatPassword(value))}
+                  error={errorRepeatPassword}
+                  onFocus={() => setErrorRepeatPassword(false)}
+                />
+                <CheckBox
+                  text="Agree to"
+                  linkText="terms and conditions"
+                  style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
+                  checked={signClienState.acceptAgree}
+                  setChecked={(value) => dispatch(setAcceptAgree(value))}
+                />
 
                 <StandartButton
                   text="Apply now"

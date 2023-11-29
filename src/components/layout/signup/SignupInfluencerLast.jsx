@@ -154,7 +154,8 @@ const SignupInfluencerLast = () => {
                 }
               />
               <CheckBox
-                text="Agree to terms and conditions"
+                text="Agree to"
+                linkText="terms and conditions"
                 style={{ marginTop: "57px" }}
                 checked={dataForm.acceptAgree}
                 setChecked={(value) => dispatch(setAcceptAgree(value))}

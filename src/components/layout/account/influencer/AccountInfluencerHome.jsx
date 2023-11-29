@@ -8,7 +8,7 @@ import accountDetails from "../../../../images/icons/details-account.svg";
 import support from "../../../../images/icons/support.svg";
 import AltButton from "../../../form/AltButton";
 import UseVerify from "../../../../hooks/useVerify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AccountInfluencerHome = () => {
   const navigation = useNavigate();
@@ -120,9 +120,14 @@ const AccountInfluencerHome = () => {
               </button>
             </li>
             <li className="account-client-menu-item">
-              <a
-                href="mailto:admin@napoleonpr.com"
+              <Link
                 className="account-client-menu-button"
+                to="#"
+                onClick={(e) => {
+                  console.log("ok");
+                  window.location.href = "mailto:admin@napoleonpr.com";
+                  e.preventDefault();
+                }}
               >
                 <img
                   className="account-client-menu-button-icon"
@@ -132,7 +137,7 @@ const AccountInfluencerHome = () => {
                 <p className="account-client-menu-button-text">
                   Contact Support
                 </p>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

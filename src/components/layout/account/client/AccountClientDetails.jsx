@@ -33,8 +33,7 @@ const AccountClientDetails = () => {
 
   const [dataPersonal, setDataPersonal] = useState({
     firstName: "",
-    username: "",
-    instagram: "",
+    instagramUsername: "",
     referalCode: "",
   });
 
@@ -56,21 +55,18 @@ const AccountClientDetails = () => {
     if (!dataPersonal.firstName) {
       setErrorFirstName(true);
     }
-    if (!dataPersonal.instagram) {
+    if (!dataPersonal.instagramUsername) {
       setErrorInstagram(true);
     }
     if (!dataPersonal.referalCode) {
       setErrorReferalCode(true);
     }
-    if (!dataPersonal.username) {
-      setErrorUsername(true);
-    }
+
     try {
       if (
         !dataPersonal.firstName ||
-        !dataPersonal.instagram ||
-        !dataPersonal.referalCode ||
-        !dataPersonal.username
+        !dataPersonal.instagramUsername ||
+        !dataPersonal.referalCode
       ) {
         return;
       }
@@ -108,7 +104,8 @@ const AccountClientDetails = () => {
     try {
       const result = await axios.put(
         `${process.env.REACT_APP_SERVER}/profile/client/password`,
-        {role:'client',
+        {
+          role: "client",
           currentPassword: dataPassword.currentPassword,
           newPassword: dataPassword.newPassword,
           id: data._id,
@@ -193,8 +190,7 @@ const AccountClientDetails = () => {
       setData(dataFetch);
       setDataPersonal({
         firstName: dataFetch.firstName,
-        username: dataFetch.username,
-        instagram: dataFetch.instagram,
+        instagramUsername: dataFetch.instagramUsername,
         referalCode: dataFetch.referalCode,
       });
       setDataCompany({
@@ -249,26 +245,18 @@ const AccountClientDetails = () => {
                       {data.firstName}
                     </p>
                   </div>
-                  <div className="account-influencer-details-wrapper-content-item">
-                    <p className="account-influencer-details-wrapper-content-title">
-                      Username
-                    </p>
-                    <p className="account-influencer-details-wrapper-content-value">
-                      {data.username}
-                    </p>
-                  </div>
 
                   <div className="account-influencer-details-wrapper-content-item">
                     <p className="account-influencer-details-wrapper-content-title">
                       Instagram
                     </p>
                     <p className="account-influencer-details-wrapper-content-value">
-                      {data.instagram}
+                      {data.instagramUsername}
                     </p>
                   </div>
                   <div className="account-influencer-details-wrapper-content-item">
                     <p className="account-influencer-details-wrapper-content-title">
-                      Referal code
+                      Referral code
                     </p>
                     <p className="account-influencer-details-wrapper-content-value">
                       {data.referalCode}
@@ -422,31 +410,20 @@ const AccountClientDetails = () => {
             error={errorFirstName}
             onFocus={() => setErrorFirstName(false)}
           />
-          <TextInput
-            title="Username"
-            placeholder="John Doe"
-            style={{ marginTop: "50px" }}
-            value={dataPersonal.username}
-            setValue={(value) =>
-              setDataPersonal({ ...dataPersonal, username: value })
-            }
-            error={errorUsername}
-            onFocus={() => setErrorUsername(false)}
-          />
 
           <TextInput
-            title="Instagram"
+            title="Instagram username"
             placeholder="John Doe"
             style={{ marginTop: "50px" }}
-            value={dataPersonal.instagram}
+            value={dataPersonal.instagramUsername}
             setValue={(value) =>
-              setDataPersonal({ ...dataPersonal, instagram: value })
+              setDataPersonal({ ...dataPersonal, instagramUsername: value })
             }
             error={errorInstagram}
             onFocus={() => setErrorInstagram(false)}
           />
           <TextInput
-            title="Referal code"
+            title="Referral code"
             placeholder="Code"
             style={{ marginTop: "50px" }}
             value={dataPersonal.referalCode}
