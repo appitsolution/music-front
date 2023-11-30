@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-const CLIENT_ID = "gdfg";
+const CLIENT_ID = "";
 
 const PaypalButton = ({ children }) => {
   const [show, setShow] = useState(true);
@@ -8,7 +8,6 @@ const PaypalButton = ({ children }) => {
   const [ErrorMessage, setErrorMessage] = useState("");
   const [orderID, setOrderID] = useState(false);
 
-  // creates a paypal order
   const createOrder = (data, actions) => {
     return actions.order
       .create({
@@ -56,7 +55,7 @@ const PaypalButton = ({ children }) => {
           createOrder={createOrder}
           onApprove={onApprove}
         >
-          {children}
+          {children}test
         </PayPalButtons>
       ) : null}
     </PayPalScriptProvider>

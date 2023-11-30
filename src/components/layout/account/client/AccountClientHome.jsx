@@ -90,7 +90,7 @@ const AccountClientHome = () => {
             </li>
             <li className="account-client-menu-item">
               <a
-                href="mailto:admin@napoleonpr.com"
+                href="mailto:admin@soundinfluencers.com?subject=Support%20Request"
                 className="account-client-menu-button"
               >
                 <img

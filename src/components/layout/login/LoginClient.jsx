@@ -92,7 +92,7 @@ const LoginClient = () => {
                   justifyContent: "center",
                 }}
               >
-                <StandartButton text="Apply now" onClick={loginRequest} />
+                <StandartButton text="Login Now" onClick={loginRequest} />
               </div>
             </div>
           </FormContainer>

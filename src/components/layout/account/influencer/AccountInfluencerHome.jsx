@@ -120,14 +120,9 @@ const AccountInfluencerHome = () => {
               </button>
             </li>
             <li className="account-client-menu-item">
-              <Link
+              <a
+                href="mailto:admin@soundinfluencers.com?subject=Support%20Request"
                 className="account-client-menu-button"
-                to="#"
-                onClick={(e) => {
-                  console.log("ok");
-                  window.location.href = "mailto:admin@napoleonpr.com";
-                  e.preventDefault();
-                }}
               >
                 <img
                   className="account-client-menu-button-icon"
@@ -137,7 +132,7 @@ const AccountInfluencerHome = () => {
                 <p className="account-client-menu-button-text">
                   Contact Support
                 </p>
-              </Link>
+              </a>
             </li>
           </ul>
         </div>

@@ -42,6 +42,7 @@ import AccountClientOngoingPromos from "./pages/account/client/ongoing-promos";
 import AcountClientOngoingCurrentPage from "./pages/account/client/ongoing-promos-current";
 import AccountInfluencerUpdateIngoingPromoPage from "./pages/account/influencer/update-ongoing-promo";
 import StripeButton from "./components/Payment/StripeButton";
+import PaypalButton from "./components/Payment/PaypalButton";
 
 const App = () => {
   return (
@@ -68,6 +69,10 @@ const App = () => {
           <Route
             path="/test"
             element={<PublicRoute role="influencer" element={StripeButton} />}
+          />
+          <Route
+            path="/test2"
+            element={<PublicRoute role="influencer" element={PaypalButton} />}
           />
           <Route
             path="/signup/influencer/agreement"

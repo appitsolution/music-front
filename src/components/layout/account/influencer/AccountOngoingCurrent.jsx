@@ -114,7 +114,7 @@ const AcountInfluencerOngoingCurrent = () => {
             }}
           >
             <a
-              href="mailto:admin@napoleonpr.com"
+              href="mailto:admin@soundinfluencers.com?subject=Support%20Request"
               className="account-client-past-promos-current-report"
             >
               Click here for Report
