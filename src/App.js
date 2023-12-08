@@ -20,7 +20,7 @@ import AccountClientPastPromos from "./pages/account/client/past-promos";
 import AccountClientPastPromosCurrent from "./pages/account/client/past-promos-current";
 import AccountInfluencerCreateInvoicePage from "./pages/account/influencer/create-invoice";
 import AccountInfluencerInvoicesPage from "./pages/account/influencer/invoices";
-import Terms from "./pages/terms";
+import Terms from "./pages/terms-client";
 import { ThemeProvider } from "./ThemeContext";
 import SignupInfluencer from "./pages/signup-influencer/signup-influencer";
 import UseVerify from "./hooks/useVerify";
@@ -43,6 +43,8 @@ import AcountClientOngoingCurrentPage from "./pages/account/client/ongoing-promo
 import AccountInfluencerUpdateIngoingPromoPage from "./pages/account/influencer/update-ongoing-promo";
 import StripeButton from "./components/Payment/StripeButton";
 import PaypalButton from "./components/Payment/PaypalButton";
+import TermsClient from "./pages/terms-client";
+import TermsInfluencer from "./pages/terms-influencer";
 
 const App = () => {
   return (
@@ -268,7 +270,8 @@ const App = () => {
           />
           <Route path="/forgot" element={<ForgotPasswordEmail />} />
           <Route path="/forgot/code/:email" element={<ForgotPasswordCode />} />
-          <Route path="/terms" element={<Terms />} />
+          <Route path="/terms-client" element={<TermsClient />} />
+          <Route path="/terms-influencer" element={<TermsInfluencer />} />
           <Route path="/" element={<PublicRoute element={Signup} />} />
         </Routes>
       </ThemeProvider>

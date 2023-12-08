@@ -33,7 +33,7 @@ const AccountClientDetails = () => {
 
   const [dataPersonal, setDataPersonal] = useState({
     firstName: "",
-    instagramUsername: "",
+    instagram: "",
     referalCode: "",
   });
 
@@ -55,7 +55,7 @@ const AccountClientDetails = () => {
     if (!dataPersonal.firstName) {
       setErrorFirstName(true);
     }
-    if (!dataPersonal.instagramUsername) {
+    if (!dataPersonal.instagram) {
       setErrorInstagram(true);
     }
     if (!dataPersonal.referalCode) {
@@ -65,7 +65,7 @@ const AccountClientDetails = () => {
     try {
       if (
         !dataPersonal.firstName ||
-        !dataPersonal.instagramUsername ||
+        !dataPersonal.instagram ||
         !dataPersonal.referalCode
       ) {
         return;
@@ -190,7 +190,7 @@ const AccountClientDetails = () => {
       setData(dataFetch);
       setDataPersonal({
         firstName: dataFetch.firstName,
-        instagramUsername: dataFetch.instagramUsername,
+        instagram: dataFetch.instagram,
         referalCode: dataFetch.referalCode,
       });
       setDataCompany({
@@ -248,10 +248,10 @@ const AccountClientDetails = () => {
 
                   <div className="account-influencer-details-wrapper-content-item">
                     <p className="account-influencer-details-wrapper-content-title">
-                      Instagram
+                      Instagram Username
                     </p>
                     <p className="account-influencer-details-wrapper-content-value">
-                      {data.instagramUsername}
+                      {data.instagram}
                     </p>
                   </div>
                   <div className="account-influencer-details-wrapper-content-item">
@@ -415,9 +415,9 @@ const AccountClientDetails = () => {
             title="Instagram username"
             placeholder="John Doe"
             style={{ marginTop: "50px" }}
-            value={dataPersonal.instagramUsername}
+            value={dataPersonal.instagram}
             setValue={(value) =>
-              setDataPersonal({ ...dataPersonal, instagramUsername: value })
+              setDataPersonal({ ...dataPersonal, instagram: value })
             }
             error={errorInstagram}
             onFocus={() => setErrorInstagram(false)}

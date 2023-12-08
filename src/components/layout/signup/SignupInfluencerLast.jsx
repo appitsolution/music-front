@@ -12,7 +12,6 @@ import {
   setPassword,
   setRepeatPassword,
   setSignupClear,
-  setUsername,
 } from "../../../redux/slice/signup-influencer";
 import axios from "axios";
 import {
@@ -110,17 +109,6 @@ const SignupInfluencerLast = () => {
           <FormContainer>
             <form className="signup-client-agreement-form">
               <TextInput
-                title="Username"
-                placeholder="Enter username"
-                style={{ marginTop: "30px" }}
-                value={dataForm.username}
-                setValue={(value) => dispatch(setUsername(value))}
-                error={errorsForm.username}
-                onFocus={() =>
-                  setErrorsForm({ ...errorsForm, username: false })
-                }
-              />
-              <TextInput
                 title="Email"
                 placeholder="Enter email"
                 style={{ marginTop: "60px" }}
@@ -154,6 +142,7 @@ const SignupInfluencerLast = () => {
                 }
               />
               <CheckBox
+                page="influencer"
                 text="Agree to"
                 linkText="terms and conditions"
                 style={{ marginTop: "57px" }}

@@ -164,7 +164,7 @@ to get approved as"
                   onFocus={() => setErrorCompany(false)}
                 />
                 <SelectedInput
-                  data={["Techno", "EDM", "House", "Other"]}
+                  data={["Artist", "Promoter", "Pr Agent", "Label", "Other"]}
                   title="Company type*"
                   changeValue={(value) => dispatch(setCompanyType(value))}
                   placeholder={
@@ -230,6 +230,7 @@ to get approved as"
                   onFocus={() => setErrorRepeatPassword(false)}
                 />
                 <CheckBox
+                  page="client"
                   text="Agree to"
                   linkText="terms and conditions"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
@@ -252,16 +253,13 @@ to get approved as"
                 <h2 className="signup-client-modal-title">Internal approval</h2>
 
                 <p className="signup-client-modal-second">
-                  Thank you for providing us with your information. We
-                  appreciate your interest.
+                  Thank you for sharing your information.
                 </p>
 
                 <p className="signup-client-modal-desc">
-                  Rest assured that we have received your submission, and our
-                  team will carefully review it internally. If your submission
-                  meets our criteria and aligns with our requirements, we will
-                  notify you promptly. We value your patience and look forward
-                  to sharing updates with you soon.
+                  We've got it and our team will review it carefully. If it fits
+                  our criteria, we'll let you know. Thanks for your patience,
+                  and we'll keep you posted.
                 </p>
 
                 <StandartButton

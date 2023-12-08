@@ -11,9 +11,8 @@ import {
   setSelectPrice,
 } from "../../../../../redux/slice/create-promo";
 
-
 const AccountClientOffers = () => {
-  const [prices,setPrices] =useState([]) 
+  const [prices, setPrices] = useState([]);
   const dispatch = useDispatch();
   const [influencers, setInfluencers] = useState([]);
 
@@ -26,28 +25,27 @@ const AccountClientOffers = () => {
   );
 
   const selectPrice = (id) => {
-    const searchPrice = prices.find((item) => item.id === id)
+    const searchPrice = prices.find((item) => item.id === id);
 
     const updateList = influencers.map((item) => {
       if (searchPrice.connectInfluencer.includes(item._id)) {
-          return {
-            ...item,
-            active: true,
-          };
-      }else {
+        return {
+          ...item,
+          active: true,
+        };
+      } else {
         return {
           ...item,
           active: false,
-        }
+        };
       }
 
       return item;
     });
-    const filterInfluencers = searchPrice.connectInfluencer
-      .map((item) => ({
-        influencerId: item,
-        confirmation: "wait",
-      }));
+    const filterInfluencers = searchPrice.connectInfluencer.map((item) => ({
+      influencerId: item,
+      confirmation: "wait",
+    }));
     dispatch(setSelectInfluencer([...filterInfluencers]));
     setInfluencers(updateList);
 
@@ -66,20 +64,20 @@ const AccountClientOffers = () => {
         price: prices.find((item) => item.id === id).price,
       })
     );
-
   };
 
-  const selectInfluencer = (id) => {
+  const selectInfluencer = (instagramUsername) => {
     if (currentPrice === 0) return;
-    const activePrice = prices.find((item)=> item.id === currentPrice)
+    const activePrice = prices.find((item) => item.id === currentPrice);
     if (
-      influencers.find((item) => item._id === id).active === false &&
+      influencers.find((item) => item.instagramUsername === instagramUsername)
+        .active === false &&
       selectInfluencers.length === activePrice.maxInfluencer
     )
       return;
 
     const updateList = influencers.map((item) => {
-      if (item._id === id) {
+      if (item.instagramUsername === instagramUsername) {
         if (item.active) {
           return {
             ...item,
@@ -96,31 +94,25 @@ const AccountClientOffers = () => {
     });
 
     const filterInfluencers = updateList
-      .filter((item) => {
-        if (item.active) {
-          return item;
-        } else {
-          return;
-        }
-      })
+      .filter((item) => item.active)
       .map((item) => ({
         influencerId: item._id,
+        instagramUsername: item.instagramUsername,
         confirmation: "wait",
       }));
+
     dispatch(setSelectInfluencer([...filterInfluencers]));
     setInfluencers(updateList);
   };
-
 
   const getData = async () => {
     const result = await axios(
       `${process.env.REACT_APP_SERVER}/auth/influencers`
     );
 
-    const offers = await axios(`${process.env.REACT_APP_SERVER}/promos/offers`)
+    const offers = await axios(`${process.env.REACT_APP_SERVER}/promos/offers`);
     if (offers.data.code === 200) {
-      
-      setPrices(offers.data.offers)
+      setPrices(offers.data.offers);
     }
     if (result.data.code === 200) {
       const listInfluencers = result.data.influencers.map((item) => ({
@@ -137,19 +129,18 @@ const AccountClientOffers = () => {
     dispatch(setCurrentWindow(1));
   };
 
-  const createInfList = (score)=> {
-
-    const list = []
+  const createInfList = (score) => {
+    const list = [];
     let sum = 0;
-    while(sum <= score){
-      sum += 1
-      if(sum > score) break
-      list.push(<li className="account-client-offers-text-item">
-      Influencer {sum }
-    </li>)
+    while (sum <= score) {
+      sum += 1;
+      if (sum > score) break;
+      list.push(
+        <li className="account-client-offers-text-item">Influencer {sum}</li>
+      );
     }
-    return list
-  }
+    return list;
+  };
 
   useEffect(() => {
     getData();
@@ -166,28 +157,29 @@ const AccountClientOffers = () => {
           <TitleSection title="Our" span="offers" />
 
           <ul className="account-client-offers">
-            {prices.map((item)=> (
+            {prices.map((item) => (
               <li
-              className={`account-client-offers-item ${
-                currentPrice !== 0
-                  ? currentPrice === item.id
-                    ? ""
-                    : "not-active"
-                  : ""
-              }`}
-              onClick={() => selectPrice(item.id)}
-            >
-              <h3 className="account-client-offers-title">offer {item.id}</h3>
-              <div className="account-client-offers-block">
-                <ul className="account-client-offers-text-list">
-                {createInfList(item.maxInfluencer)}
-                </ul>
-              </div>
+                className={`account-client-offers-item ${
+                  currentPrice !== 0
+                    ? currentPrice === item.id
+                      ? ""
+                      : "not-active"
+                    : ""
+                }`}
+                onClick={() => selectPrice(item.id)}
+              >
+                <h3 className="account-client-offers-title">offer {item.id}</h3>
+                <div className="account-client-offers-block">
+                  <ul className="account-client-offers-text-list">
+                    {createInfList(item.maxInfluencer)}
+                  </ul>
+                </div>
 
-              <button className="account-client-offers-button">{item.price} €</button>
-            </li>
+                <button className="account-client-offers-button">
+                  {item.price} €
+                </button>
+              </li>
             ))}
-           
           </ul>
 
           <TitleSection title="Pick &" span="choose" />
@@ -200,21 +192,33 @@ const AccountClientOffers = () => {
                   className={`account-client-choose-item ${
                     item.active ? "active" : ""
                   }`}
-                  onClick={() => selectInfluencer(item._id)}
+                  onClick={() => selectInfluencer(item.instagramUsername)}
                 >
                   <img
                     className="account-client-choose-item-image"
-                    src={choose1}
+                    src={item.logo}
+                    style={{ maxWidth: 125 }}
                   />
-                  <div className="account-client-choose-item-content">
+
+                  <div
+                    className="account-client-choose-item-content"
+                    style={{}}
+                  >
                     <img
                       className="account-client-choose-item-content-icon"
                       src={instagram}
                     />
+
                     <p className="account-client-choose-item-content-text">
-                      {item.followersNumber}
+                      {item.instagramUsername}
                     </p>
                   </div>
+                  <p
+                    className="account-client-choose-item-content-text"
+                    style={{ textAlign: "center", paddingBottom: 10 }}
+                  >
+                    {item.followersNumber}
+                  </p>
                 </li>
               ))}
             </ul>

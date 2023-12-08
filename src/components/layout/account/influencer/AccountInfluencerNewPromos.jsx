@@ -28,12 +28,12 @@ const AcountInfluencerNewPromos = () => {
     }
   };
 
-  const responsePromo = async (id, res) => {
-    if (!id || !res) return;
+  const responsePromo = async (id, res, instagramUsername) => {
+    if (!id || !res || !instagramUsername) return;
     try {
       const { dataFetch } = await UseVerify();
       const result = await axios.put(
-        `${process.env.REACT_APP_SERVER}/promos/update-response?influencerId=${dataFetch._id}&promoId=${id}&promoResponse=${res}`
+        `${process.env.REACT_APP_SERVER}/promos/update-response?influencerId=${dataFetch._id}&instagramUsername=${instagramUsername}&promoId=${id}&promoResponse=${res}`
       );
 
       if (result.data.code === 200) {
@@ -106,15 +106,17 @@ const AcountInfluencerNewPromos = () => {
                 <ResponseButton
                   onClickYes={() => {
                     setIsOpenModal(true);
-                    responsePromo(item._id, "accept");
+                    responsePromo(item._id, "accept", item.instagramUsername);
                   }}
-                  onClickNo={() => responsePromo(item._id, "refusing")}
+                  onClickNo={() =>
+                    responsePromo(item._id, "refusing", item.instagramUsername)
+                  }
                 />
               </div>
             </FormContainer>
           ))}
 
-          <div
+          {/* <div
             style={{
               display: "flex",
               justifyContent: "center",
@@ -127,7 +129,7 @@ const AcountInfluencerNewPromos = () => {
             >
               Click here for Report
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
 

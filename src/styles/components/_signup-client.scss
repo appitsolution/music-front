@@ -112,3 +112,39 @@
         line-height: normal;
     }
 }
+
+
+.instagram-select {
+    max-width: 665px;
+    margin: 0 auto 30px auto;
+
+    &-item {
+        position: relative;
+
+        &-delete {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 10px;
+            left: calc(100% + 15px);
+            width: 35px;
+            height: 35px;
+            background-color: blue;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 250ms linear;
+
+            &:hover {
+                background-color: red;
+            }
+
+            &-icon {
+                pointer-events: none;
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+    
+}

@@ -1,16 +1,16 @@
 import React from "react";
-import Terms from "../components/layout/Terms";
 import Header from "../components/Header";
 import Background from "../components/Background";
+import TermsClient from "../components/layout/TermsClient";
 
-const TermsPage = () => {
+const TermsClientPage = () => {
   return (
     <>
       <Header />
-      <Terms />
+      <TermsClient />
       <Background theme={"dark"} />
     </>
   );
 };
 
-export default TermsPage;
+export default TermsClientPage;

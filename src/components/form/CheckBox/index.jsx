@@ -3,6 +3,7 @@ import styles from "./style.module.css";
 import { useNavigate } from "react-router-dom";
 
 const CheckBox = ({
+  page = "client",
   checked = false,
   setChecked,
   text = "",
@@ -32,7 +33,15 @@ const CheckBox = ({
               textDecorationLine: "underline",
             }}
             type="button"
-            onClick={() => navigation("/terms")}
+            onClick={() => {
+              if (page === "client") {
+                const win = window.open("/terms-client", "_blank");
+                win.focus();
+              } else {
+                const win = window.open("/terms-influencer", "_blank");
+                win.focus();
+              }
+            }}
           >
             {linkText}
           </button>

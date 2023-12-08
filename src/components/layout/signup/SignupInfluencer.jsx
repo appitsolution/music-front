@@ -11,17 +11,15 @@ import {
   setAcceptAgree,
   setEmail,
   setFirstName,
-  setFollowersNumber,
+  setInfluencerBrands,
   setInfluencerName,
   setInstagram,
-  setMusicStyle,
-  setMusicStyleOther,
+  setInstagramAdd,
+  setInstagramDelete,
   setPassword,
   setPhone,
-  setPrice,
   setRepeatPassword,
   setSignupClear,
-  setUsername,
 } from "../../../redux/slice/signup-influencer";
 import {
   formatPhoneNumber,
@@ -35,6 +33,7 @@ import {
 } from "react-notifications";
 import axios from "axios";
 import CheckBox from "../../form/CheckBox";
+import deleteIcon from "../../../images/icons/close.svg";
 
 const SignupInfluencer = () => {
   const navigation = useNavigate();
@@ -45,25 +44,28 @@ const SignupInfluencer = () => {
 
   const [errorsForm, setErrorsForm] = useState({
     firstName: false,
-    influencerName: false,
-    musicStyle: false,
-    musicStyleOther: false,
-    instagram: false,
-    followersNumber: false,
+    instagram: [
+      {
+        musicStyle: false,
+        musicStyleOther: false,
+        instagramUsername: false,
+        followersNumber: false,
+        logo: false,
+        price: false,
+      },
+    ],
     email: false,
     phone: false,
-    price: false,
     password: false,
     repeatPassword: false,
   });
 
   const nextForm = async () => {
-    let errrosList = {
+    let errorsList = {
       firstName: false,
-      influencerName: false,
       musicStyle: false,
       musicStyleOther: false,
-      instagram: false,
+      instagram: errorsForm.instagram,
       followersNumber: false,
       email: false,
       phone: false,
@@ -72,72 +74,74 @@ const SignupInfluencer = () => {
       repeatPassword: false,
     };
     if (!dataForm.firstName) {
-      errrosList = { ...errrosList, firstName: true };
+      errorsList = { ...errorsList, firstName: true };
     }
-    if (!dataForm.influencerName) {
-      errrosList = { ...errrosList, influencerName: true };
-    }
+
     if (!dataForm.musicStyle) {
-      errrosList = { ...errrosList, musicStyle: true };
+      errorsList = { ...errorsList, musicStyle: true };
     }
     if (dataForm.musicStyle === "Other" && !dataForm.musicStyleOther) {
-      errrosList = { ...errrosList, musicStyleOther: true };
+      errorsList = { ...errorsList, musicStyleOther: true };
     }
-    if (!dataForm.instagram) {
-      errrosList = { ...errrosList, instagram: true };
-    }
-    if (!dataForm.followersNumber) {
-      errrosList = { ...errrosList, followersNumber: true };
-    }
+
     if (!validateEmail(dataForm.email)) {
-      errrosList = { ...errrosList, email: true };
+      errorsList = { ...errorsList, email: true };
     }
     if (!dataForm.phone) {
-      errrosList = { ...errrosList, phone: true };
-    }
-    if (!dataForm.price) {
-      errrosList = { ...errrosList, price: true };
+      errorsList = { ...errorsList, phone: true };
     }
 
     if (!dataForm.password) {
-      errrosList = { ...errrosList, password: true };
+      errorsList = { ...errorsList, password: true };
     }
+
+    let checkInstagram = false;
+    const checkFormErrorInstagram = errorsForm.instagram.map((item, index) => {
+      let instagramUsername = !Boolean(
+        dataForm.instagram[index].instagramUsername
+      );
+      let followersNumber = !Boolean(dataForm.instagram[index].followersNumber);
+      let logo = !Boolean(dataForm.instagram[index].logo);
+      let price = !Boolean(dataForm.instagram[index].price);
+      let musicStyle = !Boolean(dataForm.instagram[index].musicStyle);
+      let musicStyleOther = !Boolean(dataForm.instagram[index].musicStyleOther);
+
+      if (instagramUsername || followersNumber || logo || price || musicStyle)
+        checkInstagram = true;
+
+      return {
+        musicStyle: musicStyle,
+        instagramUsername: instagramUsername,
+        followersNumber: followersNumber,
+        logo: logo,
+        price: price,
+      };
+    });
+
+    errorsList = { ...errorsList, instagram: checkFormErrorInstagram };
 
     if (
       !dataForm.firstName ||
-      !dataForm.influencerName ||
-      !dataForm.musicStyle ||
-      (dataForm.musicStyle === "Other" && !dataForm.musicStyleOther) ||
-      !dataForm.instagram ||
-      !dataForm.followersNumber ||
       !dataForm.email ||
+      checkInstagram ||
       !dataForm.phone ||
-      !dataForm.price ||
       !dataForm.password
     ) {
-      return setErrorsForm(errrosList);
+      return setErrorsForm(errorsList);
     }
 
     if (dataForm.password !== dataForm.repeatPassword) {
-      return setErrorsForm({ ...errrosList, repeatPassword: true });
+      return setErrorsForm({ ...errorsList, repeatPassword: true });
     }
-
     if (!dataForm.acceptAgree) return;
     try {
       const result = await axios.post(
         `${process.env.REACT_APP_SERVER}/auth/create/influencer`,
         {
           firstName: dataForm.firstName,
-          influencerName: dataForm.influencerName,
-          musicStyle:
-            dataForm.musicStyle === "Other"
-              ? dataForm.musicStyleOther
-              : dataForm.musicStyle,
-          instagramUsername: dataForm.instagram,
-          followersNumber: dataForm.followersNumber,
+          instagram: dataForm.instagram,
           email: dataForm.email,
           phone: dataForm.phone,
-          price: dataForm.price,
           password: dataForm.password,
         }
       );
@@ -159,7 +163,13 @@ const SignupInfluencer = () => {
         result.data.code === 409 &&
         result.data.message === "This instagram already exists"
       ) {
-        return setErrorsForm({ ...errorsForm, instagram: true });
+        return setErrorsForm({
+          ...errorsForm,
+          instagram: errorsForm.instagram.map((item) => ({
+            ...item,
+            instagramUsername: true,
+          })),
+        });
       }
 
       if (result.data.code === 409) {
@@ -197,69 +207,232 @@ const SignupInfluencer = () => {
                     setErrorsForm({ ...errorsForm, firstName: false })
                   }
                 />
-                <TextInput
-                  title="Influencer name*"
-                  placeholder="Enter influencer name"
-                  style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
-                  value={dataForm.influencerName}
-                  setValue={(value) => dispatch(setInfluencerName(value))}
-                  error={errorsForm.influencerName}
-                  onFocus={() =>
-                    setErrorsForm({ ...errorsForm, influencerName: false })
-                  }
-                />
-                <SelectedInput
-                  data={["Techno", "EDM", "House", "Other"]}
-                  changeValue={(value) => {
-                    dispatch(setMusicStyle(value));
-                    setErrorsForm({ ...errorsForm, musicStyle: false });
-                  }}
-                  title="Music style*"
-                  placeholder={
-                    dataForm.musicStyle === ""
-                      ? "Сhoose music style"
-                      : dataForm.musicStyle
-                  }
-                  style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
-                  error={errorsForm.musicStyle}
-                />
-                {dataForm.musicStyle === "Other" ? (
-                  <TextInput
-                    title="Music Style Other*"
-                    placeholder="Enter music style other"
-                    style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
-                    value={dataForm.musicStyleOther}
-                    setValue={(value) => dispatch(setMusicStyleOther(value))}
-                    error={errorsForm.musicStyleOther}
-                    onFocus={() =>
-                      setErrorsForm({ ...errorsForm, musicStyleOther: false })
-                    }
+
+                <div className="instagram-select">
+                  {dataForm.instagram.map((item, index) => (
+                    <div className="instagram-select-item" key={index}>
+                      <SelectedInput
+                        data={["Techno", "EDM", "House", "Other"]}
+                        changeValue={(value) => {
+                          dispatch(
+                            setInstagram({
+                              index: index,
+                              data: { ...item, musicStyle: value },
+                            })
+                          );
+                          const instagramErrors = errorsForm.instagram;
+                          instagramErrors[index].musicStyle = false;
+                          setErrorsForm({
+                            ...errorsForm,
+                            instagram: instagramErrors,
+                          });
+                        }}
+                        title={`(${index + 1}) Music style*`}
+                        placeholder={
+                          dataForm.instagram[index].musicStyle === ""
+                            ? "Сhoose music style"
+                            : dataForm.instagram[index].musicStyle
+                        }
+                        style={{
+                          maxWidth: "665px",
+                          margin: "0 auto 60px auto",
+                        }}
+                        error={errorsForm.instagram[index].musicStyle}
+                      />
+                      {dataForm.instagram[index].musicStyle === "Other" ? (
+                        <TextInput
+                          title={`(${index + 1}) Music Style Other*`}
+                          placeholder="Enter music style other"
+                          style={{
+                            maxWidth: "665px",
+                            margin: "0 auto 60px auto",
+                          }}
+                          value={dataForm.instagram[index].musicStyleOther}
+                          setValue={(value) =>
+                            dispatch(
+                              setInstagram({
+                                index: index,
+                                data: { ...item, musicStyleOther: value },
+                              })
+                            )
+                          }
+                          error={errorsForm.musicStyleOther}
+                          onFocus={() => {
+                            const instagramErrors = errorsForm.instagram;
+                            instagramErrors[index].musicStyleOther = false;
+                            setErrorsForm({
+                              ...errorsForm,
+                              instagram: instagramErrors,
+                            });
+                          }}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                      <TextInput
+                        title={
+                          dataForm.instagram.length === 1
+                            ? "Instagram username*"
+                            : `(${index + 1}) Instagram username*`
+                        }
+                        placeholder="Enter instagram username"
+                        style={{ margin: "0 auto 60px auto" }}
+                        value={item.instagramUsername}
+                        setValue={(value) =>
+                          dispatch(
+                            setInstagram({
+                              index: index,
+                              data: { ...item, instagramUsername: value },
+                            })
+                          )
+                        }
+                        error={errorsForm.instagram[index].instagramUsername}
+                        onFocus={() => {
+                          const instagramErrors = errorsForm.instagram;
+                          instagramErrors[index].instagramUsername = false;
+                          setErrorsForm({
+                            ...errorsForm,
+                            instagram: instagramErrors,
+                          });
+                        }}
+                      />
+                      {index === 0 ? (
+                        <></>
+                      ) : (
+                        <button
+                          type="button"
+                          className="instagram-select-item-delete"
+                          onClick={() => {
+                            const editErrorFormInstagram =
+                              errorsForm.instagram.filter(
+                                (item, itemIndex) => itemIndex !== index
+                              );
+                            setErrorsForm({
+                              ...errorsForm,
+                              instagram: editErrorFormInstagram,
+                            });
+                            dispatch(setInstagramDelete(index));
+                          }}
+                        >
+                          <img
+                            className="instagram-select-item-delete-icon"
+                            src={deleteIcon}
+                          />
+                        </button>
+                      )}
+                      {/* Followers Number */}
+                      <TextInput
+                        title={
+                          dataForm.instagram.length === 1
+                            ? "Followers number*"
+                            : `(${index + 1}) Followers number*`
+                        }
+                        placeholder="Enter followers number"
+                        style={{
+                          margin: "0 auto 60px auto",
+                        }}
+                        value={item.followersNumber}
+                        setValue={(value) =>
+                          dispatch(
+                            setInstagram({
+                              index: index,
+                              data: { ...item, followersNumber: value },
+                            })
+                          )
+                        }
+                        error={errorsForm.instagram[index].followersNumber}
+                        onFocus={() => {
+                          const instagramErrors = errorsForm.instagram;
+                          instagramErrors[index].followersNumber = false;
+                          setErrorsForm({
+                            ...errorsForm,
+                            instagram: instagramErrors,
+                          });
+                        }}
+                      />
+
+                      {/* Logo */}
+                      <TextInput
+                        title={
+                          dataForm.instagram.length === 1
+                            ? "Logo Link*"
+                            : `(${index + 1}) Logo Link*`
+                        }
+                        placeholder="Enter logo link"
+                        style={{
+                          margin: "0 auto 60px auto",
+                        }}
+                        value={item.logo}
+                        setValue={(value) =>
+                          dispatch(
+                            setInstagram({
+                              index: index,
+                              data: { ...item, logo: value },
+                            })
+                          )
+                        }
+                        error={errorsForm.instagram[index].logo}
+                        onFocus={() => {
+                          const instagramErrors = errorsForm.instagram;
+                          instagramErrors[index].logo = false;
+                          setErrorsForm({
+                            ...errorsForm,
+                            instagram: instagramErrors,
+                          });
+                        }}
+                      />
+                      {/* Price */}
+                      <TextInput
+                        title={
+                          dataForm.instagram.length === 1
+                            ? "Price for 1 Instagram Post & Story, include your currency*"
+                            : `(${
+                                index + 1
+                              }) Price for 1 Instagram Post & Story, include your currency*`
+                        }
+                        placeholder="Enter Price for 1 Instagram Post & Story, include your currency*"
+                        style={{
+                          margin:
+                            dataForm.instagram.length === index + 1
+                              ? "0 auto 0px auto"
+                              : "0 auto 60px auto",
+                        }}
+                        value={item.price}
+                        setValue={(value) =>
+                          dispatch(
+                            setInstagram({
+                              index: index,
+                              data: { ...item, price: value },
+                            })
+                          )
+                        }
+                        error={errorsForm.instagram[index].price}
+                        onFocus={() => {
+                          const instagramErrors = errorsForm.instagram;
+                          instagramErrors[index].price = false;
+                          setErrorsForm({
+                            ...errorsForm,
+                            instagram: instagramErrors,
+                          });
+                        }}
+                      />
+                    </div>
+                  ))}
+                  <StandartButton
+                    text="Add a New Instagram Account"
+                    style={{ fontSize: 15, margin: "10px auto 0 auto" }}
+                    onClick={() => {
+                      setErrorsForm({
+                        ...errorsForm,
+                        instagram: [
+                          ...errorsForm.instagram,
+                          { instagramUsername: false, followersNumber: false },
+                        ],
+                      });
+                      dispatch(setInstagramAdd());
+                    }}
                   />
-                ) : (
-                  <></>
-                )}
-                <TextInput
-                  title="Instagram username*"
-                  placeholder="Enter instagram username"
-                  style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
-                  value={dataForm.instagram}
-                  setValue={(value) => dispatch(setInstagram(value))}
-                  error={errorsForm.instagram}
-                  onFocus={() =>
-                    setErrorsForm({ ...errorsForm, instagram: false })
-                  }
-                />
-                <TextInput
-                  title="Followers number*"
-                  placeholder="Enter followers number"
-                  style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
-                  value={dataForm.followersNumber}
-                  setValue={(value) => dispatch(setFollowersNumber(value))}
-                  error={errorsForm.followersNumber}
-                  onFocus={() =>
-                    setErrorsForm({ ...errorsForm, followersNumber: false })
-                  }
-                />
+                </div>
                 <TextInput
                   title="Email*"
                   placeholder="Enter email"
@@ -279,15 +452,7 @@ const SignupInfluencer = () => {
                   error={errorsForm.phone}
                   onFocus={() => setErrorsForm({ ...errorsForm, phone: false })}
                 />
-                <TextInput
-                  title="Price for 1 Instagram Post & Story, include your currency*"
-                  placeholder="Enter your price here for 1 Instagram Post & Story, include your currency"
-                  style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
-                  value={dataForm.price}
-                  setValue={(value) => dispatch(setPrice(value))}
-                  error={errorsForm.price}
-                  onFocus={() => setErrorsForm({ ...errorsForm, price: false })}
-                />
+
                 <TextInput
                   type="password"
                   title="Password"
@@ -313,6 +478,7 @@ const SignupInfluencer = () => {
                   }
                 />
                 <CheckBox
+                  page="influencer"
                   text="Agree to"
                   linkText="terms and conditions"
                   style={{ maxWidth: "665px", margin: "0 auto 60px auto" }}
@@ -335,16 +501,13 @@ const SignupInfluencer = () => {
                 <h2 className="signup-client-modal-title">Internal approval</h2>
 
                 <p className="signup-client-modal-second">
-                  Thank you for providing us with your information. We
-                  appreciate your interest.
+                  Thank you for sharing your information.
                 </p>
 
                 <p className="signup-client-modal-desc">
-                  Rest assured that we have received your submission, and our
-                  team will carefully review it internally. If your submission
-                  meets our criteria and aligns with our requirements, we will
-                  notify you promptly. We value your patience and look forward
-                  to sharing updates with you soon.
+                  We've got it and our team will review it carefully. If it fits
+                  our criteria, we'll let you know. Thanks for your patience,
+                  and we'll keep you posted.
                 </p>
 
                 <StandartButton

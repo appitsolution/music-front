@@ -2,15 +2,18 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   firstName: "",
-  influencerName: "",
-  musicStyle: "",
-  musicStyleOther: "",
-  instagram: "",
-  followersNumber: "",
+  instagram: [
+    {
+      musicStyle: "",
+      musicStyleOther: "",
+      instagramUsername: "",
+      followersNumber: "",
+      logo: "",
+      price: "",
+    },
+  ],
   email: "",
   phone: "",
-  price: "",
-  username: "",
   password: "",
   repeatPassword: "",
   acceptAgree: false,
@@ -23,32 +26,44 @@ export const signupInfluencerSlice = createSlice({
     setFirstName: (state, action) => {
       state.firstName = action.payload;
     },
-    setInfluencerName: (state, action) => {
-      state.influencerName = action.payload;
-    },
-    setMusicStyle: (state, action) => {
-      state.musicStyle = action.payload;
-    },
-    setMusicStyleOther: (state, action) => {
-      state.musicStyleOther = action.payload;
+    setInfluencerBrands: (state, action) => {
+      state.influencerBrands = action.payload;
     },
     setInstagram: (state, action) => {
-      state.instagram = action.payload;
+      const editInstagram = state.instagram;
+      editInstagram[action.payload.index] = {
+        ...action.payload.data,
+      };
+      state.instagram = editInstagram;
     },
-    setFollowersNumber: (state, action) => {
-      state.followersNumber = action.payload;
+    setInstagramAdd: (state, action) => {
+      state.instagram = [
+        ...state.instagram,
+        {
+          musicStyle: "",
+          musicStyleOther: "",
+          instagramUsername: "",
+          followersNumber: "",
+          logo: "",
+          price: "",
+        },
+      ];
+    },
+    setInstagramDelete: (state, action) => {
+      const editInstagram = state.instagram.filter((item, index) => {
+        if (index === action.payload) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+      state.instagram = editInstagram;
     },
     setEmail: (state, action) => {
       state.email = action.payload;
     },
     setPhone: (state, action) => {
       state.phone = action.payload;
-    },
-    setPrice: (state, action) => {
-      state.price = action.payload;
-    },
-    setUsername: (state, action) => {
-      state.username = action.payload;
     },
     setPassword: (state, action) => {
       state.password = action.payload;
@@ -61,15 +76,18 @@ export const signupInfluencerSlice = createSlice({
     },
     setSignupClear: (state) => {
       state.firstName = "";
-      state.influencerName = "";
-      state.musicStyle = "";
-      state.musicStyleOther = "";
-      state.instagram = "";
-      state.followersNumber = "";
+      state.instagram = [
+        {
+          musicStyle: "",
+          musicStyleOther: "",
+          instagramUsername: "",
+          followersNumber: "",
+          logo: "",
+          price: "",
+        },
+      ];
       state.email = "";
       state.phone = "";
-      state.price = "";
-      state.username = "";
       state.password = "";
       state.repeatPassword = "";
       state.acceptAgree = false;
@@ -77,18 +95,17 @@ export const signupInfluencerSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const {
   setFirstName,
-  setInfluencerName,
+  setInfluencerBrands,
   setMusicStyle,
   setMusicStyleOther,
   setInstagram,
   setFollowersNumber,
+  setInstagramAdd,
+  setInstagramDelete,
   setEmail,
   setPhone,
-  setPrice,
-  setUsername,
   setPassword,
   setRepeatPassword,
   setAcceptAgree,

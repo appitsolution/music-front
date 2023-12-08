@@ -11,6 +11,9 @@ import {
   validatePhoneNumber,
 } from "../../../../utils/validations";
 
+import deleteIcon from "../../../../images/icons/close.svg";
+import SelectedInput from "../../../form/SelectedInput";
+
 const AccountInfluencerDetails = () => {
   const [data, setData] = useState({});
   const [isOpenPersonal, setIsOpenPersonal] = useState(false);
@@ -21,9 +24,16 @@ const AccountInfluencerDetails = () => {
 
   const [dataPersonal, setDataPersonal] = useState({
     firstName: "",
-    influencerName: "",
-    instagramUsername: "",
-    followersNumber: "",
+    instagram: [
+      {
+        musicStyle: "",
+        musicStyleOther: "",
+        instagramUsername: "",
+        followersNumber: "",
+        logo: "",
+        price: "",
+      },
+    ],
   });
 
   const [dataPassword, setDataPassword] = useState({
@@ -38,9 +48,15 @@ const AccountInfluencerDetails = () => {
 
   const [errorPersonal, setErrorPersonal] = useState({
     firstName: false,
-    influencerName: false,
-    instagramUsername: false,
-    followersNumber: false,
+    instagram: [
+      {
+        musicStyle: false,
+        instagramUsername: false,
+        followersNumber: false,
+        logo: false,
+        price: false,
+      },
+    ],
   });
 
   const [errorPassword, setErrorPassword] = useState({
@@ -56,9 +72,13 @@ const AccountInfluencerDetails = () => {
   const updateClientPersonal = async () => {
     let errorPersonalList = {
       firstName: false,
-      influencerName: false,
-      instagramUsername: false,
-      followersNumber: false,
+      instagram: {
+        musicStyle: false,
+        instagramUsername: false,
+        followersNumber: false,
+        logo: false,
+        price: false,
+      },
     };
     if (!dataPersonal.firstName) {
       errorPersonalList = {
@@ -67,38 +87,56 @@ const AccountInfluencerDetails = () => {
       };
     }
 
-    if (!dataPersonal.influencerName) {
-      errorPersonalList = {
-        ...errorPersonal,
-        influencerName: true,
-      };
-    }
-    if (!dataPersonal.instagramUsername) {
-      errorPersonalList = {
-        ...errorPersonal,
-        instagramUsername: true,
-      };
-    }
+    let checkInstagram = false;
+    const checkFormErrorInstagram = errorPersonal.instagram.map(
+      (item, index) => {
+        let instagramUsername = !Boolean(
+          dataPersonal.instagram[index].instagramUsername
+        );
+        let followersNumber = !Boolean(
+          dataPersonal.instagram[index].followersNumber
+        );
+        let logo = !Boolean(dataPersonal.instagram[index].logo);
+        let musicStyle = !Boolean(dataPersonal.instagram[index].musicStyle);
 
-    if (!dataPersonal.followersNumber) {
-      errorPersonalList = {
-        ...errorPersonal,
-        followersNumber: true,
-      };
-    }
+        if (instagramUsername || followersNumber || logo || musicStyle)
+          checkInstagram = true;
+
+        return {
+          musicStyle: musicStyle,
+          instagramUsername: instagramUsername,
+          followersNumber: followersNumber,
+          logo: logo,
+        };
+      }
+    );
+
+    errorPersonalList = {
+      ...errorPersonalList,
+      instagram: checkFormErrorInstagram,
+    };
     try {
-      if (
-        !dataPersonal.firstName ||
-        !dataPersonal.instagramUsername ||
-        !dataPersonal.influencerName ||
-        !dataPersonal.followersNumber
-      ) {
+      if (!dataPersonal.firstName || checkInstagram) {
         return setErrorPersonal(errorPersonalList);
       }
 
+      const checkInstagramList = dataPersonal.instagram.map((item) => {
+        if (item.musicStyle === "Other") {
+          return {
+            ...item,
+            musicStyle: item.musicStyleOther,
+          };
+        } else {
+          return {
+            ...item,
+            musicStyle: item.musicStyle,
+          };
+        }
+      });
+
       const result = await axios.put(
         `${process.env.REACT_APP_SERVER}/profile/influencer/personal`,
-        { ...dataPersonal, id: data._id }
+        { ...dataPersonal, instagram: checkInstagramList, id: data._id }
       );
 
       if (result.data.code === 200) {
@@ -223,12 +261,21 @@ const AccountInfluencerDetails = () => {
   const getData = async () => {
     try {
       const { dataFetch } = await UseVerify();
+
       setData(dataFetch);
+      setErrorPersonal({
+        ...errorPersonal,
+        instagram: Array.from({ length: dataFetch.instagram.length }, () => ({
+          musicStyle: false,
+          instagramUsername: false,
+          followersNumber: false,
+          logo: false,
+          price: false,
+        })),
+      });
       setDataPersonal({
         firstName: dataFetch.firstName,
-        influencerName: dataFetch.influencerName,
-        instagramUsername: dataFetch.instagramUsername,
-        followersNumber: dataFetch.followersNumber,
+        instagram: dataFetch.instagram,
       });
       setDataMusic(dataFetch.musicStyle);
       setDataEmail(dataFetch.email);
@@ -279,32 +326,63 @@ const AccountInfluencerDetails = () => {
                       {data.firstName ? data.firstName : "No Data"}
                     </p>
                   </div>
-                  <div className="account-influencer-details-wrapper-content-item">
-                    <p className="account-influencer-details-wrapper-content-title">
-                      Influencer name
-                    </p>
-                    <p className="account-influencer-details-wrapper-content-value">
-                      {data.influencerName ? data.influencerName : "No Data"}
-                    </p>
-                  </div>
-                  <div className="account-influencer-details-wrapper-content-item">
-                    <p className="account-influencer-details-wrapper-content-title">
-                      Instagram username
-                    </p>
-                    <p className="account-influencer-details-wrapper-content-value">
-                      {data.instagramUsername
-                        ? data.instagramUsername
-                        : "No Data"}
-                    </p>
-                  </div>
-                  <div className="account-influencer-details-wrapper-content-item">
-                    <p className="account-influencer-details-wrapper-content-title">
-                      Followers number
-                    </p>
-                    <p className="account-influencer-details-wrapper-content-value">
-                      {data.followersNumber ? data.followersNumber : "No Data"}
-                    </p>
-                  </div>
+
+                  {dataPersonal.instagram.map((instagram, index) => (
+                    <div className="account-influencer-details-wrapper-content-item">
+                      <p className="account-influencer-details-wrapper-content-title">
+                        ({index + 1}) Instagram username
+                      </p>
+                      <p className="account-influencer-details-wrapper-content-value">
+                        {instagram.instagramUsername
+                          ? instagram.instagramUsername
+                          : "No Data"}
+                      </p>
+                    </div>
+                  ))}
+                  {dataPersonal.instagram.map((instagram, index) => (
+                    <div className="account-influencer-details-wrapper-content-item">
+                      <p className="account-influencer-details-wrapper-content-title">
+                        ({index + 1}) Followers number
+                      </p>
+                      <p className="account-influencer-details-wrapper-content-value">
+                        {instagram.followersNumber
+                          ? instagram.followersNumber
+                          : "No Data"}
+                      </p>
+                    </div>
+                  ))}
+                  {dataPersonal.instagram.map((instagram, index) => (
+                    <div className="account-influencer-details-wrapper-content-item">
+                      <p className="account-influencer-details-wrapper-content-title">
+                        ({index + 1}) Logo Link
+                      </p>
+                      <p className="account-influencer-details-wrapper-content-value">
+                        {instagram.logo ? instagram.logo : "No Data"}
+                      </p>
+                    </div>
+                  ))}
+                  {dataPersonal.instagram.map((instagram, index) => (
+                    <div className="account-influencer-details-wrapper-content-item">
+                      <p className="account-influencer-details-wrapper-content-title">
+                        ({index + 1}) Price
+                      </p>
+                      <p className="account-influencer-details-wrapper-content-value">
+                        {instagram.price ? instagram.price : "No Data"}
+                      </p>
+                    </div>
+                  ))}
+                  {dataPersonal.instagram.map((instagram, index) => (
+                    <div className="account-influencer-details-wrapper-content-item">
+                      <p className="account-influencer-details-wrapper-content-title">
+                        ({index + 1}) Music Style
+                      </p>
+                      <p className="account-influencer-details-wrapper-content-value">
+                        {instagram.musicStyle
+                          ? instagram.musicStyle
+                          : "No Data"}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -332,35 +410,6 @@ const AccountInfluencerDetails = () => {
                     </p>
                     <p className="account-influencer-details-wrapper-content-value">
                       **********
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="account-influencer-details-wrapper">
-                <div className="account-influencer-details-wrapper-header">
-                  <p className="account-influencer-details-wrapper-header-title">
-                    Music style
-                  </p>
-
-                  <button
-                    className="account-influencer-details-wrapper-header-edit"
-                    onClick={() => setIsOpenMusic(true)}
-                  >
-                    <img
-                      className="account-influencer-details-wrapper-header-edit-icon"
-                      src={edit}
-                    />
-                  </button>
-                </div>
-
-                <div className="account-influencer-details-wrapper-content">
-                  <div className="account-influencer-details-wrapper-content-item">
-                    <p className="account-influencer-details-wrapper-content-title">
-                      Music style
-                    </p>
-                    <p className="account-influencer-details-wrapper-content-value">
-                      {data.musicStyle ? data.musicStyle : "No Data"}
                     </p>
                   </div>
                 </div>
@@ -448,46 +497,204 @@ const AccountInfluencerDetails = () => {
             }
           />
 
-          <TextInput
-            title="Influencer name"
-            placeholder="John Doe"
-            style={{ marginTop: "50px" }}
-            value={dataPersonal.influencerName}
-            setValue={(value) =>
-              setDataPersonal({ ...dataPersonal, influencerName: value })
-            }
-            error={errorPersonal.influencerName}
-            onFocus={() =>
-              setErrorPersonal({ ...errorPersonal, influencerName: false })
-            }
-          />
-          <TextInput
-            title="Instagram username"
-            placeholder="John Doe"
-            style={{ marginTop: "50px" }}
-            value={dataPersonal.instagramUsername}
-            setValue={(value) =>
-              setDataPersonal({ ...dataPersonal, instagramUsername: value })
-            }
-            error={errorPersonal.instagramUsername}
-            onFocus={() =>
-              setErrorPersonal({ ...errorPersonal, instagramUsername: false })
-            }
-          />
-          <TextInput
-            title="Followers number"
-            placeholder="30K"
-            style={{ marginTop: "50px" }}
-            value={dataPersonal.followersNumber}
-            setValue={(value) =>
-              setDataPersonal({ ...dataPersonal, followersNumber: value })
-            }
-            error={errorPersonal.followersNumber}
-            onFocus={() =>
-              setErrorPersonal({ ...errorPersonal, followersNumber: false })
-            }
-          />
+          {dataPersonal.instagram.map((ins, index) => (
+            <>
+              <div className="instagram-select-item" key={index}>
+                <SelectedInput
+                  data={["Techno", "EDM", "House", "Other"]}
+                  changeValue={(value) => {
+                    const updateInstagram = dataPersonal.instagram;
+                    updateInstagram[index].musicStyle = value;
+                    setDataPersonal({
+                      ...dataPersonal,
+                      instagram: updateInstagram,
+                    });
 
+                    const errorInstagram = errorPersonal.instagram;
+                    errorInstagram[index].price = false;
+                    setErrorPersonal({
+                      ...errorPersonal,
+                      instagram: errorInstagram,
+                    });
+                  }}
+                  title={`(${index + 1}) Music style*`}
+                  placeholder={
+                    dataPersonal.instagram[index].musicStyle === ""
+                      ? "Сhoose music style"
+                      : dataPersonal.instagram[index].musicStyle
+                  }
+                  style={{ marginTop: "60px" }}
+                  error={errorPersonal.instagram[index].musicStyle}
+                />
+                {dataPersonal.instagram[index].musicStyle === "Other" ? (
+                  <TextInput
+                    title={`(${index + 1}) Music Style Other*`}
+                    placeholder="Enter music style other"
+                    style={{ marginTop: "60px" }}
+                    value={dataPersonal.instagram[index].musicStyleOther}
+                    setValue={(value) => {
+                      const updateInstagram = dataPersonal.instagram;
+                      updateInstagram[index].musicStyleOther = value;
+                      setDataPersonal({
+                        ...dataPersonal,
+                        instagram: updateInstagram,
+                      });
+                    }}
+                    error={errorPersonal.musicStyleOther}
+                    onFocus={() => {
+                      const errorInstagram = errorPersonal.instagram;
+                      errorInstagram[index].price = false;
+                      setErrorPersonal({
+                        ...errorPersonal,
+                        instagram: errorInstagram,
+                      });
+                    }}
+                  />
+                ) : (
+                  <></>
+                )}
+                <TextInput
+                  title={`(${index + 1}) Instagram username`}
+                  placeholder="John Doe"
+                  style={{ marginTop: "50px" }}
+                  value={dataPersonal.instagram[index].instagramUsername}
+                  setValue={(value) => {
+                    const updateInstagram = dataPersonal.instagram;
+                    updateInstagram[index].instagramUsername = value;
+                    setDataPersonal({
+                      ...dataPersonal,
+                      instagram: updateInstagram,
+                    });
+                  }}
+                  error={errorPersonal.instagram[index].instagramUsername}
+                  onFocus={() => {
+                    const errorInstagram = errorPersonal.instagram;
+                    errorInstagram[index].price = false;
+                    setErrorPersonal({
+                      ...errorPersonal,
+                      instagram: errorInstagram,
+                    });
+                  }}
+                />
+                <TextInput
+                  title={`(${index + 1}) Followers number`}
+                  placeholder="30K"
+                  style={{ marginTop: "50px" }}
+                  value={dataPersonal.instagram[index].followersNumber}
+                  setValue={(value) => {
+                    const updateInstagram = dataPersonal.instagram;
+                    updateInstagram[index].followersNumber = value;
+                    setDataPersonal({
+                      ...dataPersonal,
+                      instagram: updateInstagram,
+                    });
+                  }}
+                  error={errorPersonal.instagram[index].followersNumber}
+                  onFocus={() => {
+                    const errorInstagram = errorPersonal.instagram;
+                    errorInstagram[index].followersNumber = false;
+                    setErrorPersonal({
+                      ...errorPersonal,
+                      instagram: errorInstagram,
+                    });
+                  }}
+                />
+                {index === 0 ? (
+                  <></>
+                ) : (
+                  <button
+                    type="button"
+                    className="instagram-select-item-delete"
+                    onClick={() => {
+                      const editErrorFormInstagram =
+                        errorPersonal.instagram.filter(
+                          (item, itemIndex) => itemIndex !== index
+                        );
+                      setErrorPersonal({
+                        ...errorPersonal,
+                        instagram: editErrorFormInstagram,
+                      });
+                      const editInstagram = dataPersonal.instagram.filter(
+                        (fil, indexFil) => index !== indexFil
+                      );
+
+                      setDataPersonal({
+                        ...dataPersonal,
+                        instagram: editInstagram,
+                      });
+                    }}
+                  >
+                    <img
+                      className="instagram-select-item-delete-icon"
+                      src={deleteIcon}
+                    />
+                  </button>
+                )}
+                <TextInput
+                  title={`(${index + 1}) Logo Link`}
+                  placeholder="https://link.com"
+                  style={{ marginTop: "50px" }}
+                  value={dataPersonal.instagram[index].logo}
+                  setValue={(value) => {
+                    const updateInstagram = dataPersonal.instagram;
+                    updateInstagram[index].logo = value;
+                    setDataPersonal({
+                      ...dataPersonal,
+                      instagram: updateInstagram,
+                    });
+                  }}
+                  error={errorPersonal.instagram[index].logo}
+                  onFocus={() => {
+                    const errorInstagram = errorPersonal.instagram;
+                    errorInstagram[index].logo = false;
+                    setErrorPersonal({
+                      ...errorPersonal,
+                      instagram: errorInstagram,
+                    });
+                  }}
+                />
+                <TextInput
+                  title={`(${index + 1}) Price`}
+                  placeholder="30"
+                  style={{ marginTop: "50px", pointerEvents: "none" }}
+                  value={dataPersonal.instagram[index].price}
+                />
+              </div>
+            </>
+          ))}
+          <StandartButton
+            text="Add a New Instagram Account"
+            style={{ fontSize: 15, margin: "10px auto 0 auto" }}
+            onClick={() => {
+              setErrorPersonal({
+                ...errorPersonal,
+                instagram: [
+                  ...errorPersonal.instagram,
+                  {
+                    musicStyle: false,
+                    instagramUsername: false,
+                    followersNumber: false,
+                    logo: false,
+                    price: false,
+                  },
+                ],
+              });
+              setDataPersonal({
+                ...dataPersonal,
+                instagram: [
+                  ...dataPersonal.instagram,
+                  {
+                    musicStyle: "",
+                    musicStyleOther: "",
+                    instagramUsername: "",
+                    followersNumber: "",
+                    logo: "",
+                    price: "",
+                  },
+                ],
+              });
+            }}
+          />
           <div
             style={{
               marginTop: "60px",
@@ -563,34 +770,6 @@ const AccountInfluencerDetails = () => {
               text="Update Password"
               onClick={updateClientPassword}
             />
-          </div>
-        </div>
-      </ModalWindow>
-
-      <ModalWindow
-        header="Music style"
-        isOpen={isOpenMusic}
-        setClose={setIsOpenMusic}
-      >
-        <div className="account-influencer-details-form">
-          <TextInput
-            title="Music style"
-            placeholder="House"
-            style={{ marginTop: "80px" }}
-            value={dataMusic}
-            setValue={(value) => setDataMusic(value)}
-            error={errorMusic}
-            onFocus={() => setErrorMusic(false)}
-          />
-
-          <div
-            style={{
-              marginTop: "60px",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <StandartButton text="Save changes" onClick={updateMusicStyle} />
           </div>
         </div>
       </ModalWindow>
