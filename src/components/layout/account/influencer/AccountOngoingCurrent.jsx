@@ -14,15 +14,16 @@ const AcountInfluencerOngoingCurrent = () => {
   const [dataInfluencer, setDataInfluencer] = useState({});
 
   const getData = async () => {
+    console.log(params);
     try {
       const { dataFetch } = await UseVerify();
       const result = await axios(
-        `${process.env.REACT_APP_SERVER}/promos/history/one?userId=${dataFetch._id}&promosId=${params.id}`
+        `${process.env.REACT_APP_SERVER}/promos/get-ongoing-promo-one?influencerId=${dataFetch._id}&promosId=${params.id}`
       );
 
       setData(result.data.promo);
+
       setDataInfluencer(dataFetch);
-      console.log(result.data.promo);
     } catch (err) {
       console.log(err);
     }
@@ -96,11 +97,12 @@ const AcountInfluencerOngoingCurrent = () => {
                 <StandartButton
                   text="Submit Results & Get Paid"
                   style={{ padding: "9px 70px" }}
-                  onClick={() =>
+                  onClick={() => {
+                    console.log(dataInfluencer);
                     navigation(
-                      `/account/influencer/update-ongoing-promos/${data._id}/${dataInfluencer._id}`
-                    )
-                  }
+                      `/account/influencer/update-ongoing-promos/${data._id}/${dataInfluencer._id}/${params.instagram}`
+                    );
+                  }}
                 />
               </div>
             </div>

@@ -5,7 +5,7 @@ import TextInput from "../../../form/TextInput";
 import StandartButton from "../../../form/StandartButton";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { isThreeDaysPassed } from "../../../../utils/validations";
+import { is24HoursPassed } from "../../../../utils/validations";
 
 const UpdateOngoingPromo = () => {
   const params = useParams();
@@ -27,7 +27,7 @@ const UpdateOngoingPromo = () => {
   });
 
   const getData = async () => {
-    if (!params.influencerId || !params.promoId) {
+    if (!params.influencerId || !params.promoId || !params.instagram) {
       return navigation("/");
     }
     try {
@@ -38,7 +38,7 @@ const UpdateOngoingPromo = () => {
       console.log(result.data.date);
       if (result.data.code === 200) {
         setFormData(result.data.promo);
-        setData(isThreeDaysPassed(result.data.date));
+        setData(is24HoursPassed(result.data.date));
       }
     } catch (err) {
       console.log(err);
@@ -51,7 +51,7 @@ const UpdateOngoingPromo = () => {
     }
     try {
       const result = await axios.put(
-        `${process.env.REACT_APP_SERVER}/promos/update-ongoing?influencerId=${params.influencerId}&promoId=${params.promoId}`,
+        `${process.env.REACT_APP_SERVER}/promos/update-ongoing?influencerId=${params.influencerId}&promoId=${params.promoId}&instagramUsername=${params.instagram}`,
         formData
       );
 
@@ -111,7 +111,7 @@ const UpdateOngoingPromo = () => {
                 setFormData({ ...formData, impressions: value })
               }
               disabled={!data.isPassed}
-              disabledTime={data.daysLeft}
+              disabledTime={data.hoursLeft}
             />
 
             <TextInput
@@ -140,7 +140,7 @@ const UpdateOngoingPromo = () => {
                 setFormData({ ...formData, screenshot: value })
               }
               disabled={!data.isPassed}
-              disabledTime={data.daysLeft}
+              disabledTime={data.hoursLeft}
             />
             {/* <TextInput
               style={{ maxWidth: "665px", margin: "60px auto 0 auto" }}
@@ -158,7 +158,7 @@ const UpdateOngoingPromo = () => {
               value={formData.like}
               setValue={(value) => setFormData({ ...formData, like: value })}
               disabled={!data.isPassed}
-              disabledTime={data.daysLeft}
+              disabledTime={data.hoursLeft}
             />
 
             <div

@@ -208,7 +208,7 @@ const App = () => {
           />
 
           <Route
-            path="/account/influencer/ongoing-promos/:id"
+            path="/account/influencer/ongoing-promos/:id/:instagram"
             element={
               <PrivateRoute
                 role="influencer"
@@ -218,7 +218,7 @@ const App = () => {
           />
 
           <Route
-            path="/account/influencer/update-ongoing-promos/:promoId/:influencerId"
+            path="/account/influencer/update-ongoing-promos/:promoId/:influencerId/:instagram"
             element={
               <PrivateRoute
                 role="influencer"

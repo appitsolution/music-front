@@ -26,6 +26,7 @@ const AccountClientDetails = () => {
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorPhone, setErrorPhone] = useState(false);
   const [errorReferalCode, setErrorReferalCode] = useState(false);
+  const [errorLogo, setErrorLogo] = useState(false);
   const [errorUsername, setErrorUsername] = useState(false);
   const [errorCurrentPassword, setErrorCurrentPassword] = useState(false);
   const [errorNewPassword, setErrorNewPassword] = useState(false);
@@ -35,6 +36,7 @@ const AccountClientDetails = () => {
     firstName: "",
     instagram: "",
     referalCode: "",
+    logo: "",
   });
 
   const [dataPassword, setDataPassword] = useState({
@@ -66,7 +68,8 @@ const AccountClientDetails = () => {
       if (
         !dataPersonal.firstName ||
         !dataPersonal.instagram ||
-        !dataPersonal.referalCode
+        !dataPersonal.referalCode ||
+        !dataPersonal.logo
       ) {
         return;
       }
@@ -262,6 +265,14 @@ const AccountClientDetails = () => {
                       {data.referalCode}
                     </p>
                   </div>
+                  <div className="account-influencer-details-wrapper-content-item">
+                    <p className="account-influencer-details-wrapper-content-title">
+                      Logo
+                    </p>
+                    <p className="account-influencer-details-wrapper-content-value">
+                      {data.logo}
+                    </p>
+                  </div>
                 </div>
               </div>
 
@@ -432,6 +443,17 @@ const AccountClientDetails = () => {
             }
             error={errorReferalCode}
             onFocus={() => setErrorReferalCode()}
+          />
+          <TextInput
+            title="Logo"
+            placeholder="logo"
+            style={{ marginTop: "50px" }}
+            value={dataPersonal.logo}
+            setValue={(value) =>
+              setDataPersonal({ ...dataPersonal, logo: value })
+            }
+            error={errorLogo}
+            onFocus={() => setErrorLogo()}
           />
 
           <div

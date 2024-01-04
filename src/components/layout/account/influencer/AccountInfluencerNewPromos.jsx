@@ -11,6 +11,9 @@ import StandartButton from "../../../form/StandartButton";
 
 const AcountInfluencerNewPromos = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModalReject, setIsOpenModalReject] = useState(false);
+
+  const [templateDate, setTemplate] = useState();
   const navigation = useNavigate();
   const [data, setData] = useState([]);
 
@@ -21,8 +24,9 @@ const AcountInfluencerNewPromos = () => {
         `${process.env.REACT_APP_SERVER}/promos/get-new-promos?influencerId=${dataFetch._id}`
       );
 
-      setData(result.data.promos);
-      console.log(result.data.promos);
+      const filterData = result.data.promos.filter((item) => item);
+      setData(filterData);
+      console.log(filterData);
     } catch (err) {
       console.log(err);
     }
@@ -55,7 +59,7 @@ const AcountInfluencerNewPromos = () => {
 
           <p className="account-client-past-promos-second">New promos</p>
 
-          {data.map((item) => (
+          {data.map((item, index) => (
             <FormContainer
               style={{
                 marginTop: "70px",
@@ -66,51 +70,71 @@ const AcountInfluencerNewPromos = () => {
             >
               <div className="account-client-past-promos-form-current">
                 <div
-                  className="account-client-past-promos-form-current-content"
-                  style={{ padding: "0 20px 30px 20px" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    paddingLeft: 80,
+                  }}
                 >
-                  <h2 className="account-client-past-promos-form-current-content-title">
-                    Promo 1
-                  </h2>
-                  <p className="account-client-past-promos-form-current-content-client">
-                    Client:{" "}
-                    <span className="account-client-past-promos-form-current-content-client-value">
-                      {item ? item.client : "No Data"}
-                    </span>
-                  </p>
-                  <p className="account-client-past-promos-form-current-content-link">
-                    Videolink:{" "}
-                    <span className="account-client-past-promos-form-current-content-link-value">
-                      {item ? item.videoLink : "No Data"}
-                    </span>
-                  </p>
-                  <p className="account-client-past-promos-form-current-content-desc">
-                    Description:{" "}
-                    <span className="account-client-past-promos-form-current-content-desc-value">
-                      {item ? item.postDescription : "No Data"}
-                    </span>
-                  </p>
-                  <p className="account-client-past-promos-form-current-content-date">
-                    Date Request:{" "}
-                    <span className="account-client-past-promos-form-current-content-date-value">
-                      {item ? item.dateRequest : "No Data"}
-                    </span>
-                  </p>
-                  <p className="account-client-past-promos-form-current-content-wish">
-                    Special Wishes:{" "}
-                    <span className="account-client-past-promos-form-current-content-wish-value">
-                      {item ? item.specialWishes : "No Data"}
-                    </span>
-                  </p>
+                  <div style={{ width: "45%" }}>
+                    <img
+                      style={{ width: "100%" }}
+                      src={item ? (item.clientLogo ? item.clientLogo : "") : ""}
+                    />
+                  </div>
+                  <div
+                    className="account-client-past-promos-form-current-content"
+                    style={{ padding: "0 20px 30px 20px" }}
+                  >
+                    <h2 className="account-client-past-promos-form-current-content-title">
+                      Promo {index + 1}
+                    </h2>
+                    <p className="account-client-past-promos-form-current-content-client">
+                      Client:{" "}
+                      <span className="account-client-past-promos-form-current-content-client-value">
+                        {item ? item.client : "No Data"}
+                      </span>
+                    </p>
+                    <p className="account-client-past-promos-form-current-content-link">
+                      Videolink:{" "}
+                      <span className="account-client-past-promos-form-current-content-link-value">
+                        {item ? item.videoLink : "No Data"}
+                      </span>
+                    </p>
+                    <p className="account-client-past-promos-form-current-content-desc">
+                      Description:{" "}
+                      <span className="account-client-past-promos-form-current-content-desc-value">
+                        {item ? item.postDescription : "No Data"}
+                      </span>
+                    </p>
+                    <p className="account-client-past-promos-form-current-content-date">
+                      Date Request:{" "}
+                      <span className="account-client-past-promos-form-current-content-date-value">
+                        {item ? item.dateRequest : "No Data"}
+                      </span>
+                    </p>
+                    <p className="account-client-past-promos-form-current-content-wish">
+                      Special Wishes:{" "}
+                      <span className="account-client-past-promos-form-current-content-wish-value">
+                        {item ? item.specialWishes : "No Data"}
+                      </span>
+                    </p>
+                  </div>
                 </div>
                 <ResponseButton
                   onClickYes={() => {
                     setIsOpenModal(true);
                     responsePromo(item._id, "accept", item.instagramUsername);
                   }}
-                  onClickNo={() =>
-                    responsePromo(item._id, "refusing", item.instagramUsername)
-                  }
+                  onClickNo={() => {
+                    setIsOpenModalReject(true);
+                    setTemplate({
+                      id: item._id,
+                      res: "refusing",
+                      instagramUsername: item.instagramUsername,
+                    });
+                  }}
                 />
               </div>
             </FormContainer>
@@ -169,6 +193,47 @@ const AcountInfluencerNewPromos = () => {
             }}
             onClick={() => navigation("/signup/influencer/agreement")}
           />
+        </div>
+      </ModalWindow>
+      <ModalWindow isOpen={isOpenModalReject} setClose={setIsOpenModalReject}>
+        <div className="signup-client-modal">
+          <p className="signup-client-modal-desc">
+            You agree that your brand WILL NOT take part of promoting this
+            content as provided by us here.
+          </p>
+          <div style={{ display: "flex" }}>
+            <StandartButton
+              text="Accept"
+              style={{
+                padding: "8px 80px",
+                marginTop: "30px",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+              onClick={() => {
+                responsePromo(
+                  templateDate.id,
+                  templateDate.res,
+                  templateDate.instagramUsername
+                );
+                setIsOpenModalReject(false);
+                setTemplate({});
+              }}
+            />
+            <StandartButton
+              text="Reject"
+              style={{
+                padding: "8px 80px",
+                marginTop: "30px",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+              onClick={() => {
+                setIsOpenModalReject(false);
+                setTemplate({});
+              }}
+            />
+          </div>
         </div>
       </ModalWindow>
     </section>

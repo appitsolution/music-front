@@ -35,6 +35,7 @@ const AccountInfluencerOngoingPromos = () => {
         `${process.env.REACT_APP_SERVER}/promos/get-ongoing-promos?influencerId=${dataFetch._id}`
       );
       if (result.data.code === 200) {
+        console.log(result.data.promos);
         setData(result.data.promos);
       }
     } catch (err) {
@@ -65,7 +66,7 @@ const AccountInfluencerOngoingPromos = () => {
                       className="account-client-past-promos-form-item-button"
                       onClick={() =>
                         navigation(
-                          `/account/influencer/ongoing-promos/${item._id}`
+                          `/account/influencer/ongoing-promos/${item._id}/${item.instagramUsername}`
                         )
                       }
                     >

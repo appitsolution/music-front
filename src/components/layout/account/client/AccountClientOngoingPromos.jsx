@@ -70,7 +70,15 @@ const AcountClientOngoingPromos = () => {
                         navigation(`/account/client/ongoing-promos/${item._id}`)
                       }
                     >
-                      <div className="account-client-past-promos-form-image">
+                      <div
+                        className="account-client-past-promos-form-image"
+                        style={{
+                          background:
+                            item.statusPromo === "wait"
+                              ? "rgb(46 46 63 / 50%)"
+                              : "rgba(51, 48, 228, 0.5)",
+                        }}
+                      >
                         {formatDate(item.createdAt)}
                       </div>
                       <p className="account-client-past-promos-form-text">

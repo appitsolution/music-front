@@ -149,26 +149,30 @@ const AccountInfluencerDetails = () => {
   };
 
   const updateClientPassword = async () => {
+    console.log("1");
     if (!dataPassword.currentPassword) {
       setErrorPassword({
         ...errorPassword,
         currentPassword: true,
       });
     }
+    console.log("2");
     if (!dataPassword.newPassword) {
       setErrorPassword({
         ...errorPassword,
         newPassword: true,
       });
     }
+    console.log("3");
     if (
-      !dataPassword.acceptPassword ||
+      !dataPassword.repeatPassword ||
       !dataPassword.currentPassword ||
       !dataPassword.newPassword
     ) {
       return;
     }
-    if (dataPassword.newPassword !== dataPassword.acceptPassword) {
+    console.log("4");
+    if (dataPassword.newPassword !== dataPassword.repeatPassword) {
       setErrorPassword({
         ...errorPassword,
         repeatPassword: true,
@@ -179,7 +183,7 @@ const AccountInfluencerDetails = () => {
       const result = await axios.put(
         `${process.env.REACT_APP_SERVER}/profile/client/password`,
         {
-          role: "client",
+          role: "influencer",
           currentPassword: dataPassword.currentPassword,
           newPassword: dataPassword.newPassword,
           id: data._id,
@@ -190,7 +194,7 @@ const AccountInfluencerDetails = () => {
         setDataPassword({
           currentPassword: "",
           newPassword: "",
-          acceptPassword: "",
+          repeatPassword: "",
         });
         return;
       }
@@ -228,7 +232,7 @@ const AccountInfluencerDetails = () => {
     }
     try {
       const result = await axios.put(
-        `${process.env.REACT_APP_SERVER}/profile/client/email`,
+        `${process.env.REACT_APP_SERVER}/profile/influencer/email`,
         { email: dataEmail, id: data._id }
       );
       if (result.data.code === 200) {

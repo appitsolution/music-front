@@ -25,37 +25,29 @@ export function validatePhoneNumber(phoneNumber) {
   return phoneRegex.test(phoneNumber);
 }
 
-
-
-
-
 export function formatDateString(inputDate) {
+  let cleanedInput = inputDate.replace(/[^\d]/g, "");
 
-  let cleanedInput = inputDate.replace(/[^\d]/g, '');
-
-
-  let formattedDate = '';
+  let formattedDate = "";
   if (cleanedInput.length > 0) {
-      formattedDate += cleanedInput.substr(0, 2);
+    formattedDate += cleanedInput.substr(0, 2);
   }
   if (cleanedInput.length > 2) {
-      formattedDate += '.' + cleanedInput.substr(2, 2);
+    formattedDate += "." + cleanedInput.substr(2, 2);
   }
   if (cleanedInput.length > 4) {
-      formattedDate += '.' + cleanedInput.substr(4, 4);
+    formattedDate += "." + cleanedInput.substr(4, 4);
   }
 
   return formattedDate;
 }
 
-
 export function validateDate(inputDate) {
-
-  var cleanedInput = inputDate.replace(/[^\d]/g, '');
+  var cleanedInput = inputDate.replace(/[^\d]/g, "");
 
   // Перевірити довжину введеного рядка
   if (cleanedInput.length !== 8) {
-      return false;
+    return false;
   }
 
   // Отримати компоненти дати
@@ -63,41 +55,60 @@ export function validateDate(inputDate) {
   var month = parseInt(cleanedInput.substr(2, 2), 10);
   var year = parseInt(cleanedInput.substr(4, 4), 10);
 
-
   var inputDateObj = new Date(year, month - 1, day);
   var currentDate = new Date();
 
   if (isNaN(inputDateObj.getTime()) || inputDateObj < currentDate) {
-      return  false;
+    return false;
   } else if (day > 31 || month > 12) {
-      return false;
+    return false;
   } else {
-      return true; // Дата валідна
+    return true; // Дата валідна
   }
 }
 
-
-export function isThreeDaysPassed(inputDate) {
-
+export function is24HoursPassed(inputDate) {
   const currentDate = new Date();
   const inputDateTime = new Date(inputDate);
 
- const timeDifference = currentDate - inputDateTime;
+  const timeDifference = currentDate - inputDateTime;
 
- 
-  const threeDaysInMillis = 3 * 24 * 60 * 60 * 1000;
+  const twentyFourHoursInMillis = 24 * 60 * 60 * 1000;
 
-  
-  if (timeDifference >= threeDaysInMillis) {
-  
-    return { isPassed: true, daysLeft: 0 };
+  if (timeDifference >= twentyFourHoursInMillis) {
+    return { isPassed: true, hoursLeft: 0 };
   } else {
-
-    const daysLeft = Math.ceil((threeDaysInMillis - timeDifference) / (24 * 60 * 60 * 1000));
-
-    return { isPassed: false, daysLeft };
+    const hoursLeft = Math.ceil(
+      (twentyFourHoursInMillis - timeDifference) / (60 * 60 * 1000)
+    );
+    return { isPassed: false, hoursLeft };
   }
 }
 
+export function extractNumber(inputString) {
+  if (!inputString) return 0;
+  const digitsOnly = inputString.replace(/\D/g, "");
 
+  const result = parseInt(digitsOnly, 10);
 
+  return result;
+}
+
+export function formatDateStringReport(inputDateString) {
+  const inputDate = new Date(inputDateString);
+
+  if (isNaN(inputDate)) {
+    return "No Date";
+  }
+
+  const day = inputDate.getDate();
+  const month = inputDate.getMonth() + 1;
+  const year = inputDate.getFullYear();
+
+  const formattedDay = day < 10 ? "0" + day : day;
+  const formattedMonth = month < 10 ? "0" + month : month;
+
+  const formattedDate = `${year}/${formattedMonth}/${formattedDay}`;
+
+  return formattedDate;
+}

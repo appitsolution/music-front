@@ -18,7 +18,11 @@ import {
   setSwipeUpLink,
   setVideoLink,
 } from "../../../../../redux/slice/create-promo";
-import { formatDateString, validateDate } from "../../../../../utils/validations";
+import {
+  formatDateString,
+  validateDate,
+} from "../../../../../utils/validations";
+import arrow from "../../../../../images/icons/arrow.svg";
 
 const AccountClientPostContent = () => {
   const dispatch = useDispatch();
@@ -34,7 +38,7 @@ const AccountClientPostContent = () => {
     specialWishes: false,
   });
 
-  const createPromo = async () => {
+  const nextForm = () => {
     let listError = {
       videoLink: false,
       postDescription: false,
@@ -43,8 +47,6 @@ const AccountClientPostContent = () => {
       dateRequest: false,
       specialWishes: false,
     };
-
-    
 
     let haveError = false;
     for (let checkError in dataPromo) {
@@ -64,37 +66,39 @@ const AccountClientPostContent = () => {
       }
     }
 
-
-    if(!dataPromo.dateRequest){
+    if (!dataPromo.dateRequest) {
       haveError = true;
-      setFormError({...listError, dateRequest: true})
-      return 
+      setFormError({ ...listError, dateRequest: true });
+      return;
     }
 
     if (haveError) {
       setFormError(listError);
       return;
     }
-    try {
-      const { dataFetch } = await UseVerify();
-      const result = await axios.post(
-        `${process.env.REACT_APP_SERVER}/promos`,
-        { ...dataPromo, userId: dataFetch._id }
-      );
 
-      if (result.data.code === 201) {
-        dispatch(setClearForm());
-        dispatch(setCurrentWindow(0));
-        navigation("/account/client");
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    dispatch(setCurrentWindow(2));
   };
+
   return (
     <section className="account-client">
       <div className="container-form">
-        <div className="account-client-block">
+        <div className="account-client-block" style={{ position: "relative" }}>
+          <button
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: 50,
+              height: 50,
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              dispatch(setCurrentWindow(0));
+            }}
+          >
+            <img src={arrow} style={{ transform: "rotate(180deg)" }} />
+          </button>
           <TitleSection title="post" span="this content" />
 
           <FormContainer style={{ marginTop: "60px" }}>
@@ -169,10 +173,7 @@ const AccountClientPostContent = () => {
                   marginTop: "60px",
                 }}
               >
-                <StandartButton
-                  text="Request this post"
-                  onClick={createPromo}
-                />
+                <StandartButton text="Request this post" onClick={nextForm} />
               </div>
             </form>
           </FormContainer>
